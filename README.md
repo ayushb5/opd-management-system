@@ -1,7 +1,5 @@
 # OPD Management System
 
----
-
 ## 📌 About Project
 
 A backend-based OPD (Outpatient Department) Management System developed using Java, Spring Boot, Hibernate, and MySQL.
