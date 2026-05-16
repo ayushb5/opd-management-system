@@ -23,3 +23,11 @@ The system is designed using RESTful APIs and follows a clean backend architectu
 - Spring Data JPA
 - MySQL
 - Maven
+
+## 🔮 Future Improvements
+
+- JWT Authentication
+- Role-Based Authorization
+- Frontend Integration
+- Prescription Module
+- Billing System
