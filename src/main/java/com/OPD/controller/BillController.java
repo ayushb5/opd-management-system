@@ -35,9 +35,6 @@ public class BillController {
 	public ResponseEntity<Bill> saveBill(@RequestBody BillDto billDto){
 		Bill bill=new Bill();
 		Visits visit=visitService.getVisitsById(billDto.getVisitId());
-		if(visit==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 
 		bill.setConsultation_fee(billDto.getConsultation_fee());
 		bill.setPayment_status(billDto.getPayment_status());
@@ -62,9 +59,6 @@ public class BillController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Bill> getBillById(@PathVariable("id") int id){
 		Bill bill=service.getBillById(id);
-		if(bill==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(bill,HttpStatus.OK);
 	}
 	
@@ -78,9 +72,6 @@ public class BillController {
 	public ResponseEntity<Bill> updateBillById(@PathVariable("id") int id,@RequestBody BillDto billDto){
 		Bill bill=service.getBillById(id);
 		Visits visit=visitService.getVisitsById(billDto.getVisitId());
-		if(bill==null || visit==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		
 		bill.setConsultation_fee(billDto.getConsultation_fee());
 		bill.setPayment_status(billDto.getPayment_status());
@@ -97,10 +88,6 @@ public class BillController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteBillById(@PathVariable("id") int id){
-		Bill bill=service.getBillById(id);
-		if(bill==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		service.deleteBillById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

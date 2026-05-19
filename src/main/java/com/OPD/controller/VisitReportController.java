@@ -35,9 +35,6 @@ public class VisitReportController {
 	public ResponseEntity<VisitReport> saveVisitReport(@RequestBody VisitReportDto visitReportDto){
 		VisitReport visitReport=new VisitReport();
 		Visits visit=visitService.getVisitsById(visitReportDto.getVisitId());
-		if(visit==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		visitReport.setFile_name(visitReportDto.getFile_name());
 		visitReport.setFile_type(visitReportDto.getFile_type());
 		visitReport.setFile_url(visitReportDto.getFile_url());
@@ -73,9 +70,6 @@ public class VisitReportController {
 	public ResponseEntity<VisitReport> updateVisitReportById(@PathVariable("id") int id,@RequestBody VisitReportDto visitReportDto){
 		VisitReport visitReport = service.getVisitReportById(id);
 		Visits visit=visitService.getVisitsById(visitReportDto.getVisitId());
-		if(visitReport==null || visit==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		visitReport.setFile_name(visitReportDto.getFile_name());
 		visitReport.setFile_type(visitReportDto.getFile_type());
 		visitReport.setFile_url(visitReportDto.getFile_url());
@@ -87,10 +81,6 @@ public class VisitReportController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteVisitReportById(@PathVariable("id") int id){
-		VisitReport visitReport=service.getVisitReportById(id);
-		if(visitReport==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		service.deleteVisitReportById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

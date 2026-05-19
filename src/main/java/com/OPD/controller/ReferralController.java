@@ -50,10 +50,6 @@ public class ReferralController {
 		Patient patient=patientService.getById(referralDto.getPatientId());
 		Doctor doctor=doctorService.getDoctorById(referralDto.getDoctorId());
 		ReferralCenter referralCenter=referralCenterService.getReferralCenterById(referralDto.getReferralCenterId());
-		
-		if(visit==null||patient==null||doctor==null||referralCenter==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 
 		referral.setNote_type(referralDto.getNote_type());
 		referral.setReason(referralDto.getReason());
@@ -77,9 +73,6 @@ public class ReferralController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Referral> getReferralById(@PathVariable("id") int id){
 		Referral referral=service.getReferralById(id);
-		if(referral==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(referral,HttpStatus.OK);
 	}
 	
@@ -109,16 +102,12 @@ public class ReferralController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Referral> saveReferral(@PathVariable("id") int id,@RequestBody ReferralDto referralDto){
+	public ResponseEntity<Referral> updateReferral(@PathVariable("id") int id,@RequestBody ReferralDto referralDto){
 		Referral referral=service.getReferralById(id);
 		Visits visit=visitService.getVisitsById(referralDto.getVisitId());
 		Patient patient=patientService.getById(referralDto.getPatientId());
 		Doctor doctor=doctorService.getDoctorById(referralDto.getDoctorId());
 		ReferralCenter referralCenter=referralCenterService.getReferralCenterById(referralDto.getReferralCenterId());
-		
-		if(referral==null||visit==null||patient==null||doctor==null||referralCenter==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 
 		referral.setNote_type(referralDto.getNote_type());
 		referral.setReason(referralDto.getReason());
@@ -134,11 +123,7 @@ public class ReferralController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteReferral(@PathVariable("id") int id){
-		Referral referral=service.getReferralById(id);
-		if(referral==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		service.deleteReferralsById(id);
+		service.deleteReferralById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

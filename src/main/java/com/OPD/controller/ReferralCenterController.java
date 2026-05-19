@@ -1,5 +1,6 @@
 package com.OPD.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,12 @@ public class ReferralCenterController {
 	public ResponseEntity<ReferralCenter> saveReferralCenter(@RequestBody ReferralCenterDto referralCenterDto){
 		ReferralCenter referralCenter=new ReferralCenter();
 		Doctor doctor=doctorService.getDoctorById(referralCenterDto.getDoctorId());
-		if(doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		referralCenter.setName(referralCenterDto.getName());
 		referralCenter.setType(referralCenterDto.getType());
 		referralCenter.setContact_info(referralCenterDto.getContact_info());
 		referralCenter.setAddress(referralCenterDto.getAddress());
 		referralCenter.setDoctor(doctor);
+		referralCenter.setCreated_at(LocalDateTime.now());
 		
 		ReferralCenter savedReferralCenter=service.save(referralCenter);
 		return new ResponseEntity<>(savedReferralCenter,HttpStatus.CREATED);
@@ -72,9 +71,6 @@ public class ReferralCenterController {
 	public ResponseEntity<ReferralCenter> updateReferralCenterById(@PathVariable("id") int id,@RequestBody ReferralCenterDto referralCenterDto){
 		ReferralCenter referralCenter=service.getReferralCenterById(id);
 		Doctor doctor=doctorService.getDoctorById(referralCenterDto.getDoctorId());
-		if(referralCenter==null||doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		
 		referralCenter.setName(referralCenterDto.getName());
 		referralCenter.setType(referralCenterDto.getType());
@@ -89,10 +85,6 @@ public class ReferralCenterController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteReferralCenterById(@PathVariable("id") int id){
-		ReferralCenter referralCenter=service.getReferralCenterById(id);
-		if(referralCenter==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		service.deleteReferralCenterById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

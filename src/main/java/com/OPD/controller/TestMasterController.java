@@ -34,9 +34,6 @@ public class TestMasterController {
 	public ResponseEntity<TestMaster> saveTestMaster(@RequestBody TestMasterDto testMasterDto){
 		TestMaster testMaster=new TestMaster();
 		Doctor doctor=doctorService.getDoctorById(testMasterDto.getDoctorId());
-		if(doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		testMaster.setTest_name(testMasterDto.getTest_name());
 		testMaster.setNormal_range(testMasterDto.getNormal_range());
 		testMaster.setUnit(testMasterDto.getUnit());
@@ -55,9 +52,6 @@ public class TestMasterController {
 	@GetMapping("/{id}")
 	public ResponseEntity<TestMaster> getTestMasterById(@PathVariable("id") int id){
 		TestMaster testMaster=service.getTestMasterById(id);
-		if(testMaster==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(testMaster,HttpStatus.OK);
 	}
 	
@@ -71,9 +65,6 @@ public class TestMasterController {
 	public ResponseEntity<TestMaster> updateTestMaster(@PathVariable("id") int id,@RequestBody TestMasterDto testMasterDto){
 		TestMaster testMaster=service.getTestMasterById(id);
 		Doctor doctor=doctorService.getDoctorById(testMasterDto.getDoctorId());
-		if(testMaster==null||doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		
 		testMaster.setTest_name(testMasterDto.getTest_name());
 		testMaster.setNormal_range(testMasterDto.getNormal_range());
@@ -86,10 +77,6 @@ public class TestMasterController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteTestMasterById(@PathVariable("id") int id){
-		TestMaster testMaster=service.getTestMasterById(id);
-		if(testMaster==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		service.deleteTestMasterById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

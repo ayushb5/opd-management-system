@@ -35,9 +35,7 @@ public class MedicineController {
 	public ResponseEntity<?> saveMedicine(@RequestBody MedicineDto medicineDto){
 		Medicine medicine=new Medicine();
 		Doctor doctor=doctorService.getDoctorById(medicineDto.getDoctorId());
-		if(doctor==null) {
-			return new ResponseEntity<>("Doctor Not Found",HttpStatus.NOT_FOUND);
-		}
+		
 		medicine.setMedicine_name(medicineDto.getMedicine_name());
 		medicine.setType(medicineDto.getType());
 		medicine.setDoctor(doctor);
@@ -55,9 +53,6 @@ public class MedicineController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Medicine> getMedicineById(@PathVariable("id") int id){
 		Medicine medicine=service.getMedicineById(id);
-		if(medicine==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(medicine,HttpStatus.OK);
 	}
 	
@@ -68,18 +63,11 @@ public class MedicineController {
 	}
 	
 	@PutMapping("/{medicineId}")
-	public ResponseEntity<Medicine> updateMedicineById(@PathVariable("medicineId") int medicineId, @PathVariable("doctorId") int doctorId, @RequestBody MedicineDto medicineDto){
+	public ResponseEntity<Medicine> updateMedicineById(@PathVariable("medicineId") int medicineId, @RequestBody MedicineDto medicineDto){
 		Medicine medicine=service.getMedicineById(medicineId);
 		
-		Doctor doctor=doctorService.getDoctorById(doctorId);
-		
-		if(medicine==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
-		if(doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		Doctor doctor=doctorService.getDoctorById(medicineDto.getDoctorId());
+				
 		medicine.setMedicine_name(medicineDto.getMedicine_name());
 		medicine.setType(medicineDto.getType());
 		medicine.setDoctor(doctor);
@@ -90,11 +78,6 @@ public class MedicineController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteMedicineById(@PathVariable("id") int id){
-		Medicine medicine=service.getMedicineById(id);
-		if(medicine==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
 		service.deleteMedicineById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

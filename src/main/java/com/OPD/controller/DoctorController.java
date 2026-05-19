@@ -57,19 +57,13 @@ public class DoctorController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Doctor> getDoctorById(@PathVariable("id") int id){
 		Doctor doctor=service.getDoctorById(id);
-		if(doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(doctor,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Doctor> updateDoctorById(@PathVariable("id") int id, @RequestBody DoctorDto doctorDto){
 		Doctor doctor=service.getDoctorById(id);
-		if(doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
+
 		doctor.setName(doctorDto.getName());
 		doctor.setEmail(doctorDto.getEmail());
 		doctor.setPassword(doctorDto.getPassword());
@@ -87,11 +81,6 @@ public class DoctorController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteDoctor(@PathVariable("id") int id){
-		Doctor doctor=service.getDoctorById(id);
-		if(doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
 		service.deleteDoctorById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

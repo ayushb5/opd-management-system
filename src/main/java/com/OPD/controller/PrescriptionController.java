@@ -42,9 +42,6 @@ public class PrescriptionController {
 		
 		Visits visit=visitService.getVisitsById(prescriptionDto.getVisitId());
 		Medicine medicine=medicineService.getMedicineById(prescriptionDto.getMedicineId());
-		if(visit==null || medicine==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		
 		prescription.setDosage(prescriptionDto.getDosage());
 		prescription.setDuration(prescriptionDto.getDuration());
@@ -73,9 +70,6 @@ public class PrescriptionController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Prescriptions> getPrescriptionById(@PathVariable("id") int id){
 		Prescriptions prescription=service.getPrescriptionById(id);
-		if(prescription==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(prescription,HttpStatus.OK);
 	}
 	@GetMapping("/visit/{visitId}")
@@ -93,10 +87,6 @@ public class PrescriptionController {
 		Prescriptions prescription=service.getPrescriptionById(id);
 		Visits visit=visitService.getVisitsById(prescriptionDto.getVisitId());
 		Medicine medicine=medicineService.getMedicineById(prescriptionDto.getMedicineId());
-		
-		if(prescription==null || visit==null || medicine==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		
 		prescription.setDosage(prescriptionDto.getDosage());
 		prescription.setDuration(prescriptionDto.getDuration());
@@ -120,10 +110,6 @@ public class PrescriptionController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletePrescriptionById(@PathVariable("id") int id){
-		Prescriptions prescription=service.getPrescriptionById(id);
-		if(prescription==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		service.deletePrescriptionById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -35,9 +35,6 @@ public class PatientController {
 	public ResponseEntity<Patient> savePatient(@RequestBody PatientDto patientDto){
 		Patient patient=new Patient();
 		Doctor doctor=doctorService.getDoctorById(patientDto.getDoctorId());
-		if(doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		
 		patient.setPatient_name(patientDto.getPatient_name());
 		patient.setAge(patientDto.getAge());
@@ -66,9 +63,6 @@ public class PatientController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Patient> getPatientById(@PathVariable("id") int id){
 		Patient patient=service.getById(id);
-		if(patient==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(patient,HttpStatus.OK);
 	}
 	
@@ -82,9 +76,6 @@ public class PatientController {
 	public ResponseEntity<Patient> updatePatientById(@PathVariable("patientId") int patientId,@RequestBody PatientDto patientDto){
 		Patient patient=service.getById(patientId);
 		Doctor doctor=doctorService.getDoctorById(patientDto.getDoctorId());
-		if(patient==null || doctor==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		patient.setPatient_name(patientDto.getPatient_name());
 		patient.setAge(patientDto.getAge());
 		patient.setGender(patientDto.getGender());
@@ -103,10 +94,6 @@ public class PatientController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletePatientById(@PathVariable("id") int id){
-		Patient patient=service.getById(id);
-		if(patient==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		service.deletePatientById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

@@ -40,10 +40,7 @@ public class PathologyTestController {
 		PathologyTest pathologyTest=new PathologyTest();
 		Visits visit=visitService.getVisitsById(pathologyTestDto.getVisitId());
 		TestMaster testMaster=testMasterService.getTestMasterById(pathologyTestDto.getTestId());
-		if(visit==null || testMaster==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
+				
 		pathologyTest.setResult(pathologyTestDto.getResult());
 		pathologyTest.setRemarks(pathologyTestDto.getRemarks());
 		pathologyTest.setReport_file(pathologyTestDto.getReport_file());
@@ -64,9 +61,6 @@ public class PathologyTestController {
 	@GetMapping("/{id}")
 	public ResponseEntity<PathologyTest> getPathologyTestById(@PathVariable("id") int id){
 		PathologyTest pathologyTest=service.getPathologyTestById(id);
-		if(pathologyTest==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(pathologyTest,HttpStatus.OK);
 	}
 	
@@ -87,11 +81,7 @@ public class PathologyTestController {
 		PathologyTest pathologyTest=service.getPathologyTestById(id);
 		Visits visit=visitService.getVisitsById(pathologyTestDto.getVisitId());
 		TestMaster testMaster=testMasterService.getTestMasterById(pathologyTestDto.getTestId());
-		
-		if(pathologyTest==null||visit==null||testMaster==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
+			
 		pathologyTest.setResult(pathologyTestDto.getResult());
 		pathologyTest.setRemarks(pathologyTestDto.getRemarks());
 		pathologyTest.setReport_file(pathologyTestDto.getReport_file());
@@ -105,10 +95,6 @@ public class PathologyTestController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletePathologyTestById(@PathVariable("id") int id){
-		PathologyTest pathologyTest=service.getPathologyTestById(id);
-		if(pathologyTest==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		service.deleteByPathologyTestId(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

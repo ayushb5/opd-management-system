@@ -40,9 +40,7 @@ public class VisitController {
 		Visits visit=new Visits();
 		Doctor doctor=doctorService.getDoctorById(visitDto.getDoctorId());
 		Patient patient=patientService.getById(visitDto.getPatientId());
-		if(doctor==null || patient==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+
 		visit.setVisit_date(visitDto.getVisit_date());
 		visit.setComplaints(visitDto.getComplaints());
 		visit.setDiagnosis(visitDto.getDiagnosis());
@@ -90,9 +88,6 @@ public class VisitController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Visits> getVisitById(@PathVariable("id") int id){
 		Visits visit=service.getVisitsById(id);
-		if(visit==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(visit,HttpStatus.OK);
 	}
 	
@@ -111,17 +106,10 @@ public class VisitController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Visits> updateVisitsById(@PathVariable("id") int id,@RequestBody VisitsDto visitDto){
 		Visits visit=service.getVisitsById(id);
-		if(visit==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		
 		Doctor doctor=doctorService.getDoctorById(visitDto.getDoctorId());
 		Patient patient=patientService.getById(visitDto.getPatientId());
-		
-		if(doctor==null || patient==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
+
 		visit.setVisit_date(visitDto.getVisit_date());
 		visit.setComplaints(visitDto.getComplaints());
 		visit.setDiagnosis(visitDto.getDiagnosis());
@@ -161,10 +149,6 @@ public class VisitController {
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteVisitById(@PathVariable("id") int id){
-		Visits visit = service.getVisitsById(id);
-		if(visit == null){
-		    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		service.deleteVisitsById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
