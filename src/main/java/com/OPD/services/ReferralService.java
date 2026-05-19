@@ -12,5 +12,5 @@ public interface ReferralService {
 	List<Referral> getReferralsByPatientId(int patientId);
 	List<Referral> getReferralsByDoctorId(int doctorId);
 	List<Referral> getReferralsByReferralCenterId(int referralCenterId);
-	void deleteReferralsById(int id);
+	void deleteReferralById(int id);
 }
