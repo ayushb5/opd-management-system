@@ -16,20 +16,20 @@ public class Referral {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name="visit_id")
+	@JoinColumn(name="visitId")
 	private Visits visit;
 	
 	@ManyToOne
-	@JoinColumn(name="patient_id")
+	@JoinColumn(name="patientId")
 	private Patient patient;
 	
 	@ManyToOne
-	@JoinColumn(name="doctor_id")
+	@JoinColumn(name="doctorId")
 	private Doctor doctor;
 
 	@ManyToOne
-	@JoinColumn(name="referral_center_id")
-	private ReferralCenter referral_centers;
+	@JoinColumn(name="referralCenteId")
+	private ReferralCenter referralCenter;
 	
 	public enum Note_type{
 		PATHOLOGY,
@@ -66,10 +66,10 @@ public class Referral {
 		this.doctor = doctor;
 	}
 	public ReferralCenter getReferral_centers() {
-		return referral_centers;
+		return referralCenter;
 	}
 	public void setReferral_centers(ReferralCenter referral_centers) {
-		this.referral_centers = referral_centers;
+		this.referralCenter = referral_centers;
 	}
 	public Note_type getNote_type() {
 		return note_type;
@@ -102,7 +102,7 @@ public class Referral {
 		this.visit = visit;
 		this.patient = patient;
 		this.doctor = doctor;
-		this.referral_centers = referral_centers;
+		this.referralCenter = referral_centers;
 		this.note_type = note_type;
 		this.reason = reason;
 		this.details = details;
@@ -111,7 +111,7 @@ public class Referral {
 	@Override
 	public String toString() {
 		return "Referrals [id=" + id + ", visit=" + visit + ", patient=" + patient + ", doctor=" + doctor
-				+ ", referral_centers=" + referral_centers + ", note_type=" + note_type + ", reason=" + reason
+				+ ", referral_centers=" + referralCenter + ", note_type=" + note_type + ", reason=" + reason
 				+ ", details=" + details + ", created_at=" + created_at + "]";
 	}
 	public Referral() {

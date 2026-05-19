@@ -21,7 +21,7 @@ public class PathologyTest {
 	
 	@ManyToOne
 	@JoinColumn(name="test_id")
-	private TestMaster test_masters;
+	private TestMaster testMaster;
 	
 	private String result;
 	private String remarks;
@@ -40,10 +40,10 @@ public class PathologyTest {
 		this.visit = visit;
 	}
 	public TestMaster getTest_masters() {
-		return test_masters;
+		return testMaster;
 	}
 	public void setTest_masters(TestMaster test_masters) {
-		this.test_masters = test_masters;
+		this.testMaster = test_masters;
 	}
 	public String getResult() {
 		return result;
@@ -74,7 +74,7 @@ public class PathologyTest {
 		super();
 		this.id = id;
 		this.visit = visit;
-		this.test_masters = test_masters;
+		this.testMaster = test_masters;
 		this.result = result;
 		this.remarks = remarks;
 		this.report_file = report_file;
@@ -82,7 +82,7 @@ public class PathologyTest {
 	}
 	@Override
 	public String toString() {
-		return "Pathology_tests [id=" + id + ", visit=" + visit + ", test_masters=" + test_masters + ", result="
+		return "Pathology_tests [id=" + id + ", visit=" + visit + ", test_masters=" + testMaster + ", result="
 				+ result + ", remarks=" + remarks + ", report_file=" + report_file + ", created_at=" + created_at + "]";
 	}
 	public PathologyTest() {
