@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.TestMaster;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.TestMasterRepository;
 import com.OPD.services.TestMasterService;
 @Service
@@ -24,7 +25,7 @@ public class TestMasterServiceImpl implements TestMasterService {
 
 	@Override
 	public TestMaster getTestMasterById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Test Master not found with id: "+id));
 	}
 
 	@Override
@@ -34,6 +35,7 @@ public class TestMasterServiceImpl implements TestMasterService {
 
 	@Override
 	public void deleteTestMasterById(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Test Master not found with id: "+id));
 		repository.deleteById(id);
 	}
 

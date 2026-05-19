@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Patient;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.PatientRepository;
 import com.OPD.services.PatientService;
 
@@ -26,16 +27,17 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public Patient getById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Patient not found with id: "+id));
 	}
 
 	@Override
 	public List<Patient> getPatientByDoctorId(int id) {
-		return repository.findbyDoctorId(id);
+		return repository.findByDoctorId(id);
 	}
 
 	@Override
 	public void deletePatientById(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Patient not found with id: "+id));
 		repository.deleteById(id);
 
 	}

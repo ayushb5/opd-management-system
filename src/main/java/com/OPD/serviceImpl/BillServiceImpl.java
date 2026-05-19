@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Bill;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.BillRepository;
 import com.OPD.services.BillService;
 
@@ -25,7 +26,7 @@ public class BillServiceImpl implements BillService {
 
 	@Override
 	public Bill getBillById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Bill not found with id: "+id));
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class BillServiceImpl implements BillService {
 
 	@Override
 	public void deleteBillById(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Bill not found with id: "+id));
 		repository.deleteById(id);
 	}
 

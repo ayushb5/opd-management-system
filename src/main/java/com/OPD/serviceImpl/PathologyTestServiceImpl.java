@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.PathologyTest;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.PathologyTestRepository;
 import com.OPD.services.PathologyTestService;
 @Service
@@ -26,7 +27,7 @@ public class PathologyTestServiceImpl implements PathologyTestService {
 
 	@Override
 	public PathologyTest getPathologyTestById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Pathology Test not found with id: "+id));
 	}
 
 	@Override
@@ -41,8 +42,8 @@ public class PathologyTestServiceImpl implements PathologyTestService {
 
 	@Override
 	public void deleteByPathologyTestId(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Pathology Test not found with id: "+id));
 		repository.deleteById(id);
-
 	}
 
 }

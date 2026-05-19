@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Diagnostics;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.DiagnosticRepository;
 import com.OPD.services.DiagnosticService;
 @Service
@@ -25,7 +26,7 @@ public class DiagnosticServiceImpl implements DiagnosticService {
 
 	@Override
 	public Diagnostics getDiagnosticById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Diagnostic not found with id: "+id));
 	}
 
 	@Override
@@ -40,6 +41,7 @@ public class DiagnosticServiceImpl implements DiagnosticService {
 
 	@Override
 	public void deleteDiagnosticById(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Diagnostic not found with id: "+id));
 		repository.deleteById(id);
 	}
 

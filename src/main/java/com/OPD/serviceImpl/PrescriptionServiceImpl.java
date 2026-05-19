@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Prescriptions;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.PrescriptionRepository;
 import com.OPD.services.PrescriptionService;
 @Service
@@ -26,7 +27,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
 	@Override
 	public Prescriptions getPrescriptionById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Prescription not found with id: "+id));
 	}
 
 	@Override
@@ -41,6 +42,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
 	@Override
 	public void deletePrescriptionById(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Prescription not found with id: "+id));
 		repository.deleteById(id);
 	}
 

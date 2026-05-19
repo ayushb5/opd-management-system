@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.OPD.entities.Doctor;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.DoctorRepository;
 import com.OPD.services.DoctorService;
 
@@ -28,13 +29,13 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Override
 	public Doctor getDoctorById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Doctor not found with id: "+id));
 	}
 
 	@Override
 	public void deleteDoctorById(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Doctor not found with id: "+id));
 		repository.deleteById(id);
-
 	}
 
 }

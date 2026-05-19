@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.VisitReport;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.VisitReportRepository;
 import com.OPD.services.VisitReportService;
 @Service
@@ -26,7 +27,7 @@ public class VisitReportServiceImpl implements VisitReportService {
 
 	@Override
 	public VisitReport getVisitReportById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit Report not found with id: "+id));
 	}
 
 	@Override
@@ -36,6 +37,7 @@ public class VisitReportServiceImpl implements VisitReportService {
 
 	@Override
 	public void deleteVisitReportById(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit Report not found with id: "+id));
 		repository.deleteById(id);
 	}
 

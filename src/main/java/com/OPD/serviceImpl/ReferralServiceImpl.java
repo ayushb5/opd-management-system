@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Referral;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.ReferralRepository;
 import com.OPD.services.ReferralService;
 @Service
@@ -24,7 +25,7 @@ public class ReferralServiceImpl implements ReferralService {
 
 	@Override
 	public Referral getReferralById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Referral not found with id: "+id));
 	}
 
 	@Override
@@ -48,7 +49,8 @@ public class ReferralServiceImpl implements ReferralService {
 	}
 
 	@Override
-	public void deleteReferralsById(int id) {
+	public void deleteReferralById(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Referral not found with id: "+id));
 		repository.deleteById(id);
 	}
 

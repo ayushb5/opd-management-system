@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Visits;
+import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.VisitRepository;
 import com.OPD.services.VisitService;
 
@@ -27,11 +28,12 @@ public class VisitServiceImpl implements VisitService {
 
 	@Override
 	public Visits getVisitsById(int id) {
-		return repository.findById(id).orElse(null);
+		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit not found with id: "+id));
 	}
 
 	@Override
 	public void deleteVisitsById(int id) {
+		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit not found with id: "+id));
 		repository.deleteById(id);
 	}
 
