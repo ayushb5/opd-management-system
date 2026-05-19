@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Referral_centers {
+public class ReferralCenter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -30,6 +30,7 @@ public class Referral_centers {
 	private String contact_info;
 	private String address;
 	private LocalDateTime created_at;
+	
 	public int getId() {
 		return id;
 	}
@@ -72,7 +73,7 @@ public class Referral_centers {
 	public void setCreated_at(LocalDateTime created_at) {
 		this.created_at = created_at;
 	}
-	public Referral_centers(int id, Doctor doctor, String name, Type type, String contact_info, String address,
+	public ReferralCenter(int id, Doctor doctor, String name, Type type, String contact_info, String address,
 			LocalDateTime created_at) {
 		super();
 		this.id = id;
@@ -88,7 +89,7 @@ public class Referral_centers {
 		return "Referral_centers [id=" + id + ", doctor=" + doctor + ", name=" + name + ", type=" + type
 				+ ", contact_info=" + contact_info + ", address=" + address + ", created_at=" + created_at + "]";
 	}
-	public Referral_centers() {
+	public ReferralCenter() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class Bills {
+public class Bill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -87,7 +87,7 @@ public class Bills {
 	public void setCreated_at(LocalDateTime created_at) {
 		this.created_at = created_at;
 	}
-	public Bills(int id, Visits visit, BigDecimal consultation_fee, String payment_status, String payment_mode,
+	public Bill(int id, Visits visit, BigDecimal consultation_fee, String payment_status, String payment_mode,
 			BigDecimal concession, BigDecimal paid_amount, BigDecimal total_amount, BigDecimal pending_amount,
 			LocalDateTime created_at) {
 		super();
@@ -109,7 +109,7 @@ public class Bills {
 				+ paid_amount + ", total_amount=" + total_amount + ", pending_amount=" + pending_amount
 				+ ", created_at=" + created_at + "]";
 	}
-	public Bills() {
+	public Bill() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

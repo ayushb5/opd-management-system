@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Referrals {
+public class Referral {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -29,7 +29,7 @@ public class Referrals {
 
 	@ManyToOne
 	@JoinColumn(name="referral_center_id")
-	private Referral_centers referral_centers;
+	private ReferralCenter referral_centers;
 	
 	public enum Note_type{
 		PATHOLOGY,
@@ -65,10 +65,10 @@ public class Referrals {
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
-	public Referral_centers getReferral_centers() {
+	public ReferralCenter getReferral_centers() {
 		return referral_centers;
 	}
-	public void setReferral_centers(Referral_centers referral_centers) {
+	public void setReferral_centers(ReferralCenter referral_centers) {
 		this.referral_centers = referral_centers;
 	}
 	public Note_type getNote_type() {
@@ -95,7 +95,7 @@ public class Referrals {
 	public void setCreated_at(LocalDateTime created_at) {
 		this.created_at = created_at;
 	}
-	public Referrals(int id, Visits visit, Patient patient, Doctor doctor, Referral_centers referral_centers,
+	public Referral(int id, Visits visit, Patient patient, Doctor doctor, ReferralCenter referral_centers,
 			Note_type note_type, String reason, String details, LocalDateTime created_at) {
 		super();
 		this.id = id;
@@ -114,7 +114,7 @@ public class Referrals {
 				+ ", referral_centers=" + referral_centers + ", note_type=" + note_type + ", reason=" + reason
 				+ ", details=" + details + ", created_at=" + created_at + "]";
 	}
-	public Referrals() {
+	public Referral() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
