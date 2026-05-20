@@ -3,47 +3,87 @@ package com.OPD.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class VisitsDto {
-	private int doctorId;
-	private int patientId;
+	@NotNull(message="Doctor id is required")
+	private Integer doctorId;
+	@NotNull(message="Patient id is required")
+	private Integer patientId;
+	
+	@NotNull(message="Visit date is required")
 	private LocalDate visit_date;
+	
+	@NotBlank(message="Complaint is required")
 	private String complaints;
+	
+	@NotBlank(message="Diagnosis is required")
 	private String diagnosis;
+	
+	@NotBlank(message="Advice is required")
 	private String advice;
+	
 	private String bp;
+	
 	private String pulse;
+	
 	private String saturation;
+	
 	private String temperature;
+	
 	private String respiration_rate;
+	
 	private String sugar;
+	
 	private String fasting_sugar;
+	
 	private String pp_sugar;
+	
 	private String random_sugar;
+	
 	private String urea_creatinine;
+	
 	private String past_history;
+	
 	private String current_medication;
+	
 	private String additional_notes;
-	private int weight;
+	
+	@NotNull(message="Weight is required")
+	private Integer weight;
+	
 	private String edema;
+	
 	private String pallor;
+	
 	private String jaundice;
+	
 	private String cvs;
+	
 	private String rs;
+	
 	private String pa;
+	
 	private String cns;
+	
 	private String hb;
+	
 	private String ecg;
+	
+	@NotNull(message="Follow up date is required")
 	private LocalDate followup_date;
-	public int getDoctorId() {
+	
+	public Integer getDoctorId() {
 		return doctorId;
 	}
-	public void setDoctorId(int doctorId) {
+	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
-	public int getPatientId() {
+	public Integer getPatientId() {
 		return patientId;
 	}
-	public void setPatientId(int patientId) {
+	public void setPatientId(Integer patientId) {
 		this.patientId = patientId;
 	}
 	public LocalDate getVisit_date() {
@@ -148,10 +188,10 @@ public class VisitsDto {
 	public void setAdditional_notes(String additional_notes) {
 		this.additional_notes = additional_notes;
 	}
-	public int getWeight() {
+	public Integer getWeight() {
 		return weight;
 	}
-	public void setWeight(int weight) {
+	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
 	public String getEdema() {

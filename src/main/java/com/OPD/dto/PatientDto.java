@@ -2,23 +2,44 @@ package com.OPD.dto;
 
 import com.OPD.entities.Patient;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class PatientDto {
-	private int doctorId;
+	@NotNull(message="Doctor id is required")
+	private Integer doctorId;
+	
+	@NotBlank(message="Patient name is required")
 	private String patient_name;
-	private int age;
+	
+	@NotNull(message="Age is required")
+	@Min(value=0,message="Age cannot be required")
+	private Integer age;
+	
+	@NotNull(message="Gender is required")
 	private Patient.Gender gender;
+	
+	@NotBlank(message="Mobile number is required")
 	private String mobileno;
+	
+	@NotBlank(message="Address is required")
 	private String address;
+	
+	@NotBlank(message="Bloog group is required")
 	private String blood_group;
+	
+	@NotBlank(message="Height is required")
 	private String height;
+	
 	private String smoking;
 	private String alcohol;
 	private String tobacco;
 	
-	public int getDoctorId() {
+	public Integer getDoctorId() {
 		return doctorId;
 	}
-	public void setDoctorId(int doctorId) {
+	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
 	public String getPatient_name() {
@@ -27,10 +48,10 @@ public class PatientDto {
 	public void setPatient_name(String patient_name) {
 		this.patient_name = patient_name;
 	}
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 	public Patient.Gender getGender() {

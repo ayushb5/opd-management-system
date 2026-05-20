@@ -1,13 +1,22 @@
 package com.OPD.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class MedicineDto {
-	private int doctorId;
+	@NotNull(message="Doctor id is required")
+	private Integer doctorId;
+	
+	@NotBlank(message="Medicine name is required")
 	private String medicine_name;
+	
+	@NotBlank(message="Type is required")
 	private String type;
-	public int getDoctorId() {
+	
+	public Integer getDoctorId() {
 		return doctorId;
 	}
-	public void setDoctorId(int doctorId) {
+	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
 	public String getMedicine_name() {

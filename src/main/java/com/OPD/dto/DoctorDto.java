@@ -2,18 +2,38 @@ package com.OPD.dto;
 
 import com.OPD.entities.Doctor;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class DoctorDto {
-	
+	@NotBlank(message="Doctor name is required")
 	private String name;
+	
+	@Email(message="Enter valid email")
+	@NotBlank(message="email is required")
 	private String email;
+	
+	@NotBlank(message="Password is required")
+	@Size(min=6,message="Password must be at least 6 characters")
 	private String password;
+	
+	@NotBlank(message="Specialization is required")
 	private String specialization;
+	
+	@NotBlank(message="Clinic name is required")
 	private String clinic_name;
+	
+	@NotBlank(message="Address is required")
 	private String address;
+	
+	@NotBlank(message="Mobile number is required")
 	private String mobileno;
 	private String token;
+	
+	@NotBlank(message="Status is required")
 	private Doctor.Status status;
+	
 	public String getName() {
 		return name;
 	}
