@@ -20,6 +20,8 @@ import com.OPD.dto.DoctorDto;
 import com.OPD.entities.Doctor;
 import com.OPD.services.DoctorService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/doctor")
 @CrossOrigin
@@ -29,7 +31,7 @@ public class DoctorController {
 	private DoctorService service;
 	
 	@PostMapping
-	public ResponseEntity<Doctor> saveDoctor(@RequestBody DoctorDto doctorDto){
+	public ResponseEntity<Doctor> saveDoctor(@Valid @RequestBody DoctorDto doctorDto){
 		Doctor doctor=new Doctor();
 		doctor.setName(doctorDto.getName());
 		doctor.setEmail(doctorDto.getEmail());

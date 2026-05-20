@@ -24,6 +24,8 @@ import com.OPD.services.DoctorService;
 import com.OPD.services.PatientService;
 import com.OPD.services.VisitService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/visits")
 @CrossOrigin
@@ -36,7 +38,7 @@ public class VisitController {
 	private PatientService patientService;
 	
 	@PostMapping
-	public ResponseEntity<Visits> saveVisit(@RequestBody VisitsDto visitDto){
+	public ResponseEntity<Visits> saveVisit(@Valid @RequestBody VisitsDto visitDto){
 		Visits visit=new Visits();
 		Doctor doctor=doctorService.getDoctorById(visitDto.getDoctorId());
 		Patient patient=patientService.getById(visitDto.getPatientId());
