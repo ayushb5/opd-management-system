@@ -14,6 +14,7 @@ import com.OPD.services.AdminService;
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminRepository repository;
+
 	@Override
 	public Admin save(Admin admin) {
 		return repository.save(admin);
@@ -26,12 +27,13 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Admin getAdminById(int id) {
-		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Admin not found with id: "+id));
+		return repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Admin not found with id: " + id));
 	}
 
 	@Override
 	public void deleteAdminById(int id) {
-		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Admin not found with id: "+id));
+		repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin not found with id: " + id));
 		repository.deleteById(id);
 	}
 
