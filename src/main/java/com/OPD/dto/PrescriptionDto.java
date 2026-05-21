@@ -1,30 +1,63 @@
 package com.OPD.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class PrescriptionDto {
-	private int visitId;
-	private int medicineId;
+	@NotNull(message="Visit id is required")
+	private Integer visitId;
+	
+	@NotNull(message="Medicine id is required")
+	private Integer medicineId;
+	
+	@NotBlank(message="Dosage is required")
 	private String dosage;
+	
+	@NotBlank(message="Duration is required")
 	private String duration;
+	
+	@NotBlank(message="Instructions are required")
 	private String instructions;
-	private int quantity;
-	private int morning_dose;
-	private int afternoon_dose;
-	private int evening_dose;
-	private int duration_days;
-	private int total_quantity;
+	
+	@NotNull(message="Quantity is required")
+	@Min(value=1,message="Quantity must be at least 1")
+	private Integer quantity;
+	
+	@NotNull(message="Morning dose is required")
+	@Min(value=0,message="Dose cannot be negative")
+	private Integer morning_dose;
+
+	@NotNull(message="Afternoon dose is required")
+	@Min(value=0,message="Dose cannot be negative")
+	private Integer afternoon_dose;
+
+	@NotNull(message="Evening dose is required")
+	@Min(value=0,message="Dose cannot be negative")
+	private Integer evening_dose;
+	
+	@NotNull(message="Duration days required")
+	@Min(value=1,message="Duration must be at least 1 day")
+	private Integer duration_days;
+	
+	@NotNull(message="Total Quantity required")
+	@Min(value=1,message="Total Quantity must be positive")
+	private Integer total_quantity;
+	
 	private String quantity_note;
 	private String dose_qty;
 	private String dose_unit;
-	public int getVisitId() {
+	
+	public Integer getVisitId() {
 		return visitId;
 	}
-	public void setVisitId(int visitId) {
+	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
 	}
-	public int getMedicineId() {
+	public Integer getMedicineId() {
 		return medicineId;
 	}
-	public void setMedicineId(int medicineId) {
+	public void setMedicineId(Integer medicineId) {
 		this.medicineId = medicineId;
 	}
 	public String getDosage() {
@@ -45,40 +78,40 @@ public class PrescriptionDto {
 	public void setInstructions(String instructions) {
 		this.instructions = instructions;
 	}
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	public int getMorning_dose() {
+	public Integer getMorning_dose() {
 		return morning_dose;
 	}
-	public void setMorning_dose(int morning_dose) {
+	public void setMorning_dose(Integer morning_dose) {
 		this.morning_dose = morning_dose;
 	}
-	public int getAfternoon_dose() {
+	public Integer getAfternoon_dose() {
 		return afternoon_dose;
 	}
-	public void setAfternoon_dose(int afternoon_dose) {
+	public void setAfternoon_dose(Integer afternoon_dose) {
 		this.afternoon_dose = afternoon_dose;
 	}
-	public int getEvening_dose() {
+	public Integer getEvening_dose() {
 		return evening_dose;
 	}
-	public void setEvening_dose(int evening_dose) {
+	public void setEvening_dose(Integer evening_dose) {
 		this.evening_dose = evening_dose;
 	}
-	public int getDuration_days() {
+	public Integer getDuration_days() {
 		return duration_days;
 	}
-	public void setDuration_days(int duration_days) {
+	public void setDuration_days(Integer duration_days) {
 		this.duration_days = duration_days;
 	}
-	public int getTotal_quantity() {
+	public Integer getTotal_quantity() {
 		return total_quantity;
 	}
-	public void setTotal_quantity(int total_quantity) {
+	public void setTotal_quantity(Integer total_quantity) {
 		this.total_quantity = total_quantity;
 	}
 	public String getQuantity_note() {
