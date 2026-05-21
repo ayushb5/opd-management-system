@@ -23,6 +23,8 @@ import com.OPD.services.MedicineService;
 import com.OPD.services.PrescriptionService;
 import com.OPD.services.VisitService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/prescription")
 @CrossOrigin
@@ -37,7 +39,7 @@ public class PrescriptionController {
 	private MedicineService medicineService;
 	
 	@PostMapping
-	public ResponseEntity<Prescriptions> savePrescription(@RequestBody PrescriptionDto prescriptionDto){
+	public ResponseEntity<Prescriptions> savePrescription(@Valid @RequestBody PrescriptionDto prescriptionDto){
 		Prescriptions prescription=new Prescriptions();
 		
 		Visits visit=visitService.getVisitsById(prescriptionDto.getVisitId());
