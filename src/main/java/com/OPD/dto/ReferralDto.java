@@ -2,38 +2,52 @@ package com.OPD.dto;
 
 import com.OPD.entities.Referral;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class ReferralDto {
+	@NotNull(message="Visit id is required")
+	private Integer visitId;
 	
-	private int visitId;
-	private int patientId;
-	private int doctorId;
-	private int referralCenterId;
+	@NotNull(message="Patient id is required")
+	private Integer patientId;
+	
+	@NotNull(message="Doctor id is required")
+	private Integer doctorId;
+	
+	@NotNull(message="Referral Center id is required")
+	private Integer referralCenterId;
+	
 	private Referral.Note_type note_type;
+	
+	@NotBlank(message="Reason is required")
 	private String reason;
+	
+	@NotBlank(message="Details are required")
 	private String details;
 	
-	public int getVisitId() {
+	public Integer getVisitId() {
 		return visitId;
 	}
-	public void setVisitId(int visitId) {
+	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
 	}
-	public int getPatientId() {
+	public Integer getPatientId() {
 		return patientId;
 	}
-	public void setPatientId(int patientId) {
+	public void setPatientId(Integer patientId) {
 		this.patientId = patientId;
 	}
-	public int getDoctorId() {
+	public Integer getDoctorId() {
 		return doctorId;
 	}
-	public void setDoctorId(int doctorId) {
+	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
 	public int getReferralCenterId() {
 		return referralCenterId;
 	}
-	public void setReferralCenterId(int referralCenterId) {
+	public void setReferralCenterId(Integer referralCenterId) {
 		this.referralCenterId = referralCenterId;
 	}
 	public Referral.Note_type getNote_type() {
