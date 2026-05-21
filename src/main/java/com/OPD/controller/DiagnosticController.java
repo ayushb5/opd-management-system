@@ -24,6 +24,8 @@ import com.OPD.services.DiagnosticService;
 import com.OPD.services.DoctorService;
 import com.OPD.services.VisitService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/diagnostic")
 @CrossOrigin
@@ -36,7 +38,7 @@ public class DiagnosticController {
 	private DoctorService doctorService;
 	
 	@PostMapping
-	public ResponseEntity<Diagnostics> saveDiagnostic(@RequestBody DiagnosticDto diagnosticDto){
+	public ResponseEntity<Diagnostics> saveDiagnostic(@Valid @RequestBody DiagnosticDto diagnosticDto){
 		Diagnostics diagnostic=new Diagnostics();
 		Visits visit=visitService.getVisitsById(diagnosticDto.getVisitId());
 		Doctor doctor=doctorService.getDoctorById(diagnosticDto.getDoctorId());
