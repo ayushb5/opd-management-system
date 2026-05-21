@@ -22,6 +22,8 @@ import com.OPD.entities.Visits;
 import com.OPD.services.VisitReportService;
 import com.OPD.services.VisitService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/visit-report")
 @CrossOrigin
@@ -32,7 +34,7 @@ public class VisitReportController {
 	private VisitService visitService;
 	
 	@PostMapping
-	public ResponseEntity<VisitReport> saveVisitReport(@RequestBody VisitReportDto visitReportDto){
+	public ResponseEntity<VisitReport> saveVisitReport(@Valid @RequestBody VisitReportDto visitReportDto){
 		VisitReport visitReport=new VisitReport();
 		Visits visit=visitService.getVisitsById(visitReportDto.getVisitId());
 		visitReport.setFile_name(visitReportDto.getFile_name());

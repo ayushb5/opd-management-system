@@ -1,14 +1,25 @@
 package com.OPD.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class VisitReportDto {
-	private int visitId;
+	@NotNull(message="Visit id is required")
+	private Integer visitId;
+	
+	@NotBlank(message="File name is required")
 	private String file_name;
+	
+	@NotBlank(message="File URL is required")
 	private String file_url;
+	
+	@NotBlank(message="File type is required")
 	private String file_type;
-	public int getVisitId() {
+	
+	public Integer getVisitId() {
 		return visitId;
 	}
-	public void setVisitId(int visitId) {
+	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
 	}
 	public String getFile_name() {
