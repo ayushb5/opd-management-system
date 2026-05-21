@@ -1,11 +1,24 @@
 package com.OPD.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class AdminDto {
+	@NotBlank(message="Name is required")
 	private String name;
+	
+	@Email(message="Enter valid email")
+	@NotBlank(message="Email is required")
 	private String email;
+	
+	@NotBlank(message="Mobile number is required")
 	private String mobileno;
+	
+	@NotBlank(message="Password is required")
+	@Size(min=6,message="Password must be at least 6 characters")
 	private String password;
-	private String token;
+	
 	public String getName() {
 		return name;
 	}
@@ -30,20 +43,15 @@ public class AdminDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
-	}
-	public AdminDto(String name, String email, String mobileno, String password, String token) {
+
+	public AdminDto(String name, String email, String mobileno, String password) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.mobileno = mobileno;
 		this.password = password;
-		this.token = token;
 	}
+	
 	public AdminDto() {
 	}
 	

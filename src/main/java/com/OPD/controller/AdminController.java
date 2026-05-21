@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +20,8 @@ import com.OPD.dto.AdminDto;
 import com.OPD.entities.Admin;
 import com.OPD.services.AdminService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin
@@ -28,13 +29,12 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 	@PostMapping
-	public ResponseEntity<Admin> save(@RequestBody AdminDto adminDto){
+	public ResponseEntity<Admin> save(@Valid @RequestBody AdminDto adminDto){
 		Admin admin=new Admin();
 		admin.setName(adminDto.getName());
 		admin.setEmail(adminDto.getEmail());
 		admin.setMobileno(adminDto.getMobileno());
 		admin.setPassword(adminDto.getPassword());
-		admin.setToken(adminDto.getToken());
 		admin.setCreated_at(LocalDateTime.now());
 		admin.setUpdated_at(LocalDateTime.now());
 		
@@ -55,14 +55,13 @@ public class AdminController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Admin> updateAdminById(@PathVariable("id") int id, @RequestBody AdminDto adminDto){
+	public ResponseEntity<Admin> updateAdminById(@PathVariable("id") int id,@Valid @RequestBody AdminDto adminDto){
 		Admin admin=service.getAdminById(id);
 		
 		admin.setName(adminDto.getName());
 		admin.setEmail(adminDto.getEmail());
 		admin.setMobileno(adminDto.getMobileno());
 		admin.setPassword(adminDto.getPassword());
-		admin.setToken(adminDto.getToken());
 		admin.setUpdated_at(LocalDateTime.now());
 		
 		Admin updatedAdmin=service.save(admin);
