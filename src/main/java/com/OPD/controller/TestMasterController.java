@@ -64,7 +64,7 @@ public class TestMasterController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<TestMaster> updateTestMaster(@PathVariable("id") int id,@RequestBody TestMasterDto testMasterDto){
+	public ResponseEntity<TestMaster> updateTestMaster(@PathVariable("id") int id,@Valid @RequestBody TestMasterDto testMasterDto){
 		TestMaster testMaster=service.getTestMasterById(id);
 		Doctor doctor=doctorService.getDoctorById(testMasterDto.getDoctorId());
 		

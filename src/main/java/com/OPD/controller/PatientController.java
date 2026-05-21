@@ -75,7 +75,7 @@ public class PatientController {
 	}
 	
 	@PutMapping("/{patientId}")
-	public ResponseEntity<Patient> updatePatientById(@PathVariable("patientId") int patientId,@RequestBody PatientDto patientDto){
+	public ResponseEntity<Patient> updatePatientById(@PathVariable("patientId") int patientId,@Valid @RequestBody PatientDto patientDto){
 		Patient patient=service.getById(patientId);
 		Doctor doctor=doctorService.getDoctorById(patientDto.getDoctorId());
 		patient.setPatient_name(patientDto.getPatient_name());

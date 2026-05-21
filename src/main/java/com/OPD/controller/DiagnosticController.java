@@ -85,7 +85,7 @@ public class DiagnosticController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Diagnostics> updateDiagnosticById(@PathVariable("id") int id,@RequestBody DiagnosticDto diagnosticDto){
+	public ResponseEntity<Diagnostics> updateDiagnosticById(@Valid @PathVariable("id") int id,@RequestBody DiagnosticDto diagnosticDto){
 		Diagnostics diagnostic=service.getDiagnosticById(id);
 		Visits visit=visitService.getVisitsById(diagnosticDto.getVisitId());
 		Doctor doctor=doctorService.getDoctorById(diagnosticDto.getDoctorId());

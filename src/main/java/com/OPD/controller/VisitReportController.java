@@ -69,7 +69,7 @@ public class VisitReportController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<VisitReport> updateVisitReportById(@PathVariable("id") int id,@RequestBody VisitReportDto visitReportDto){
+	public ResponseEntity<VisitReport> updateVisitReportById(@PathVariable("id") int id,@Valid @RequestBody VisitReportDto visitReportDto){
 		VisitReport visitReport = service.getVisitReportById(id);
 		Visits visit=visitService.getVisitsById(visitReportDto.getVisitId());
 		visitReport.setFile_name(visitReportDto.getFile_name());

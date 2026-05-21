@@ -106,7 +106,7 @@ public class VisitController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Visits> updateVisitsById(@PathVariable("id") int id,@RequestBody VisitsDto visitDto){
+	public ResponseEntity<Visits> updateVisitsById(@PathVariable("id") int id,@Valid @RequestBody VisitsDto visitDto){
 		Visits visit=service.getVisitsById(id);
 		
 		Doctor doctor=doctorService.getDoctorById(visitDto.getDoctorId());

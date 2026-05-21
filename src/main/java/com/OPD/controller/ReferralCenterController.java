@@ -70,7 +70,7 @@ public class ReferralCenterController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ReferralCenter> updateReferralCenterById(@Valid @PathVariable("id") int id,@RequestBody ReferralCenterDto referralCenterDto){
+	public ResponseEntity<ReferralCenter> updateReferralCenterById(@PathVariable("id") int id,@Valid @RequestBody ReferralCenterDto referralCenterDto){
 		ReferralCenter referralCenter=service.getReferralCenterById(id);
 		Doctor doctor=doctorService.getDoctorById(referralCenterDto.getDoctorId());
 		

@@ -79,7 +79,7 @@ public class PathologyTestController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<PathologyTest> updatePathologyTestById(@PathVariable("id") int id,@RequestBody PathologyTestDto pathologyTestDto){
+	public ResponseEntity<PathologyTest> updatePathologyTestById(@PathVariable("id") int id,@Valid @RequestBody PathologyTestDto pathologyTestDto){
 		PathologyTest pathologyTest=service.getPathologyTestById(id);
 		Visits visit=visitService.getVisitsById(pathologyTestDto.getVisitId());
 		TestMaster testMaster=testMasterService.getTestMasterById(pathologyTestDto.getTestId());

@@ -85,7 +85,7 @@ public class PrescriptionController {
 		return new ResponseEntity<>(prescriptions,HttpStatus.OK);
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<Prescriptions> updatePrescriptionById(@PathVariable("id") int id,@RequestBody PrescriptionDto prescriptionDto){
+	public ResponseEntity<Prescriptions> updatePrescriptionById(@PathVariable("id") int id,@Valid @RequestBody PrescriptionDto prescriptionDto){
 		Prescriptions prescription=service.getPrescriptionById(id);
 		Visits visit=visitService.getVisitsById(prescriptionDto.getVisitId());
 		Medicine medicine=medicineService.getMedicineById(prescriptionDto.getMedicineId());
