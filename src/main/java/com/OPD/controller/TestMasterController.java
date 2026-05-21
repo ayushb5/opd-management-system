@@ -21,6 +21,8 @@ import com.OPD.entities.TestMaster;
 import com.OPD.services.DoctorService;
 import com.OPD.services.TestMasterService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/test-master")
 @CrossOrigin
@@ -31,7 +33,7 @@ public class TestMasterController {
 	private DoctorService doctorService;
 	
 	@PostMapping
-	public ResponseEntity<TestMaster> saveTestMaster(@RequestBody TestMasterDto testMasterDto){
+	public ResponseEntity<TestMaster> saveTestMaster(@Valid @RequestBody TestMasterDto testMasterDto){
 		TestMaster testMaster=new TestMaster();
 		Doctor doctor=doctorService.getDoctorById(testMasterDto.getDoctorId());
 		testMaster.setTest_name(testMasterDto.getTest_name());

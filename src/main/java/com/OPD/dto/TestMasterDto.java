@@ -1,14 +1,25 @@
 package com.OPD.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class TestMasterDto {
-	private int doctorId;
+	@NotNull(message="Doctor id is required")
+	private Integer doctorId;
+	
+	@NotBlank(message="Test name is required")
 	private String test_name;
+	
+	@NotBlank(message="Normal range is required")
 	private String normal_range;
+	
+	@NotBlank(message="Unit is required")
 	private String unit;
-	public int getDoctorId() {
+	
+	public Integer getDoctorId() {
 		return doctorId;
 	}
-	public void setDoctorId(int doctorId) {
+	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
 	public String getTest_name() {
