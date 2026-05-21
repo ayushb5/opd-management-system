@@ -28,6 +28,8 @@ import com.OPD.services.ReferralCenterService;
 import com.OPD.services.ReferralService;
 import com.OPD.services.VisitService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/referral")
 @CrossOrigin
@@ -44,7 +46,7 @@ public class ReferralController {
 	private ReferralCenterService referralCenterService;
 	
 	@PostMapping
-	public ResponseEntity<Referral> saveReferral(@RequestBody ReferralDto referralDto){
+	public ResponseEntity<Referral> saveReferral(@Valid @RequestBody ReferralDto referralDto){
 		Referral referral=new Referral();
 		Visits visit=visitService.getVisitsById(referralDto.getVisitId());
 		Patient patient=patientService.getById(referralDto.getPatientId());
@@ -102,7 +104,7 @@ public class ReferralController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Referral> updateReferral(@PathVariable("id") int id,@RequestBody ReferralDto referralDto){
+	public ResponseEntity<Referral> updateReferral(@PathVariable("id") int id,@Valid @RequestBody ReferralDto referralDto){
 		Referral referral=service.getReferralById(id);
 		Visits visit=visitService.getVisitsById(referralDto.getVisitId());
 		Patient patient=patientService.getById(referralDto.getPatientId());

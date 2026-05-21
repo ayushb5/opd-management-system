@@ -2,16 +2,27 @@ package com.OPD.dto;
 
 import com.OPD.entities.ReferralCenter;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class ReferralCenterDto {
-	private int doctorId;
+	@NotNull(message="Doctor id is required")
+	private Integer doctorId;
+	
+	@NotBlank(message="Name is required")
 	private String name;
 	private ReferralCenter.Type type;
+	
+	@NotBlank(message="Contact Info is required")
 	private String contact_info;
+	
+	@NotBlank(message="Address is required")
 	private String address;
-	public int getDoctorId() {
+	
+	public Integer getDoctorId() {
 		return doctorId;
 	}
-	public void setDoctorId(int doctorId) {
+	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
 	public String getName() {
