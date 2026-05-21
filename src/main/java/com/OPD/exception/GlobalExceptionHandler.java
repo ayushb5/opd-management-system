@@ -32,4 +32,15 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(BadRequestException.class)
+	public ResponseEntity<Map<String,Object>> handleBadRequest(BadRequestException e){
+	    Map<String,Object> error = new HashMap<>();
+
+	    error.put("timestamp", LocalDateTime.now());
+	    error.put("status", HttpStatus.BAD_REQUEST.value());
+	    error.put("message", e.getMessage());
+
+	    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
 }
