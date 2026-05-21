@@ -3,19 +3,45 @@ package com.OPD.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class BillDto {
-	private int visitId;
+	@NotNull(message="Visit id is required")
+	private Integer visitId;
+	
+	@NotNull(message="Consultation fee is required")
+	@DecimalMin(value="0.0",message="Consultation fee cannot be negative")
 	private BigDecimal consultation_fee;
+	
+	@NotBlank(message="Payment status is required")
 	private String payment_status;
+	
+	@NotBlank(message="Payment mode is required")
 	private String payment_mode;
+	
+	@NotNull(message="Concession is required")
+	@DecimalMin(value="0.0", message="Concession cannot be negative")
 	private BigDecimal concession;
+	
+	@NotNull(message="Paid amount is required")
+	@DecimalMin(value="0.0", message="Paid amount cannot be negative")
 	private BigDecimal paid_amount;
+	
+	@NotNull(message="Total amount is required")
+	@DecimalMin(value="0.0", message="Total amount cannot be negative")
 	private BigDecimal total_amount;
+	
+	@NotNull(message="Pending amount is required")
+	@DecimalMin(value="0.0", message="Pending amount cannot be negative")
 	private BigDecimal pending_amount;
-	public int getVisitId() {
+	
+	public Integer getVisitId() {
 		return visitId;
 	}
-	public void setVisitId(int visitId) {
+	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
 	}
 	public BigDecimal getConsultation_fee() {

@@ -22,6 +22,8 @@ import com.OPD.entities.Visits;
 import com.OPD.services.BillService;
 import com.OPD.services.VisitService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/bill")
 @CrossOrigin
@@ -32,7 +34,7 @@ public class BillController {
 	private VisitService visitService;
 	
 	@PostMapping
-	public ResponseEntity<Bill> saveBill(@RequestBody BillDto billDto){
+	public ResponseEntity<Bill> saveBill(@Valid @RequestBody BillDto billDto){
 		Bill bill=new Bill();
 		Visits visit=visitService.getVisitsById(billDto.getVisitId());
 
@@ -69,7 +71,7 @@ public class BillController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Bill> updateBillById(@PathVariable("id") int id,@RequestBody BillDto billDto){
+	public ResponseEntity<Bill> updateBillById(@PathVariable("id") int id,@Valid @RequestBody BillDto billDto){
 		Bill bill=service.getBillById(id);
 		Visits visit=visitService.getVisitsById(billDto.getVisitId());
 		
