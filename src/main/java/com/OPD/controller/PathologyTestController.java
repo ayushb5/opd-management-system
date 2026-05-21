@@ -24,6 +24,8 @@ import com.OPD.services.PathologyTestService;
 import com.OPD.services.TestMasterService;
 import com.OPD.services.VisitService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/pathology-test")
 @CrossOrigin
@@ -36,7 +38,7 @@ public class PathologyTestController {
 	@Autowired TestMasterService testMasterService;
 	
 	@PostMapping
-	public ResponseEntity<PathologyTest> savePathologyTest(@RequestBody PathologyTestDto pathologyTestDto){
+	public ResponseEntity<PathologyTest> savePathologyTest(@Valid @RequestBody PathologyTestDto pathologyTestDto){
 		PathologyTest pathologyTest=new PathologyTest();
 		Visits visit=visitService.getVisitsById(pathologyTestDto.getVisitId());
 		TestMaster testMaster=testMasterService.getTestMasterById(pathologyTestDto.getTestId());

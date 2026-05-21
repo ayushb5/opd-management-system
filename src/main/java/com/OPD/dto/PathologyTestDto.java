@@ -1,21 +1,34 @@
 package com.OPD.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class PathologyTestDto {
-	private int visitId;
-	private int testId;
+	@NotNull(message="Visit id is required")
+	private Integer visitId;
+	
+	@NotNull(message="Test id is required")
+	private Integer testId;
+	
+//	@NotBlank(message="Result is required")
 	private String result;
+	
+	@NotBlank(message="Remarks required")
 	private String remarks;
+	
+//	@NotBlank(message="Report file is required")
 	private String report_file;
-	public int getVisitId() {
+	
+	public Integer getVisitId() {
 		return visitId;
 	}
-	public void setVisitId(int visitId) {
+	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
 	}
-	public int getTestId() {
+	public Integer getTestId() {
 		return testId;
 	}
-	public void setTestId(int testId) {
+	public void setTestId(Integer testId) {
 		this.testId = testId;
 	}
 	public String getResult() {
