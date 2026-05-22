@@ -1,14 +1,19 @@
 # =========================
 # Build Files
 # =========================
-target/
-build/
+
+# backend
+backend/target/
+backend/build/
+
+# frontend
+frontend/node_modules/
+frontend/dist/
 
 # =========================
 # Maven Wrapper
 # =========================
 # Keep wrapper files committed
-# for easier project setup
 
 # =========================
 # IDE Files
@@ -56,9 +61,9 @@ Thumbs.db
 .env
 .env.*
 
-# Spring Boot sensitive configs
-src/main/resources/application-dev.properties
-src/main/resources/application-prod.properties
+# Spring profiles
+backend/src/main/resources/application-dev.properties
+backend/src/main/resources/application-prod.properties
 
 # =========================
 # Misc
