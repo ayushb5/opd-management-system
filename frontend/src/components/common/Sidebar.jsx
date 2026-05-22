@@ -7,16 +7,24 @@ function Sidebar() {
                 <h5>Menu</h5>
                 <ul className="nav flex-column mt-4">
                     <li className="nav-item mb-2">
-                        <NavLink to={"/"} className={"nav-link"}>Dashboard</NavLink >
+                        <NavLink to={"/"} className={({ isActive }) =>
+                            isActive ? "bg-primary nav-link text-white" : "nav-link text-black"
+                        }>Dashboard</NavLink >
                     </li>
                     <li className="nav-item mb-2">
-                        <NavLink to={"/patients"} className={"nav-link"}>Patients</NavLink >
+                        <NavLink to={"/patients"} className={({ isActive }) =>
+                            isActive ? "bg-primary nav-link text-white" : "nav-link text-black"
+                        }>Patients</NavLink >
                     </li>
                     <li className="nav-item mb-2">
-                        <NavLink to={"/doctors"} className={"nav-link"}>Doctors</NavLink >
+                        <NavLink to={"/doctors"} className={({ isActive }) =>
+                            isActive ? "bg-primary nav-link text-white" : "nav-link text-black"
+                        }>Doctors</NavLink >
                     </li>
                     <li className="nav-item mb-2">
-                        <NavLink to={"/visits"} className={"nav-link"}>Visits</NavLink >
+                        <NavLink to={"/visits"} className={({ isActive }) =>
+                            isActive ? "bg-primary nav-link text-white" : "nav-link text-black"
+                        }>Visits</NavLink >
                     </li>
                 </ul>
             </div>
