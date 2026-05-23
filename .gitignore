@@ -69,3 +69,4 @@ backend/src/main/resources/application-prod.properties
 # Misc
 # =========================
 HELP.md
+/.metadata/
