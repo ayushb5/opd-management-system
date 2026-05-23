@@ -1,8 +1,6 @@
-import MainLayout from "../../layouts/MainLayout"
-
 function Dashboard() {
     return (
-        <MainLayout>
+        <>
             <h1 className="mb-4">Dashboard</h1>
 
             <div className="row g-4">
@@ -42,7 +40,7 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
-        </MainLayout>
+        </>
     )
 }
 
