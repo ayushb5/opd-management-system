@@ -1,9 +1,6 @@
 package com.OPD.entities;
 
 import java.time.LocalDateTime;
-
-import com.OPD.entities.Doctor.Status;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
