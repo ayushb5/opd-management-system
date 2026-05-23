@@ -1,15 +1,17 @@
 import Navbar from "../components/common/Navbar"
+import { Outlet } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 import Sidebar from "../components/common/Sidebar"
 
-function MainLayout({ children }) {
+function MainLayout() {
     return (
         <>
             <Navbar />
-
+            <ToastContainer />
             <div className="d-flex">
                 <Sidebar />
                 <main className="p-4 flex-grow-1">
-                    {children}
+                    <Outlet />
                 </main>
             </div>
         </>
