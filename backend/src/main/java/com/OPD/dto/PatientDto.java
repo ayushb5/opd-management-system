@@ -26,7 +26,6 @@ public class PatientDto {
 	@NotBlank(message="Address is required")
 	private String address;
 	
-	@NotBlank(message="Bloog group is required")
 	private String blood_group;
 	
 	@NotBlank(message="Height is required")
