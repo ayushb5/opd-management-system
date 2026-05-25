@@ -126,6 +126,6 @@ public class ReferralController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteReferral(@PathVariable("id") int id){
 		service.deleteReferralById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

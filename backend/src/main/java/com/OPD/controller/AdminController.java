@@ -71,6 +71,6 @@ public class AdminController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteAdminById(@PathVariable("id") int id){
 		service.deleteAdminById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

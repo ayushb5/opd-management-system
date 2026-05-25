@@ -88,6 +88,6 @@ public class ReferralCenterController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteReferralCenterById(@PathVariable("id") int id){
 		service.deleteReferralCenterById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

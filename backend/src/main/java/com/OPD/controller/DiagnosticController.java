@@ -109,6 +109,6 @@ public class DiagnosticController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		service.deleteDiagnosticById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

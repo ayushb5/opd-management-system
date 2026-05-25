@@ -91,6 +91,6 @@ public class BillController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteBillById(@PathVariable("id") int id){
 		service.deleteBillById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

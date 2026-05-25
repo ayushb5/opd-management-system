@@ -113,6 +113,6 @@ public class PrescriptionController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletePrescriptionById(@PathVariable("id") int id){
 		service.deletePrescriptionById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

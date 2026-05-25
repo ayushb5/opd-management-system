@@ -98,7 +98,7 @@ public class PathologyTestController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletePathologyTestById(@PathVariable("id") int id){
 		service.deleteByPathologyTestId(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
 }

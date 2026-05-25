@@ -84,6 +84,6 @@ public class VisitReportController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteVisitReportById(@PathVariable("id") int id){
 		service.deleteVisitReportById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

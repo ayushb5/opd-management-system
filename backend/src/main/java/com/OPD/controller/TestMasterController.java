@@ -80,6 +80,6 @@ public class TestMasterController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteTestMasterById(@PathVariable("id") int id){
 		service.deleteTestMasterById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
