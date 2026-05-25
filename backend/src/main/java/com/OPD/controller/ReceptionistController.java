@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,8 @@ public class ReceptionistController {
 	private ReceptionistService service;
 	@Autowired
 	private DoctorService doctorService;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@PostMapping
 	public ResponseEntity<Receptionist> saveReceptionist(@Valid @RequestBody ReceptionistDto receptionistDto){
@@ -40,7 +44,7 @@ public class ReceptionistController {
 		
 		receptionist.setName(receptionistDto.getName());
 		receptionist.setEmail(receptionistDto.getEmail());
-		receptionist.setPassword(receptionistDto.getPassword());
+		receptionist.setPassword(passwordEncoder.encode(receptionistDto.getPassword()));
 		receptionist.setMobileno(receptionistDto.getMobileno());
 		receptionist.setStatus(receptionistDto.getStatus());
 		receptionist.setDoctor(doctor);
@@ -76,7 +80,7 @@ public class ReceptionistController {
 		
 		receptionist.setName(receptionistDto.getName());
 		receptionist.setEmail(receptionistDto.getEmail());
-		receptionist.setPassword(receptionistDto.getPassword());
+		receptionist.setPassword(passwordEncoder.encode(receptionistDto.getPassword()));
 		receptionist.setMobileno(receptionistDto.getMobileno());
 		receptionist.setStatus(receptionistDto.getStatus());
 		receptionist.setDoctor(doctor);

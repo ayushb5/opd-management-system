@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +29,15 @@ import jakarta.validation.Valid;
 public class AdminController {
 	@Autowired
 	private AdminService service;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	@PostMapping
 	public ResponseEntity<Admin> save(@Valid @RequestBody AdminDto adminDto){
 		Admin admin=new Admin();
 		admin.setName(adminDto.getName());
 		admin.setEmail(adminDto.getEmail());
 		admin.setMobileno(adminDto.getMobileno());
-		admin.setPassword(adminDto.getPassword());
+		admin.setPassword(passwordEncoder.encode(adminDto.getPassword()));
 		admin.setCreated_at(LocalDateTime.now());
 		admin.setUpdated_at(LocalDateTime.now());
 		
@@ -61,7 +64,7 @@ public class AdminController {
 		admin.setName(adminDto.getName());
 		admin.setEmail(adminDto.getEmail());
 		admin.setMobileno(adminDto.getMobileno());
-		admin.setPassword(adminDto.getPassword());
+		admin.setPassword(passwordEncoder.encode(adminDto.getPassword()));
 		admin.setUpdated_at(LocalDateTime.now());
 		
 		Admin updatedAdmin=service.save(admin);

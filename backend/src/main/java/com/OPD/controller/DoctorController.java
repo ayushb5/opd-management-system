@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,13 +30,15 @@ public class DoctorController {
 	
 	@Autowired
 	private DoctorService service;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@PostMapping
 	public ResponseEntity<Doctor> saveDoctor(@Valid @RequestBody DoctorDto doctorDto){
 		Doctor doctor=new Doctor();
 		doctor.setName(doctorDto.getName());
 		doctor.setEmail(doctorDto.getEmail());
-		doctor.setPassword(doctorDto.getPassword());
+		doctor.setPassword(passwordEncoder.encode(doctorDto.getPassword()));
 		doctor.setSpecialization(doctorDto.getSpecialization());
 		doctor.setClinic_name(doctorDto.getClinic_name());
 		doctor.setAddress(doctorDto.getAddress());
@@ -68,7 +71,7 @@ public class DoctorController {
 
 		doctor.setName(doctorDto.getName());
 		doctor.setEmail(doctorDto.getEmail());
-		doctor.setPassword(doctorDto.getPassword());
+		doctor.setPassword(passwordEncoder.encode(doctorDto.getPassword()));
 		doctor.setSpecialization(doctorDto.getSpecialization());
 		doctor.setClinic_name(doctorDto.getClinic_name());
 		doctor.setAddress(doctorDto.getAddress());
