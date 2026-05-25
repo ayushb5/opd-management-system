@@ -1,0 +1,55 @@
+package com.OPD.serviceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.OPD.dto.LoginDto;
+import com.OPD.entities.Admin;
+import com.OPD.entities.Doctor;
+import com.OPD.entities.Receptionist;
+import com.OPD.exception.InvalidCredentialsException;
+import com.OPD.repository.AdminRepository;
+import com.OPD.repository.DoctorRepository;
+import com.OPD.repository.ReceptionistRepository;
+import com.OPD.services.AuthService;
+@Service
+public class AuthServiceImpl implements AuthService {
+
+	@Autowired
+	private AdminRepository adminRepository;
+	@Autowired
+	private DoctorRepository doctorRepository;
+	@Autowired
+	private ReceptionistRepository receptionistRepository;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Override
+	public String adminLogin(LoginDto loginDto) {
+		Admin admin=adminRepository.findByEmail(loginDto.getEmail()).orElseThrow(()->new InvalidCredentialsException("Invalid email or password"));
+		if(!passwordEncoder.matches(loginDto.getPassword(), admin.getPassword())) {
+			throw new InvalidCredentialsException("Invalid email or password");
+		}
+		return "Login successful";
+	}
+
+	@Override
+	public String doctorLogin(LoginDto loginDto) {
+		Doctor doctor=doctorRepository.findByEmail(loginDto.getEmail()).orElseThrow(()->new InvalidCredentialsException("Invalid email or password"));
+		if(!passwordEncoder.matches(loginDto.getPassword(), doctor.getPassword())) {
+			throw new InvalidCredentialsException("Invalid email or password");
+		}
+		return "Login successful";
+	}
+
+	@Override
+	public String receptionistLogin(LoginDto loginDto) {
+		Receptionist receptionist=receptionistRepository.findByEmail(loginDto.getEmail()).orElseThrow(()->new InvalidCredentialsException("Invalid email or password"));
+		if(!passwordEncoder.matches(loginDto.getPassword(), receptionist.getPassword())) {
+			throw new InvalidCredentialsException("Invalid email or password");
+		}
+		return "Login successful";
+	}
+
+}
