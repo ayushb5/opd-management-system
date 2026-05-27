@@ -1,5 +1,4 @@
 package com.OPD.serviceImpl;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import com.OPD.repository.AdminRepository;
 import com.OPD.repository.DoctorRepository;
 import com.OPD.repository.ReceptionistRepository;
 import com.OPD.services.AuthService;
+import com.OPD.services.JwtService;
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -24,6 +24,8 @@ public class AuthServiceImpl implements AuthService {
 	private ReceptionistRepository receptionistRepository;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private JwtService jwtService;
 	
 	@Override
 	public String adminLogin(LoginDto loginDto) {
@@ -31,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
 		if(!passwordEncoder.matches(loginDto.getPassword(), admin.getPassword())) {
 			throw new InvalidCredentialsException("Invalid email or password");
 		}
-		return "Login successful";
+		return jwtService.generateToken(admin.getEmail());
 	}
 
 	@Override
@@ -40,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
 		if(!passwordEncoder.matches(loginDto.getPassword(), doctor.getPassword())) {
 			throw new InvalidCredentialsException("Invalid email or password");
 		}
-		return "Login successful";
+		return jwtService.generateToken(doctor.getEmail());
 	}
 
 	@Override
@@ -49,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
 		if(!passwordEncoder.matches(loginDto.getPassword(), receptionist.getPassword())) {
 			throw new InvalidCredentialsException("Invalid email or password");
 		}
-		return "Login successful";
+		return jwtService.generateToken(receptionist.getEmail());
 	}
 
 }
