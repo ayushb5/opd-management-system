@@ -1,0 +1,59 @@
+import { NavLink, useNavigate } from "react-router-dom"
+import { Grid, PersonBadge, People, ArrowBarRight } from "react-bootstrap-icons"
+import { toast } from "react-toastify"
+
+function Sidebar() {
+    const role = localStorage.getItem("role");
+    const navigate = useNavigate();
+
+    const menuItems = {
+        ADMIN: [
+            { name: "Dashboard", path: "/admin/dashboard", icon: <Grid /> },
+            { name: "Doctors", path: "/admin/doctors", icon: <PersonBadge /> },
+            { name: "Receptionists", path: "/admin/receptionists", icon: <People /> }
+        ],
+        DOCTOR: [
+            { name: "Dashboard", path: "/doctor/dashboard" },
+            { name: "Appointments", path: "/doctor/appointments" }
+        ],
+        RECEPTIONIST: [
+            { name: "Dashboard", path: "/receptionist/dashboard" },
+            { name: "Patients", path: "/receptionist/patients" }
+        ]
+    }
+
+    const handleLogout = () => {
+        localStorage.clear();
+        toast.success("Logout successful!");
+        navigate("/");
+    }
+
+    return (
+        <div className="bg-primary text-white min-vh-100 p-3 d-flex flex-column">
+            <h5 className="d-none d-lg-block">
+                City Care Hospital
+            </h5>
+            <hr />
+            {
+                menuItems[role]?.map((item) => (
+                    <NavLink key={item.path} to={item.path} className={({ isActive }) => {
+                        return `nav-link rounded px-3 fw-semibold py-2 mb-2 sidebar-link ${isActive ? "bg-warning text-dark fw-bold" : "text-white"
+                            }`
+                    }}>
+                        <span className="me-2">{item.icon}</span>
+                        {item.name}
+                    </NavLink>
+                ))
+            }
+
+            <div className="mt-auto">
+                <button className="btn btn-outline-danger fw-semibold text-white w-100" onClick={handleLogout}>
+                    <span className="me-2"><ArrowBarRight /></span>
+                    Logout
+                </button>
+            </div>
+        </div>
+    )
+}
+
+export default Sidebar
