@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Admin;
+import com.OPD.enums.Role;
 import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.AdminRepository;
 import com.OPD.services.AdminService;
@@ -17,6 +18,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Admin save(Admin admin) {
+		admin.setRole(Role.ADMIN);
 		return repository.save(admin);
 	}
 

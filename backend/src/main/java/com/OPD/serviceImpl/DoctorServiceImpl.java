@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.OPD.entities.Doctor;
+import com.OPD.enums.Role;
 import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.DoctorRepository;
 import com.OPD.services.DoctorService;
@@ -19,6 +20,7 @@ public class DoctorServiceImpl implements DoctorService {
 	
 	@Override
 	public Doctor save(Doctor doctor) {
+		doctor.setRole(Role.DOCTOR);
 		return repository.save(doctor);
 	}
 
