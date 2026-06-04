@@ -2,7 +2,11 @@ package com.OPD.entities;
 
 import java.time.LocalDateTime;
 
+import com.OPD.enums.Role;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +21,8 @@ public class Admin {
 	private String mobileno;
 	private String password;
 	private String token;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	private LocalDateTime created_at;
 	private LocalDateTime updated_at;
 	public int getId() {
@@ -55,6 +61,13 @@ public class Admin {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
@@ -67,7 +80,8 @@ public class Admin {
 	public void setUpdated_at(LocalDateTime updated_at) {
 		this.updated_at = updated_at;
 	}
-	public Admin(int id, String name, String email, String mobileno, String password, String token,
+	
+	public Admin(int id, String name, String email, String mobileno, String password, String token, Role role,
 			LocalDateTime created_at, LocalDateTime updated_at) {
 		super();
 		this.id = id;
@@ -76,17 +90,19 @@ public class Admin {
 		this.mobileno = mobileno;
 		this.password = password;
 		this.token = token;
+		this.role = role;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
+	
 	@Override
 	public String toString() {
 		return "Admin [id=" + id + ", name=" + name + ", email=" + email + ", mobileno=" + mobileno + ", password="
-				+ password + ", token=" + token + ", created_at=" + created_at + ", updated_at=" + updated_at + "]";
+				+ password + ", token=" + token + ", role=" + role + ", created_at=" + created_at + ", updated_at="
+				+ updated_at + "]";
 	}
 	public Admin() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

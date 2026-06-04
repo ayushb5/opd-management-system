@@ -2,6 +2,8 @@ package com.OPD.entities;
 
 import java.time.LocalDateTime;
 
+import com.OPD.enums.Role;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,6 +32,9 @@ public class Receptionist {
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
 	private LocalDateTime created_at;
 	private LocalDateTime updated_at;
 	public int getId() {
@@ -74,6 +79,12 @@ public class Receptionist {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
@@ -87,7 +98,7 @@ public class Receptionist {
 		this.updated_at = updated_at;
 	}
 	public Receptionist(int id, Doctor doctor, String name, String email, String password, String mobileno,
-			Status status, LocalDateTime created_at, LocalDateTime updated_at) {
+			Status status, Role role, LocalDateTime created_at, LocalDateTime updated_at) {
 		super();
 		this.id = id;
 		this.doctor = doctor;
@@ -96,14 +107,15 @@ public class Receptionist {
 		this.password = password;
 		this.mobileno = mobileno;
 		this.status = status;
+		this.role = role;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
 	@Override
 	public String toString() {
 		return "Receptionist [id=" + id + ", doctor=" + doctor + ", name=" + name + ", email=" + email + ", password="
-				+ password + ", mobileno=" + mobileno + ", status=" + status + ", created_at=" + created_at
-				+ ", updated_at=" + updated_at + "]";
+				+ password + ", mobileno=" + mobileno + ", status=" + status + ", role=" + role + ", created_at="
+				+ created_at + ", updated_at=" + updated_at + "]";
 	}
 	public Receptionist() {
 		super();

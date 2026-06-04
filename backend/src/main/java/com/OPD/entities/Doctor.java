@@ -1,6 +1,9 @@
 package com.OPD.entities;
 
 import java.time.LocalDateTime;
+
+import com.OPD.enums.Role;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,6 +36,10 @@ public class Doctor {
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
+	
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
 	private LocalDateTime created_at;
 	private LocalDateTime updated_at;
 	public int getId() {
@@ -95,6 +102,13 @@ public class Doctor {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
@@ -107,8 +121,9 @@ public class Doctor {
 	public void setUpdated_at(LocalDateTime updated_at) {
 		this.updated_at = updated_at;
 	}
+	
 	public Doctor(int id, String name, String email, String password, String specialization, String clinic_name,
-			String address, String mobileno, String token, Status status, LocalDateTime created_at,
+			String address, String mobileno, String token, Status status, Role role, LocalDateTime created_at,
 			LocalDateTime updated_at) {
 		super();
 		this.id = id;
@@ -121,6 +136,7 @@ public class Doctor {
 		this.mobileno = mobileno;
 		this.token = token;
 		this.status = status;
+		this.role = role;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
@@ -128,8 +144,8 @@ public class Doctor {
 	public String toString() {
 		return "Doctor [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password
 				+ ", specialization=" + specialization + ", clinic_name=" + clinic_name + ", address=" + address
-				+ ", mobileno=" + mobileno + ", token=" + token + ", status=" + status + ", created_at=" + created_at
-				+ ", updated_at=" + updated_at + "]";
+				+ ", mobileno=" + mobileno + ", token=" + token + ", status=" + status + ", role=" + role
+				+ ", created_at=" + created_at + ", updated_at=" + updated_at + "]";
 	}
 	public Doctor() {
 		super();
