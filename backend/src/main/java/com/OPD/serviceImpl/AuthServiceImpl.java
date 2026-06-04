@@ -31,18 +31,10 @@ public class AuthServiceImpl implements AuthService {
 	private JwtService jwtService;
 	@Override
 	public LoginResponse login(LoginDto loginDto) {
-		System.out.println("Email: " + loginDto.getEmail());
 		Optional<Admin> admin=adminRepository.findByEmail(loginDto.getEmail());
-		System.out.println("Admin Found: " + admin.isPresent());
 		
 		if(admin.isPresent()) {
 			Admin adminData=admin.get();
-			System.out.println(
-				    passwordEncoder.matches(
-				        loginDto.getPassword(),
-				        adminData.getPassword()
-				    )
-				);
 			if(!passwordEncoder.matches(loginDto.getPassword(), adminData.getPassword())) {
 				throw new InvalidCredentialsException("Invalid email or password");
 			}
