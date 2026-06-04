@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.LoginDto;
+import com.OPD.response.LoginResponse;
 import com.OPD.services.AuthService;
 
 import jakarta.validation.Valid;
@@ -21,21 +22,27 @@ public class AuthController {
 	@Autowired
 	private AuthService service;
 	
-	@PostMapping("/admin/login")
-	public ResponseEntity<String> adminLogin(@Valid @RequestBody LoginDto loginDto){
-		String response=service.adminLogin(loginDto);
+	@PostMapping("/login")
+	public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginDto loginDto){
+		LoginResponse response=service.login(loginDto);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
-	@PostMapping("/doctor/login")
-	public ResponseEntity<String> doctorLogin(@Valid @RequestBody LoginDto loginDto){
-		String response=service.doctorLogin(loginDto);
-		return new ResponseEntity<>(response,HttpStatus.OK);
-	}
-	
-	@PostMapping("/receptionist/login")
-	public ResponseEntity<String> receptionistLogin(@Valid @RequestBody LoginDto loginDto){
-		String response=service.receptionistLogin(loginDto);
-		return new ResponseEntity<>(response,HttpStatus.OK);
-	}
+//	@PostMapping("/admin/login")
+//	public ResponseEntity<LoginResponse> adminLogin(@Valid @RequestBody LoginDto loginDto){
+//		LoginResponse response=service.adminLogin(loginDto);
+//		return new ResponseEntity<>(response,HttpStatus.OK);
+//	}
+//	
+//	@PostMapping("/doctor/login")
+//	public ResponseEntity<LoginResponse> doctorLogin(@Valid @RequestBody LoginDto loginDto){
+//		LoginResponse response=service.doctorLogin(loginDto);
+//		return new ResponseEntity<>(response,HttpStatus.OK);
+//	}
+//	
+//	@PostMapping("/receptionist/login")
+//	public ResponseEntity<LoginResponse> receptionistLogin(@Valid @RequestBody LoginDto loginDto){
+//		LoginResponse response=service.receptionistLogin(loginDto);
+//		return new ResponseEntity<>(response,HttpStatus.OK);
+//	}
 }
