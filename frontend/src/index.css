@@ -7,3 +7,10 @@
     color: black !important;
     font-weight: bold;
 }
+
+@media (max-width: 500.98px) {
+    .add-doctor-btn {
+        font-size: small !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+}
