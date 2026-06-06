@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { Grid, PersonBadge, People, ArrowBarRight } from "react-bootstrap-icons"
 import { toast } from "react-toastify"
 
-function Sidebar() {
+function Sidebar({ showTitle = true }) {
     const role = localStorage.getItem("role");
     const navigate = useNavigate();
 
@@ -29,11 +29,15 @@ function Sidebar() {
     }
 
     return (
-        <div className="bg-primary text-white min-vh-100 p-3 d-flex flex-column">
-            <h5 className="d-none d-lg-block">
-                City Care Hospital
-            </h5>
-            <hr />
+        <div className="bg-primary text-white h-100 w-100 p-3 d-flex flex-column">
+            {
+                showTitle && (
+                    <>
+                        <h5>City Care Hospital</h5>
+                        <hr />
+                    </>
+                )
+            }
             {
                 menuItems[role]?.map((item) => (
                     <NavLink key={item.path} to={item.path} className={({ isActive }) => {
@@ -47,7 +51,7 @@ function Sidebar() {
             }
 
             <div className="mt-auto">
-                <button className="btn btn-outline-danger fw-semibold text-white w-100" onClick={handleLogout}>
+                <button className="btn btn-danger fw-semibold w-100" onClick={handleLogout}>
                     <span className="me-2"><ArrowBarRight /></span>
                     Logout
                 </button>
