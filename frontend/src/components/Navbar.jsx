@@ -13,14 +13,20 @@ function Navbar() {
                 Dashboard
             </h5>
 
-            <div className="ms-auto">
-                <span className="badge bg-primary me-2">
+            <div className="ms-auto d-flex align-items-center">
+                <span className="badge bg-primary me-2 ">
                     {role}
                 </span>
 
-                <span>
-                    {email}
-                </span>
+                <div className="d-none d-md-block">
+                    <small className="text-muted d-block">
+                        Welcome
+                    </small>
+
+                    <small className="fw-semibold">
+                        {email}
+                    </small>
+                </div>
             </div>
 
         </div>
