@@ -3,7 +3,9 @@ package com.OPD.entities;
 import java.time.LocalDateTime;
 
 import com.OPD.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,8 +21,11 @@ public class Doctor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	@Column(unique = true)
 	private String email;
+	@JsonIgnore
 	private String password;
+	
 	private String specialization;
 	private String clinic_name;
 	private String address;
@@ -31,7 +36,7 @@ public class Doctor {
 		TRIAL,
 		ACTIVE,
 		EXPIRED,
-		CANCEL
+		CANCELLED
 	}
 	
 	@Enumerated(EnumType.STRING)

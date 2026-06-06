@@ -21,6 +21,9 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public Doctor save(Doctor doctor) {
 		doctor.setRole(Role.DOCTOR);
+		if(doctor.getStatus() == null) {
+			doctor.setStatus(Doctor.Status.TRIAL);
+		}
 		return repository.save(doctor);
 	}
 

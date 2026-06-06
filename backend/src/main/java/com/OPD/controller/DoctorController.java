@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.DoctorDto;
 import com.OPD.entities.Doctor;
+import com.OPD.repository.DoctorRepository;
 import com.OPD.services.DoctorService;
 
 import jakarta.validation.Valid;
@@ -27,7 +28,8 @@ import jakarta.validation.Valid;
 @RequestMapping("/doctor")
 @CrossOrigin
 public class DoctorController {
-	
+	@Autowired
+	private DoctorRepository repository;
 	@Autowired
 	private DoctorService service;
 	@Autowired
@@ -37,14 +39,20 @@ public class DoctorController {
 	public ResponseEntity<Doctor> saveDoctor(@Valid @RequestBody DoctorDto doctorDto){
 		Doctor doctor=new Doctor();
 		doctor.setName(doctorDto.getName());
+		if(repository.findByEmail(doctorDto.getEmail()).isPresent()) {
+		    throw new RuntimeException("Email already exists");
+		}
 		doctor.setEmail(doctorDto.getEmail());
+		if (doctorDto.getPassword() == null ||
+		        doctorDto.getPassword().trim().length() < 6) {
+		        throw new RuntimeException(
+		            "Password must be at least 6 characters");
+		   }
 		doctor.setPassword(passwordEncoder.encode(doctorDto.getPassword()));
 		doctor.setSpecialization(doctorDto.getSpecialization());
 		doctor.setClinic_name(doctorDto.getClinic_name());
 		doctor.setAddress(doctorDto.getAddress());
 		doctor.setMobileno(doctorDto.getMobileno());
-		doctor.setToken(doctorDto.getToken());
-		doctor.setStatus(doctorDto.getStatus());
 		doctor.setCreated_at(LocalDateTime.now());
 		doctor.setUpdated_at(LocalDateTime.now());
 		
@@ -71,12 +79,10 @@ public class DoctorController {
 
 		doctor.setName(doctorDto.getName());
 		doctor.setEmail(doctorDto.getEmail());
-		doctor.setPassword(passwordEncoder.encode(doctorDto.getPassword()));
 		doctor.setSpecialization(doctorDto.getSpecialization());
 		doctor.setClinic_name(doctorDto.getClinic_name());
 		doctor.setAddress(doctorDto.getAddress());
 		doctor.setMobileno(doctorDto.getMobileno());
-		doctor.setToken(doctorDto.getToken());
 		doctor.setStatus(doctorDto.getStatus());
 		doctor.setUpdated_at(LocalDateTime.now());
 		

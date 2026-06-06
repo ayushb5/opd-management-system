@@ -14,8 +14,6 @@ public class DoctorDto {
 	@NotBlank(message="email is required")
 	private String email;
 	
-//	@NotBlank(message="Password is required")
-//	@Size(min=6,message="Password must be at least 6 characters")
 	private String password;
 	
 	@NotBlank(message="Specialization is required")
@@ -29,7 +27,6 @@ public class DoctorDto {
 	
 	@NotBlank(message="Mobile number is required")
 	private String mobileno;
-	private String token;
 	
 	private Doctor.Status status;
 	
@@ -74,12 +71,6 @@ public class DoctorDto {
 	}
 	public void setMobileno(String mobileno) {
 		this.mobileno = mobileno;
-	}
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
 	}
 	public Doctor.Status getStatus() {
 	    return status;
