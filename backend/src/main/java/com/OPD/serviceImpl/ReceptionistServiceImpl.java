@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.OPD.entities.Doctor;
 import com.OPD.entities.Receptionist;
 import com.OPD.enums.Role;
 import com.OPD.exception.ResourceNotFoundException;
@@ -17,6 +18,9 @@ public class ReceptionistServiceImpl implements ReceptionistService {
 	@Override
 	public Receptionist saveReceptionist(Receptionist receptionist) {
 		receptionist.setRole(Role.RECEPTIONIST);
+		if(receptionist.getStatus() == null) {
+			receptionist.setStatus(Receptionist.Status.ACTIVE);
+		}
 		return repository.save(receptionist);
 	}
 
