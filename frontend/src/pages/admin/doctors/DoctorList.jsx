@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react"
 import { Search } from "react-bootstrap-icons"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { Pencil, Trash } from "react-bootstrap-icons";
-import { getDoctors } from "../../../services/doctorService";
+import { deleteDoctor, getDoctors } from "../../../services/doctorService";
+import ConfirmationModal from "../../../components/ConfirmationModal";
+import { toast } from "react-toastify"
+
 function DoctorList() {
     const [doctors, setDoctors] = useState([]);
     const [search, setSearch] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [selectedDoctorId, setSelectedDoctorId] = useState(null);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchDoctors();
+    }, [])
 
     const fetchDoctors = async () => {
         try {
@@ -16,9 +27,19 @@ function DoctorList() {
         }
     }
 
-    useEffect(() => {
-        fetchDoctors();
-    }, [])
+    const handleDelete = async () => {
+        try {
+            await deleteDoctor(selectedDoctorId);
+            toast.success("Doctor deleted successfully");
+
+            setDoctors(
+                doctors.filter(doctor => doctor.id != selectedDoctorId)
+            );
+            setShowModal(false);
+        } catch (error) {
+            toast.error("Failed to delete doctor");
+        }
+    }
 
     const filteredDoctors = doctors.filter((doctor) =>
         doctor.name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -76,11 +97,18 @@ function DoctorList() {
                                     <td>{doctor.mobileno}</td>
                                     <td>{doctor.email}</td>
                                     <td className="text-nowrap">
-                                        <button className="btn btn-warning btn-sm me-2">
+                                        <button className="btn btn-warning btn-sm me-2"
+                                            onClick={() => navigate(`edit-doctor/${doctor.id}`)}
+                                        >
                                             <Pencil />
                                         </button>
 
-                                        <button className="btn btn-danger btn-sm">
+                                        <button className="btn btn-danger btn-sm"
+                                            onClick={() => {
+                                                setSelectedDoctorId(doctor.id);
+                                                setShowModal(true);
+                                            }}
+                                        >
                                             <Trash />
                                         </button>
                                     </td>
@@ -96,6 +124,14 @@ function DoctorList() {
                     </tbody>
                 </table>
             </div>
+
+            <ConfirmationModal
+                show={showModal}
+                title="Delete Doctor"
+                message="Are you sure you want to delete this doctor?"
+                onConfirm={handleDelete}
+                onClose={() => setShowModal(false)}
+            />
         </>
     )
 }
