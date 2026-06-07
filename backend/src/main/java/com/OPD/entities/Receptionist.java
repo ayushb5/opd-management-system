@@ -3,7 +3,9 @@ package com.OPD.entities;
 import java.time.LocalDateTime;
 
 import com.OPD.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -22,7 +24,9 @@ public class Receptionist {
 	private Doctor doctor;
 	
 	private String name;
+	@Column(unique = true)
 	private String email;
+	@JsonIgnore
 	private String password;
 	private String mobileno;
 	public enum Status{
