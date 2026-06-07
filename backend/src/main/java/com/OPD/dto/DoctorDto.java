@@ -11,7 +11,7 @@ public class DoctorDto {
 	private String name;
 	
 	@Email(message="Enter valid email")
-	@NotBlank(message="email is required")
+	@NotBlank(message="Email is required")
 	private String email;
 	
 	private String password;
