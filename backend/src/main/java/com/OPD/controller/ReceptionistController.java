@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.OPD.dto.ReceptionistDto;
 import com.OPD.entities.Doctor;
 import com.OPD.entities.Receptionist;
+import com.OPD.repository.ReceptionistRepository;
 import com.OPD.services.DoctorService;
 import com.OPD.services.ReceptionistService;
 
@@ -30,6 +31,8 @@ import jakarta.validation.Valid;
 @RequestMapping("/receptionist")
 @CrossOrigin
 public class ReceptionistController {
+	@Autowired
+	private ReceptionistRepository repository;
 	@Autowired
 	private ReceptionistService service;
 	@Autowired
@@ -43,6 +46,9 @@ public class ReceptionistController {
 		Doctor doctor=doctorService.getDoctorById(receptionistDto.getDoctorId());
 		
 		receptionist.setName(receptionistDto.getName());
+		if(repository.findByEmail(receptionistDto.getEmail()).isPresent()) {
+		    throw new RuntimeException("Email already exists");
+		}
 		receptionist.setEmail(receptionistDto.getEmail());
 		receptionist.setPassword(passwordEncoder.encode(receptionistDto.getPassword()));
 		receptionist.setMobileno(receptionistDto.getMobileno());
@@ -80,7 +86,6 @@ public class ReceptionistController {
 		
 		receptionist.setName(receptionistDto.getName());
 		receptionist.setEmail(receptionistDto.getEmail());
-		receptionist.setPassword(passwordEncoder.encode(receptionistDto.getPassword()));
 		receptionist.setMobileno(receptionistDto.getMobileno());
 		receptionist.setStatus(receptionistDto.getStatus());
 		receptionist.setDoctor(doctor);
