@@ -9,6 +9,9 @@ import ReceptionistDashboard from "./pages/receptionist/ReceptionistDashboard";
 import DoctorList from "./pages/admin/doctors/DoctorList";
 import AddDoctor from "./pages/admin/doctors/AddDoctor";
 import EditDoctor from "./pages/admin/doctors/EditDoctor";
+import ReceptionistList from "./pages/admin/receptionist/ReceptionistList";
+import AddReceptionist from "./pages/admin/receptionist/AddReceptionist";
+import EditReceptionist from "./pages/admin/receptionist/EditReceptionist";
 
 function App() {
   return (
@@ -54,6 +57,31 @@ function App() {
             }
           />
 
+        </Route>
+
+        <Route path="/admin/receptionists">
+          <Route index element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <ReceptionistList />
+            </ProtectedRoute>
+          }
+          />
+          <Route
+            path="add-receptionist"
+            element={
+              <ProtectedRoute allowedRole="ADMIN">
+                <AddReceptionist />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="edit-receptionist/:id"
+            element={
+              <ProtectedRoute allowedRole="ADMIN">
+                <EditReceptionist />
+              </ProtectedRoute>
+            }
+          />
         </Route>
 
         <Route
