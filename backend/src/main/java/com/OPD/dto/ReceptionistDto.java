@@ -10,18 +10,21 @@ import jakarta.validation.constraints.NotNull;
 public class ReceptionistDto {
 	@NotNull(message="Doctor id is required")
 	private Integer doctorId;
+	
 	@NotBlank(message="Name is required")
 	private String name;
+	
 	@Email(message="Enter valid email")
 	@NotBlank(message="Email is required")
 	private String email;
-//	@NotBlank(message="Password is required")
-//	@Size(min=6,message="Password must be at least 6 characters")
+	
 	private String password;
+	
 	@NotBlank(message="Mobile number is required")
 	private String mobileno;
-	@NotNull(message="Status is required")
+	
 	private Receptionist.Status status;
+	
 	public Integer getDoctorId() {
 		return doctorId;
 	}
