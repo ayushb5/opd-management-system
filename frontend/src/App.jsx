@@ -8,6 +8,7 @@ import DoctorDashboard from "./pages/doctor/DoctorDashboard";
 import ReceptionistDashboard from "./pages/receptionist/ReceptionistDashboard";
 import DoctorList from "./pages/admin/doctors/DoctorList";
 import AddDoctor from "./pages/admin/doctors/AddDoctor";
+import EditDoctor from "./pages/admin/doctors/EditDoctor";
 
 function App() {
   return (
@@ -43,6 +44,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="edit-doctor/:id"
+            element={
+              <ProtectedRoute allowedRole="ADMIN">
+                <EditDoctor />
+              </ProtectedRoute>
+            }
+          />
+
         </Route>
 
         <Route
