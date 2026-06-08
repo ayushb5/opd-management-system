@@ -12,6 +12,9 @@ import EditDoctor from "./pages/admin/doctors/EditDoctor";
 import ReceptionistList from "./pages/admin/receptionist/ReceptionistList";
 import AddReceptionist from "./pages/admin/receptionist/AddReceptionist";
 import EditReceptionist from "./pages/admin/receptionist/EditReceptionist";
+import PatientList from "./pages/admin/patients/PatientList";
+import AddPatient from "./pages/admin/patients/AddPatient"
+import EditPatient from "./pages/admin/patients/EditPatient";
 
 function App() {
   return (
@@ -81,6 +84,27 @@ function App() {
                 <EditReceptionist />
               </ProtectedRoute>
             }
+          />
+        </Route>
+
+        <Route path="/admin/patients">
+          <Route index element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <PatientList />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="add-patient" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <AddPatient />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="edit-patient/:id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <EditPatient />
+            </ProtectedRoute>
+          }
           />
         </Route>
 
