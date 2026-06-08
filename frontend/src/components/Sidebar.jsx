@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom"
-import { Grid, PersonBadge, People, ArrowBarRight } from "react-bootstrap-icons"
+import { Grid, PersonBadge, People, ArrowBarRight, PersonVcard } from "react-bootstrap-icons"
 import { toast } from "react-toastify"
 
 function Sidebar({ showTitle = true }) {
@@ -10,7 +10,8 @@ function Sidebar({ showTitle = true }) {
         ADMIN: [
             { name: "Dashboard", path: "/admin/dashboard", icon: <Grid /> },
             { name: "Doctors", path: "/admin/doctors", icon: <PersonBadge /> },
-            { name: "Receptionists", path: "/admin/receptionists", icon: <People /> }
+            { name: "Receptionists", path: "/admin/receptionists", icon: <People /> },
+            { name: "Patients", path: "/admin/patients", icon: <PersonVcard /> }
         ],
         DOCTOR: [
             { name: "Dashboard", path: "/doctor/dashboard" },
