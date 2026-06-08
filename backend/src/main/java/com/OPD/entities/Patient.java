@@ -34,7 +34,7 @@ public class Patient {
 	private String mobileno;
 	private String address;
 	private String blood_group;
-	private String height;
+	private Integer height;
 	private String smoking;
 	private String alcohol;
 	private String tobacco;
@@ -87,10 +87,10 @@ public class Patient {
 	public void setBlood_group(String blood_group) {
 		this.blood_group = blood_group;
 	}
-	public String getHeight() {
+	public Integer getHeight() {
 		return height;
 	}
-	public void setHeight(String height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 	public String getSmoking() {
@@ -118,7 +118,7 @@ public class Patient {
 		this.created_at = created_at;
 	}
 	public Patient(int id, Doctor doctor, String patient_name, int age, Gender gender, String mobileno, String address,
-			String blood_group, String height, String smoking, String alcohol, String tobacco,
+			String blood_group, Integer height, String smoking, String alcohol, String tobacco,
 			LocalDateTime created_at) {
 		super();
 		this.id = id;
