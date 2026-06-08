@@ -24,7 +24,7 @@ export const getReceptionist = async (id) => {
 //   return response.data;
 // };
 
-// Update doctor by Id
+// Update Receptionist by Id
 export const updateReceptionist = async (id, receptionistData) => {
   const response = await axiosInstance.put(
     `/receptionist/${id}`,
@@ -33,7 +33,7 @@ export const updateReceptionist = async (id, receptionistData) => {
   return response.data;
 };
 
-//Delete doctor by Id
+//Delete Receptionist by Id
 export const deleteReceptionist = async (id) => {
   const response = await axiosInstance.delete(`/receptionist/${id}`);
   return response.data;
