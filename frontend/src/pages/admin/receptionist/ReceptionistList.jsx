@@ -108,11 +108,11 @@ function ReceptionistList() {
                                 <tr key={receptionist.id}>
 
                                     <td>{receptionist.id}</td>
-                                    <td>{receptionist.name}</td>
+                                    <td className="text-nowrap">{receptionist.name}</td>
                                     <td>{receptionist.email}</td>
                                     <td>{receptionist.mobileno}</td>
 
-                                    <td>
+                                    <td className="text-nowrap">
                                         {receptionist.doctor?.name}
                                     </td>
 
