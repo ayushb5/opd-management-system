@@ -25,11 +25,12 @@ public class PatientDto {
 	
 	@NotBlank(message="Address is required")
 	private String address;
-	
+	@NotBlank(message="Blood group is required")
 	private String blood_group;
 	
-	@NotBlank(message="Height is required")
-	private String height;
+	@NotNull(message="Height is required")
+	@Min(value = 1, message = "Height must be greater than 0")
+	private Integer height;
 	
 	private String smoking;
 	private String alcohol;
@@ -77,10 +78,10 @@ public class PatientDto {
 	public void setBlood_group(String blood_group) {
 		this.blood_group = blood_group;
 	}
-	public String getHeight() {
+	public Integer getHeight() {
 		return height;
 	}
-	public void setHeight(String height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 	public String getSmoking() {
