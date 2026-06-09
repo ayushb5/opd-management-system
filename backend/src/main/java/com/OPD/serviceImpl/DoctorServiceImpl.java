@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.OPD.entities.Doctor;
 import com.OPD.enums.Role;
@@ -33,12 +32,12 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public Doctor getDoctorById(int id) {
+	public Doctor getDoctorById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Doctor not found with id: "+id));
 	}
 
 	@Override
-	public void deleteDoctorById(int id) {
+	public void deleteDoctorById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Doctor not found with id: "+id));
 		repository.deleteById(id);
 	}

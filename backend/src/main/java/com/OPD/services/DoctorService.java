@@ -7,6 +7,6 @@ import com.OPD.entities.Doctor;
 public interface DoctorService {
 	Doctor save(Doctor doctor);
 	List<Doctor> getAllDoctors();
-	Doctor getDoctorById(int id);
-	void deleteDoctorById(int id);
+	Doctor getDoctorById(Integer id);
+	void deleteDoctorById(Integer id);
 }

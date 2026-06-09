@@ -1,6 +1,5 @@
 package com.OPD.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.DoctorDto;
 import com.OPD.entities.Doctor;
+import com.OPD.exception.DuplicateResourceException;
 import com.OPD.repository.DoctorRepository;
 import com.OPD.services.DoctorService;
 
@@ -40,21 +40,16 @@ public class DoctorController {
 		Doctor doctor=new Doctor();
 		doctor.setName(doctorDto.getName());
 		if(repository.findByEmail(doctorDto.getEmail()).isPresent()) {
-		    throw new RuntimeException("Email already exists");
+		    throw new DuplicateResourceException("Email already exists");
 		}
 		doctor.setEmail(doctorDto.getEmail());
-		if (doctorDto.getPassword() == null ||
-		        doctorDto.getPassword().trim().length() < 6) {
-		        throw new RuntimeException(
-		            "Password must be at least 6 characters");
-		   }
+		
 		doctor.setPassword(passwordEncoder.encode(doctorDto.getPassword()));
 		doctor.setSpecialization(doctorDto.getSpecialization());
-		doctor.setClinic_name(doctorDto.getClinic_name());
+		doctor.setClinicName(doctorDto.getClinicName());
 		doctor.setAddress(doctorDto.getAddress());
-		doctor.setMobileno(doctorDto.getMobileno());
-		doctor.setCreated_at(LocalDateTime.now());
-		doctor.setUpdated_at(LocalDateTime.now());
+		doctor.setMobileNo(doctorDto.getMobileNo());
+		doctor.setStatus(doctorDto.getStatus());
 		
 		Doctor savedDoctor=service.save(doctor);
 		
@@ -68,30 +63,29 @@ public class DoctorController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Doctor> getDoctorById(@PathVariable("id") int id){
+	public ResponseEntity<Doctor> getDoctorById(@PathVariable("id") Integer id){
 		Doctor doctor=service.getDoctorById(id);
 		return new ResponseEntity<>(doctor,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Doctor> updateDoctorById(@PathVariable("id") int id,@Valid @RequestBody DoctorDto doctorDto){
+	public ResponseEntity<Doctor> updateDoctorById(@PathVariable("id") Integer id,@Valid @RequestBody DoctorDto doctorDto){
 		Doctor doctor=service.getDoctorById(id);
 
 		doctor.setName(doctorDto.getName());
 		doctor.setEmail(doctorDto.getEmail());
 		doctor.setSpecialization(doctorDto.getSpecialization());
-		doctor.setClinic_name(doctorDto.getClinic_name());
+		doctor.setClinicName(doctorDto.getClinicName());
 		doctor.setAddress(doctorDto.getAddress());
-		doctor.setMobileno(doctorDto.getMobileno());
+		doctor.setMobileNo(doctorDto.getMobileNo());
 		doctor.setStatus(doctorDto.getStatus());
-		doctor.setUpdated_at(LocalDateTime.now());
 		
 		Doctor updatedDoctor=service.save(doctor);
 		return new ResponseEntity<>(updatedDoctor,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteDoctor(@PathVariable("id") int id){
+	public ResponseEntity<Void> deleteDoctor(@PathVariable("id") Integer id){
 		service.deleteDoctorById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

@@ -3,7 +3,7 @@ package com.OPD.entities;
 import java.time.LocalDateTime;
 
 import com.OPD.enums.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +12,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,18 +21,19 @@ import jakarta.persistence.Table;
 public class Doctor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String name;
-	@Column(unique = true)
+	@Column(nullable = false, unique = true)
 	private String email;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	
 	private String specialization;
-	private String clinic_name;
+	private String clinicName;
 	private String address;
-	private String mobileno;
-	private String token;
+	
+	@Column(nullable = false, unique = true)
+	private String mobileNo;
 	
 	public enum Status{
 		TRIAL,
@@ -40,13 +43,25 @@ public class Doctor {
 	}
 	
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Status status;
 	
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	@Column(nullable = false)
+	private Role role;;
 	
-	private LocalDateTime created_at;
-	private LocalDateTime updated_at;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+	
+	@PrePersist
+	public void onCreate() {
+	    createdAt = LocalDateTime.now();
+	    updatedAt = LocalDateTime.now();
+	}
+	@PreUpdate
+	public void onUpdate() {
+	    updatedAt = LocalDateTime.now();
+	}
 	public int getId() {
 		return id;
 	}
@@ -77,11 +92,11 @@ public class Doctor {
 	public void setSpecialization(String specialization) {
 		this.specialization = specialization;
 	}
-	public String getClinic_name() {
-		return clinic_name;
+	public String getClinicName() {
+		return clinicName;
 	}
-	public void setClinic_name(String clinic_name) {
-		this.clinic_name = clinic_name;
+	public void setClinicName(String clinicName) {
+		this.clinicName = clinicName;
 	}
 	public String getAddress() {
 		return address;
@@ -89,17 +104,11 @@ public class Doctor {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getMobileno() {
-		return mobileno;
+	public String getMobileNo() {
+		return mobileNo;
 	}
-	public void setMobileno(String mobileno) {
-		this.mobileno = mobileno;
-	}
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 	public Status getStatus() {
 		return status;
@@ -107,55 +116,52 @@ public class Doctor {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
 	public Role getRole() {
 		return role;
 	}
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public LocalDateTime getCreated_at() {
-		return created_at;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
-	public LocalDateTime getUpdated_at() {
-		return updated_at;
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
 	}
-	public void setUpdated_at(LocalDateTime updated_at) {
-		this.updated_at = updated_at;
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
-	
-	public Doctor(int id, String name, String email, String password, String specialization, String clinic_name,
-			String address, String mobileno, String token, Status status, Role role, LocalDateTime created_at,
-			LocalDateTime updated_at) {
+	public Doctor(int id, String name, String email, String password, String specialization, String clinicName,
+			String address, String mobileNo, Status status, Role role, LocalDateTime createdAt,
+			LocalDateTime updatedAt) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.specialization = specialization;
-		this.clinic_name = clinic_name;
+		this.clinicName = clinicName;
 		this.address = address;
-		this.mobileno = mobileno;
-		this.token = token;
+		this.mobileNo = mobileNo;
 		this.status = status;
 		this.role = role;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 	@Override
 	public String toString() {
-		return "Doctor [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password
-				+ ", specialization=" + specialization + ", clinic_name=" + clinic_name + ", address=" + address
-				+ ", mobileno=" + mobileno + ", token=" + token + ", status=" + status + ", role=" + role
-				+ ", created_at=" + created_at + ", updated_at=" + updated_at + "]";
+		return "Doctor [id=" + id + ", name=" + name + ", email=" + email + ", specialization=" + specialization
+				+ ", clinicName=" + clinicName + ", address=" + address + ", mobileNo=" + mobileNo + ", status="
+				+ status + ", role=" + role + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 	public Doctor() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	
 }
