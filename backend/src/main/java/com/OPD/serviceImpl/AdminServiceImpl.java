@@ -28,13 +28,13 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Admin getAdminById(int id) {
+	public Admin getAdminById(Integer id) {
 		return repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Admin not found with id: " + id));
 	}
 
 	@Override
-	public void deleteAdminById(int id) {
+	public void deleteAdminById(Integer id) {
 		repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin not found with id: " + id));
 		repository.deleteById(id);
 	}

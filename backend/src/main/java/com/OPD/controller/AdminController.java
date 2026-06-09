@@ -1,6 +1,5 @@
 package com.OPD.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +35,8 @@ public class AdminController {
 		Admin admin=new Admin();
 		admin.setName(adminDto.getName());
 		admin.setEmail(adminDto.getEmail());
-		admin.setMobileno(adminDto.getMobileno());
+		admin.setMobileNo(adminDto.getMobileNo());
 		admin.setPassword(passwordEncoder.encode(adminDto.getPassword()));
-		admin.setCreated_at(LocalDateTime.now());
-		admin.setUpdated_at(LocalDateTime.now());
 		
 		Admin savedAdmin=service.save(admin);
 		return new ResponseEntity<>(savedAdmin,HttpStatus.CREATED);
@@ -52,27 +49,26 @@ public class AdminController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Admin> getAdminById(@PathVariable("id") int id){
+	public ResponseEntity<Admin> getAdminById(@PathVariable("id") Integer id){
 		Admin admin=service.getAdminById(id);
 		return new ResponseEntity<>(admin,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Admin> updateAdminById(@PathVariable("id") int id,@Valid @RequestBody AdminDto adminDto){
+	public ResponseEntity<Admin> updateAdminById(@PathVariable("id") Integer id,@Valid @RequestBody AdminDto adminDto){
 		Admin admin=service.getAdminById(id);
 		
 		admin.setName(adminDto.getName());
 		admin.setEmail(adminDto.getEmail());
-		admin.setMobileno(adminDto.getMobileno());
+		admin.setMobileNo(adminDto.getMobileNo());
 		admin.setPassword(passwordEncoder.encode(adminDto.getPassword()));
-		admin.setUpdated_at(LocalDateTime.now());
 		
 		Admin updatedAdmin=service.save(admin);
 		return new ResponseEntity<>(updatedAdmin,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteAdminById(@PathVariable("id") int id){
+	public ResponseEntity<Void> deleteAdminById(@PathVariable("id") Integer id){
 		service.deleteAdminById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
