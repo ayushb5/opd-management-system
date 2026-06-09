@@ -26,17 +26,17 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public Patient getById(int id) {
+	public Patient getById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Patient not found with id: "+id));
 	}
 
 	@Override
-	public List<Patient> getPatientByDoctorId(int id) {
-		return repository.findByDoctorId(id);
+	public List<Patient> getPatientByDoctorId(Integer doctorId) {
+		return repository.findByDoctor_Id(doctorId);
 	}
 
 	@Override
-	public void deletePatientById(int id) {
+	public void deletePatientById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Patient not found with id: "+id));
 		repository.deleteById(id);
 

@@ -5,28 +5,33 @@ import com.OPD.entities.Patient;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class PatientDto {
 	@NotNull(message="Doctor id is required")
 	private Integer doctorId;
 	
 	@NotBlank(message="Patient name is required")
-	private String patient_name;
+	private String patientName;
 	
 	@NotNull(message="Age is required")
-	@Min(value=0,message="Age cannot be required")
+	@Min(value = 1, message = "Age must be greater than 0")
 	private Integer age;
 	
 	@NotNull(message="Gender is required")
 	private Patient.Gender gender;
 	
-	@NotBlank(message="Mobile number is required")
-	private String mobileno;
+	@NotBlank(message = "Mobile number is required")
+	@Pattern(
+	    regexp = "^[6-9]\\d{9}$",
+	    message = "Enter valid mobile number"
+	)
+	private String mobileNo;
 	
 	@NotBlank(message="Address is required")
 	private String address;
 	@NotBlank(message="Blood group is required")
-	private String blood_group;
+	private String bloodGroup;
 	
 	@NotNull(message="Height is required")
 	@Min(value = 1, message = "Height must be greater than 0")
@@ -36,17 +41,21 @@ public class PatientDto {
 	private String alcohol;
 	private String tobacco;
 	
+	public PatientDto() {
+		
+	}
+
 	public Integer getDoctorId() {
 		return doctorId;
 	}
 	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
-	public String getPatient_name() {
-		return patient_name;
+	public String getPatientName() {
+		return patientName;
 	}
-	public void setPatient_name(String patient_name) {
-		this.patient_name = patient_name;
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
 	}
 	public Integer getAge() {
 		return age;
@@ -60,11 +69,11 @@ public class PatientDto {
 	public void setGender(Patient.Gender gender) {
 		this.gender = gender;
 	}
-	public String getMobileno() {
-		return mobileno;
+	public String getMobileNo() {
+		return mobileNo;
 	}
-	public void setMobileno(String mobileno) {
-		this.mobileno = mobileno;
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 	public String getAddress() {
 		return address;
@@ -72,11 +81,11 @@ public class PatientDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getBlood_group() {
-		return blood_group;
+	public String getBloodGroup() {
+		return bloodGroup;
 	}
-	public void setBlood_group(String blood_group) {
-		this.blood_group = blood_group;
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
 	}
 	public Integer getHeight() {
 		return height;
@@ -102,4 +111,5 @@ public class PatientDto {
 	public void setTobacco(String tobacco) {
 		this.tobacco = tobacco;
 	}
+		
 }

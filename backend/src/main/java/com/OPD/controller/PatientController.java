@@ -1,6 +1,5 @@
 package com.OPD.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +37,16 @@ public class PatientController {
 		Patient patient=new Patient();
 		Doctor doctor=doctorService.getDoctorById(patientDto.getDoctorId());
 		
-		patient.setPatient_name(patientDto.getPatient_name());
+		patient.setPatientName(patientDto.getPatientName());
 		patient.setAge(patientDto.getAge());
 		patient.setGender(patientDto.getGender());
-		patient.setMobileno(patientDto.getMobileno());
+		patient.setMobileNo(patientDto.getMobileNo());
 		patient.setAddress(patientDto.getAddress());
-		patient.setBlood_group(patientDto.getBlood_group());
+		patient.setBloodGroup(patientDto.getBloodGroup());
 		patient.setHeight(patientDto.getHeight());
 		patient.setSmoking(patientDto.getSmoking());
 		patient.setAlcohol(patientDto.getAlcohol());
 		patient.setTobacco(patientDto.getTobacco());
-		patient.setCreated_at(LocalDateTime.now());
 		patient.setDoctor(doctor);
 		
 		Patient savedPatient=service.save(patient);
@@ -63,27 +61,27 @@ public class PatientController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Patient> getPatientById(@PathVariable("id") int id){
+	public ResponseEntity<Patient> getPatientById(@PathVariable("id") Integer id){
 		Patient patient=service.getById(id);
 		return new ResponseEntity<>(patient,HttpStatus.OK);
 	}
 	
 	@GetMapping("/doctor/{doctorId}")
-	public ResponseEntity<List<Patient>> getPatientByDoctorId(@PathVariable("doctorId") int doctorId){
+	public ResponseEntity<List<Patient>> getPatientByDoctorId(@PathVariable("doctorId") Integer doctorId){
 		List<Patient> patients=service.getPatientByDoctorId(doctorId);
 		return new ResponseEntity<>(patients,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{patientId}")
-	public ResponseEntity<Patient> updatePatientById(@PathVariable("patientId") int patientId,@Valid @RequestBody PatientDto patientDto){
+	public ResponseEntity<Patient> updatePatientById(@PathVariable("patientId") Integer patientId,@Valid @RequestBody PatientDto patientDto){
 		Patient patient=service.getById(patientId);
 		Doctor doctor=doctorService.getDoctorById(patientDto.getDoctorId());
-		patient.setPatient_name(patientDto.getPatient_name());
+		patient.setPatientName(patientDto.getPatientName());
 		patient.setAge(patientDto.getAge());
 		patient.setGender(patientDto.getGender());
-		patient.setMobileno(patientDto.getMobileno());
+		patient.setMobileNo(patientDto.getMobileNo());
 		patient.setAddress(patientDto.getAddress());
-		patient.setBlood_group(patientDto.getBlood_group());
+		patient.setBloodGroup(patientDto.getBloodGroup());
 		patient.setHeight(patientDto.getHeight());
 		patient.setSmoking(patientDto.getSmoking());
 		patient.setAlcohol(patientDto.getAlcohol());
@@ -95,7 +93,7 @@ public class PatientController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletePatientById(@PathVariable("id") int id){
+	public ResponseEntity<Void> deletePatientById(@PathVariable("id") Integer id){
 		service.deletePatientById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
