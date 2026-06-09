@@ -26,27 +26,27 @@ public class PrescriptionDto {
 	
 	@NotNull(message="Morning dose is required")
 	@Min(value=0,message="Dose cannot be negative")
-	private Integer morning_dose;
+	private Integer morningDose;
 
 	@NotNull(message="Afternoon dose is required")
 	@Min(value=0,message="Dose cannot be negative")
-	private Integer afternoon_dose;
+	private Integer afternoonDose;
 
 	@NotNull(message="Evening dose is required")
 	@Min(value=0,message="Dose cannot be negative")
-	private Integer evening_dose;
+	private Integer eveningDose;
 	
 	@NotNull(message="Duration days required")
 	@Min(value=1,message="Duration must be at least 1 day")
-	private Integer duration_days;
+	private Integer durationDays;
 	
 	@NotNull(message="Total Quantity required")
 	@Min(value=1,message="Total Quantity must be positive")
-	private Integer total_quantity;
+	private Integer totalQuantity;
 	
-	private String quantity_note;
-	private String dose_qty;
-	private String dose_unit;
+	private String quantityNote;
+	private String doseQuantity;
+	private String doseUnit;
 	
 	public Integer getVisitId() {
 		return visitId;
@@ -84,53 +84,53 @@ public class PrescriptionDto {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	public Integer getMorning_dose() {
-		return morning_dose;
+	public Integer getMorningDose() {
+		return morningDose;
 	}
-	public void setMorning_dose(Integer morning_dose) {
-		this.morning_dose = morning_dose;
+	public void setMorningDose(Integer morningDose) {
+		this.morningDose = morningDose;
 	}
-	public Integer getAfternoon_dose() {
-		return afternoon_dose;
+	public Integer getAfternoonDose() {
+		return afternoonDose;
 	}
-	public void setAfternoon_dose(Integer afternoon_dose) {
-		this.afternoon_dose = afternoon_dose;
+	public void setAfternoonDose(Integer afternoonDose) {
+		this.afternoonDose = afternoonDose;
 	}
-	public Integer getEvening_dose() {
-		return evening_dose;
+	public Integer getEveningDose() {
+		return eveningDose;
 	}
-	public void setEvening_dose(Integer evening_dose) {
-		this.evening_dose = evening_dose;
+	public void setEveningDose(Integer eveningDose) {
+		this.eveningDose = eveningDose;
 	}
-	public Integer getDuration_days() {
-		return duration_days;
+	public Integer getDurationDays() {
+		return durationDays;
 	}
-	public void setDuration_days(Integer duration_days) {
-		this.duration_days = duration_days;
+	public void setDurationDays(Integer durationDays) {
+		this.durationDays = durationDays;
 	}
-	public Integer getTotal_quantity() {
-		return total_quantity;
+	public Integer getTotalQuantity() {
+		return totalQuantity;
 	}
-	public void setTotal_quantity(Integer total_quantity) {
-		this.total_quantity = total_quantity;
+	public void setTotalQuantity(Integer totalQuantity) {
+		this.totalQuantity = totalQuantity;
 	}
-	public String getQuantity_note() {
-		return quantity_note;
+	public String getQuantityNote() {
+		return quantityNote;
 	}
-	public void setQuantity_note(String quantity_note) {
-		this.quantity_note = quantity_note;
+	public void setQuantityNote(String quantityNote) {
+		this.quantityNote = quantityNote;
 	}
-	public String getDose_qty() {
-		return dose_qty;
+	public String getDoseQuantity() {
+		return doseQuantity;
 	}
-	public void setDose_qty(String dose_qty) {
-		this.dose_qty = dose_qty;
+	public void setDoseQuantity(String doseQuantity) {
+		this.doseQuantity = doseQuantity;
 	}
-	public String getDose_unit() {
-		return dose_unit;
+	public String getDoseUnit() {
+		return doseUnit;
 	}
-	public void setDose_unit(String dose_unit) {
-		this.dose_unit = dose_unit;
+	public void setDoseUnit(String doseUnit) {
+		this.doseUnit = doseUnit;
 	}
 	
 }
