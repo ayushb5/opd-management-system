@@ -19,22 +19,22 @@ public class TestMasterServiceImpl implements TestMasterService {
 	}
 
 	@Override
-	public List<TestMaster> getAllTestMaster() {
+	public List<TestMaster> getAllTestMasters() {
 		return repository.findAll();
 	}
 
 	@Override
-	public TestMaster getTestMasterById(int id) {
+	public TestMaster getTestMasterById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Test Master not found with id: "+id));
 	}
 
 	@Override
-	public List<TestMaster> getTestMasterByDoctorId(int doctorId) {
-		return repository.findByDoctorId(doctorId);
+	public List<TestMaster> getTestMastersByDoctorId(Integer doctorId) {
+		return repository.findByDoctor_Id(doctorId);
 	}
 
 	@Override
-	public void deleteTestMasterById(int id) {
+	public void deleteTestMasterById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Test Master not found with id: "+id));
 		repository.deleteById(id);
 	}

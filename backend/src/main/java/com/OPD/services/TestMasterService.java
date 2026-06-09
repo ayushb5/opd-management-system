@@ -6,8 +6,8 @@ import com.OPD.entities.TestMaster;
 
 public interface TestMasterService {
 	TestMaster save(TestMaster testMaster);
-	List<TestMaster> getAllTestMaster();
-	TestMaster getTestMasterById(int id);
-	List<TestMaster> getTestMasterByDoctorId(int doctorId);
-	void deleteTestMasterById(int id);
+	List<TestMaster> getAllTestMasters();
+	TestMaster getTestMasterById(Integer id);
+	List<TestMaster> getTestMastersByDoctorId(Integer doctorId);
+	void deleteTestMasterById(Integer id);
 }

@@ -8,38 +8,42 @@ public class TestMasterDto {
 	private Integer doctorId;
 	
 	@NotBlank(message="Test name is required")
-	private String test_name;
+	private String testName;
 	
-	@NotBlank(message="Normal range is required")
-	private String normal_range;
+	private String normalRange;
 	
-	@NotBlank(message="Unit is required")
 	private String unit;
-	
+
 	public Integer getDoctorId() {
 		return doctorId;
 	}
+
 	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
-	public String getTest_name() {
-		return test_name;
+
+	public String getTestName() {
+		return testName;
 	}
-	public void setTest_name(String test_name) {
-		this.test_name = test_name;
+
+	public void setTestName(String testName) {
+		this.testName = testName;
 	}
-	public String getNormal_range() {
-		return normal_range;
+
+	public String getNormalRange() {
+		return normalRange;
 	}
-	public void setNormal_range(String normal_range) {
-		this.normal_range = normal_range;
+
+	public void setNormalRange(String normalRange) {
+		this.normalRange = normalRange;
 	}
+
 	public String getUnit() {
 		return unit;
 	}
+
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	
 	
 }	

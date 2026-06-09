@@ -1,5 +1,6 @@
 package com.OPD.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,66 +10,82 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tests_masters")
+@Table(name="test_masters")
 public class TestMaster {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name="doctor_id")
+	@JoinColumn(name="doctor_id", nullable = false)
 	private Doctor doctor;
 	
-	private String test_name;
-	private String normal_range;
+	@Column(nullable = false)
+	private String testName;
+	
+	private String normalRange;
+	
 	private String unit;
-	public int getId() {
+	
+	public TestMaster() {
+		
+	}
+	
+	public TestMaster(Integer id, Doctor doctor, String testName,
+            String normalRange, String unit) {
+					this.id = id;
+					this.doctor = doctor;
+					this.testName = testName;
+					this.normalRange = normalRange;
+					this.unit = unit;
+		}
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Doctor getDoctor() {
 		return doctor;
 	}
+
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
-	public String getTest_name() {
-		return test_name;
+
+	public String getTestName() {
+		return testName;
 	}
-	public void setTest_name(String test_name) {
-		this.test_name = test_name;
+
+	public void setTestName(String testName) {
+		this.testName = testName;
 	}
-	public String getNormal_range() {
-		return normal_range;
+
+	public String getNormalRange() {
+		return normalRange;
 	}
-	public void setNormal_range(String normal_range) {
-		this.normal_range = normal_range;
+
+	public void setNormalRange(String normalRange) {
+		this.normalRange = normalRange;
 	}
+
 	public String getUnit() {
 		return unit;
 	}
+
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	public TestMaster(int id, Doctor doctor, String test_name, String normal_range, String unit) {
-		super();
-		this.id = id;
-		this.doctor = doctor;
-		this.test_name = test_name;
-		this.normal_range = normal_range;
-		this.unit = unit;
-	}
+
 	@Override
-	public String toString() {
-		return "Tests_master [id=" + id + ", doctor=" + doctor + ", test_name=" + test_name + ", normal_range="
-				+ normal_range + ", unit=" + unit + "]";
-	}
-	public TestMaster() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
+    public String toString() {
+        return "TestMaster [id=" + id +
+               ", testName=" + testName +
+               ", normalRange=" + normalRange +
+               ", unit=" + unit + "]";
+    }
 	
 }

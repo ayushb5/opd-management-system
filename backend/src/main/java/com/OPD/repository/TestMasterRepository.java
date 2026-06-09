@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import com.OPD.entities.TestMaster;
 @Repository
 public interface TestMasterRepository extends JpaRepository<TestMaster, Integer> {
-	List<TestMaster> findByDoctorId(int doctorId);
+	List<TestMaster> findByDoctor_Id(Integer doctorId);
 }

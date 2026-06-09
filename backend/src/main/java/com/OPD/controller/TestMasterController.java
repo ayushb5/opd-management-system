@@ -36,8 +36,8 @@ public class TestMasterController {
 	public ResponseEntity<TestMaster> saveTestMaster(@Valid @RequestBody TestMasterDto testMasterDto){
 		TestMaster testMaster=new TestMaster();
 		Doctor doctor=doctorService.getDoctorById(testMasterDto.getDoctorId());
-		testMaster.setTest_name(testMasterDto.getTest_name());
-		testMaster.setNormal_range(testMasterDto.getNormal_range());
+		testMaster.setTestName(testMasterDto.getTestName());
+		testMaster.setNormalRange(testMasterDto.getNormalRange());
 		testMaster.setUnit(testMasterDto.getUnit());
 		testMaster.setDoctor(doctor);
 		
@@ -47,29 +47,29 @@ public class TestMasterController {
 	
 	@GetMapping
 	public ResponseEntity<List<TestMaster>> getAllTestMaster(){
-		List<TestMaster> testMasters=service.getAllTestMaster();
+		List<TestMaster> testMasters=service.getAllTestMasters();
 		return new ResponseEntity<>(testMasters,HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<TestMaster> getTestMasterById(@PathVariable("id") int id){
+	public ResponseEntity<TestMaster> getTestMasterById(@PathVariable("id") Integer id){
 		TestMaster testMaster=service.getTestMasterById(id);
 		return new ResponseEntity<>(testMaster,HttpStatus.OK);
 	}
 	
 	@GetMapping("/doctor/{doctorId}")
-	public ResponseEntity<List<TestMaster>> getTestMasterByDoctorId(@PathVariable("doctorId") int doctorId){
-		List<TestMaster> testMasters=service.getTestMasterByDoctorId(doctorId);
+	public ResponseEntity<List<TestMaster>> getTestMasterByDoctorId(@PathVariable("doctorId") Integer doctorId){
+		List<TestMaster> testMasters=service.getTestMastersByDoctorId(doctorId);
 		return new ResponseEntity<>(testMasters,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<TestMaster> updateTestMaster(@PathVariable("id") int id,@Valid @RequestBody TestMasterDto testMasterDto){
+	public ResponseEntity<TestMaster> updateTestMaster(@PathVariable("id") Integer id,@Valid @RequestBody TestMasterDto testMasterDto){
 		TestMaster testMaster=service.getTestMasterById(id);
 		Doctor doctor=doctorService.getDoctorById(testMasterDto.getDoctorId());
 		
-		testMaster.setTest_name(testMasterDto.getTest_name());
-		testMaster.setNormal_range(testMasterDto.getNormal_range());
+		testMaster.setTestName(testMasterDto.getTestName());
+		testMaster.setNormalRange(testMasterDto.getNormalRange());
 		testMaster.setUnit(testMasterDto.getUnit());
 		testMaster.setDoctor(doctor);
 		
@@ -78,7 +78,7 @@ public class TestMasterController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteTestMasterById(@PathVariable("id") int id){
+	public ResponseEntity<Void> deleteTestMasterById(@PathVariable("id") Integer id){
 		service.deleteTestMasterById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
