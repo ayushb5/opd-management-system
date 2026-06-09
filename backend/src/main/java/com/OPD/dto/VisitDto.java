@@ -1,19 +1,18 @@
 package com.OPD.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class VisitsDto {
+public class VisitDto {
 	@NotNull(message="Doctor id is required")
 	private Integer doctorId;
 	@NotNull(message="Patient id is required")
 	private Integer patientId;
 	
 	@NotNull(message="Visit date is required")
-	private LocalDate visit_date;
+	private LocalDate visitDate;
 	
 	@NotBlank(message="Complaint is required")
 	private String complaints;
@@ -26,32 +25,23 @@ public class VisitsDto {
 	
 	private String bp;
 	
-	private String pulse;
+	private Integer pulse;
+	private Integer saturation;
+	private Double temperature;
+	private Integer respirationRate;
 	
-	private String saturation;
+	private Double fastingSugar;
+	private Double ppSugar;
+	private Double randomSugar;
 	
-	private String temperature;
+	private String ureaCreatinine;
 	
-	private String respiration_rate;
+	private String pastHistory;
+	private String currentMedication;
+	private String additionalNotes;
 	
-	private String sugar;
-	
-	private String fasting_sugar;
-	
-	private String pp_sugar;
-	
-	private String random_sugar;
-	
-	private String urea_creatinine;
-	
-	private String past_history;
-	
-	private String current_medication;
-	
-	private String additional_notes;
-	
-	@NotNull(message="Weight is required")
-	private Integer weight;
+	@NotNull(message = "Weight is required")
+	private Double weight;
 	
 	private String edema;
 	
@@ -67,192 +57,247 @@ public class VisitsDto {
 	
 	private String cns;
 	
-	private String hb;
+	private Double hb;
 	
 	private String ecg;
 	
 	@NotNull(message="Follow up date is required")
-	private LocalDate followup_date;
-	
+	private LocalDate followupDate;
+
 	public Integer getDoctorId() {
 		return doctorId;
 	}
+
 	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
+
 	public Integer getPatientId() {
 		return patientId;
 	}
+
 	public void setPatientId(Integer patientId) {
 		this.patientId = patientId;
 	}
-	public LocalDate getVisit_date() {
-		return visit_date;
+
+	public LocalDate getVisitDate() {
+		return visitDate;
 	}
-	public void setVisit_date(LocalDate visit_date) {
-		this.visit_date = visit_date;
+
+	public void setVisitDate(LocalDate visitDate) {
+		this.visitDate = visitDate;
 	}
+
 	public String getComplaints() {
 		return complaints;
 	}
+
 	public void setComplaints(String complaints) {
 		this.complaints = complaints;
 	}
+
 	public String getDiagnosis() {
 		return diagnosis;
 	}
+
 	public void setDiagnosis(String diagnosis) {
 		this.diagnosis = diagnosis;
 	}
+
 	public String getAdvice() {
 		return advice;
 	}
+
 	public void setAdvice(String advice) {
 		this.advice = advice;
 	}
+
 	public String getBp() {
 		return bp;
 	}
+
 	public void setBp(String bp) {
 		this.bp = bp;
 	}
-	public String getPulse() {
+
+	public Integer getPulse() {
 		return pulse;
 	}
-	public void setPulse(String pulse) {
+
+	public void setPulse(Integer pulse) {
 		this.pulse = pulse;
 	}
-	public String getSaturation() {
+
+	public Integer getSaturation() {
 		return saturation;
 	}
-	public void setSaturation(String saturation) {
+
+	public void setSaturation(Integer saturation) {
 		this.saturation = saturation;
 	}
-	public String getTemperature() {
+
+	public Double getTemperature() {
 		return temperature;
 	}
-	public void setTemperature(String temperature) {
+
+	public void setTemperature(Double temperature) {
 		this.temperature = temperature;
 	}
-	public String getRespiration_rate() {
-		return respiration_rate;
+
+	public Integer getRespirationRate() {
+		return respirationRate;
 	}
-	public void setRespiration_rate(String respiration_rate) {
-		this.respiration_rate = respiration_rate;
+
+	public void setRespirationRate(Integer respirationRate) {
+		this.respirationRate = respirationRate;
 	}
-	public String getSugar() {
-		return sugar;
+
+	public Double getFastingSugar() {
+		return fastingSugar;
 	}
-	public void setSugar(String sugar) {
-		this.sugar = sugar;
+
+	public void setFastingSugar(Double fastingSugar) {
+		this.fastingSugar = fastingSugar;
 	}
-	public String getFasting_sugar() {
-		return fasting_sugar;
+
+	public Double getPpSugar() {
+		return ppSugar;
 	}
-	public void setFasting_sugar(String fasting_sugar) {
-		this.fasting_sugar = fasting_sugar;
+
+	public void setPpSugar(Double ppSugar) {
+		this.ppSugar = ppSugar;
 	}
-	public String getPp_sugar() {
-		return pp_sugar;
+
+	public Double getRandomSugar() {
+		return randomSugar;
 	}
-	public void setPp_sugar(String pp_sugar) {
-		this.pp_sugar = pp_sugar;
+
+	public void setRandomSugar(Double randomSugar) {
+		this.randomSugar = randomSugar;
 	}
-	public String getRandom_sugar() {
-		return random_sugar;
+
+	public String getUreaCreatinine() {
+		return ureaCreatinine;
 	}
-	public void setRandom_sugar(String random_sugar) {
-		this.random_sugar = random_sugar;
+
+	public void setUreaCreatinine(String ureaCreatinine) {
+		this.ureaCreatinine = ureaCreatinine;
 	}
-	public String getUrea_creatinine() {
-		return urea_creatinine;
+
+	public String getPastHistory() {
+		return pastHistory;
 	}
-	public void setUrea_creatinine(String urea_creatinine) {
-		this.urea_creatinine = urea_creatinine;
+
+	public void setPastHistory(String pastHistory) {
+		this.pastHistory = pastHistory;
 	}
-	public String getPast_history() {
-		return past_history;
+
+	public String getCurrentMedication() {
+		return currentMedication;
 	}
-	public void setPast_history(String past_history) {
-		this.past_history = past_history;
+
+	public void setCurrentMedication(String currentMedication) {
+		this.currentMedication = currentMedication;
 	}
-	public String getCurrent_medication() {
-		return current_medication;
+
+	public String getAdditionalNotes() {
+		return additionalNotes;
 	}
-	public void setCurrent_medication(String current_medication) {
-		this.current_medication = current_medication;
+
+	public void setAdditionalNotes(String additionalNotes) {
+		this.additionalNotes = additionalNotes;
 	}
-	public String getAdditional_notes() {
-		return additional_notes;
-	}
-	public void setAdditional_notes(String additional_notes) {
-		this.additional_notes = additional_notes;
-	}
-	public Integer getWeight() {
+
+	public Double getWeight() {
 		return weight;
 	}
-	public void setWeight(Integer weight) {
+
+	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
+
 	public String getEdema() {
 		return edema;
 	}
+
 	public void setEdema(String edema) {
 		this.edema = edema;
 	}
+
 	public String getPallor() {
 		return pallor;
 	}
+
 	public void setPallor(String pallor) {
 		this.pallor = pallor;
 	}
+
 	public String getJaundice() {
 		return jaundice;
 	}
+
 	public void setJaundice(String jaundice) {
 		this.jaundice = jaundice;
 	}
+
 	public String getCvs() {
 		return cvs;
 	}
+
 	public void setCvs(String cvs) {
 		this.cvs = cvs;
 	}
+
 	public String getRs() {
 		return rs;
 	}
+
 	public void setRs(String rs) {
 		this.rs = rs;
 	}
+
 	public String getPa() {
 		return pa;
 	}
+
 	public void setPa(String pa) {
 		this.pa = pa;
 	}
+
 	public String getCns() {
 		return cns;
 	}
+
 	public void setCns(String cns) {
 		this.cns = cns;
 	}
-	public String getHb() {
+
+	public Double getHb() {
 		return hb;
 	}
-	public void setHb(String hb) {
+
+	public void setHb(Double hb) {
 		this.hb = hb;
 	}
+
 	public String getEcg() {
 		return ecg;
 	}
+
 	public void setEcg(String ecg) {
 		this.ecg = ecg;
 	}
-	public LocalDate getFollowup_date() {
-		return followup_date;
+
+	public LocalDate getFollowupDate() {
+		return followupDate;
 	}
-	public void setFollowup_date(LocalDate followup_date) {
-		this.followup_date = followup_date;
+
+	public void setFollowupDate(LocalDate followupDate) {
+		this.followupDate = followupDate;
 	}
-	
+
+	public VisitDto() {
+		
+	}
+
 }

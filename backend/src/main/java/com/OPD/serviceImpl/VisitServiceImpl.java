@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.OPD.entities.Visits;
+import com.OPD.entities.Visit;
 import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.VisitRepository;
 import com.OPD.services.VisitService;
@@ -17,34 +17,34 @@ public class VisitServiceImpl implements VisitService {
 	private VisitRepository repository;
 	
 	@Override
-	public Visits save(Visits visit) {
+	public Visit save(Visit visit) {
 		return repository.save(visit);
 	}
 
 	@Override
-	public List<Visits> getAllVisits() {
+	public List<Visit> getAllVisits() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Visits getVisitsById(int id) {
+	public Visit getVisitById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit not found with id: "+id));
 	}
 
 	@Override
-	public void deleteVisitsById(int id) {
+	public void deleteVisitById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit not found with id: "+id));
 		repository.deleteById(id);
 	}
 
 	@Override
-	public List<Visits> getVisitsByDoctorId(int doctorId) {
-		return repository.findByDoctorId(doctorId);
+	public List<Visit> getVisitsByDoctorId(Integer doctorId) {
+		return repository.findByDoctor_Id(doctorId);
 	}
 
 	@Override
-	public List<Visits> getVisitsByPatientId(int patientId) {
-		return repository.findByPatientId(patientId);
+	public List<Visit> getVisitsByPatientId(Integer patientId) {
+		return repository.findByPatient_Id(patientId);
 	}
 
 }

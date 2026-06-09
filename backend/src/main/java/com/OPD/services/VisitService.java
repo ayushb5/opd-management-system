@@ -2,13 +2,13 @@ package com.OPD.services;
 
 import java.util.List;
 
-import com.OPD.entities.Visits;
+import com.OPD.entities.Visit;
 
 public interface VisitService {
-	Visits save(Visits visit);
-	List<Visits> getAllVisits();
-	Visits getVisitsById(int id);
-	void deleteVisitsById(int id);
-	List<Visits> getVisitsByDoctorId(int doctorId);
-    List<Visits> getVisitsByPatientId(int patientId);
+	Visit save(Visit visit);
+	List<Visit> getAllVisits();
+	Visit getVisitById(Integer id);
+	void deleteVisitById(Integer id);
+	List<Visit> getVisitsByDoctorId(Integer doctorId);
+    List<Visit> getVisitsByPatientId(Integer patientId);
 }
