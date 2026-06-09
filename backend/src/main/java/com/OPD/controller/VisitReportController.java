@@ -1,6 +1,5 @@
 package com.OPD.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.VisitReportDto;
 import com.OPD.entities.VisitReport;
-import com.OPD.entities.Visits;
+import com.OPD.entities.Visit;
 import com.OPD.services.VisitReportService;
 import com.OPD.services.VisitService;
 
@@ -36,11 +35,10 @@ public class VisitReportController {
 	@PostMapping
 	public ResponseEntity<VisitReport> saveVisitReport(@Valid @RequestBody VisitReportDto visitReportDto){
 		VisitReport visitReport=new VisitReport();
-		Visits visit=visitService.getVisitsById(visitReportDto.getVisitId());
-		visitReport.setFile_name(visitReportDto.getFile_name());
-		visitReport.setFile_type(visitReportDto.getFile_type());
-		visitReport.setFile_url(visitReportDto.getFile_url());
-		visitReport.setCreated_at(LocalDateTime.now());
+		Visit visit=visitService.getVisitById(visitReportDto.getVisitId());
+		visitReport.setFileName(visitReportDto.getFileName());
+		visitReport.setFileType(visitReportDto.getFileType());
+		visitReport.setFileUrl(visitReportDto.getFileUrl());
 		visitReport.setVisit(visit);
 		
 		VisitReport savedVisitReport=service.save(visitReport);
@@ -54,27 +52,24 @@ public class VisitReportController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<VisitReport> getVisitReportById(@PathVariable("id") int id){
+	public ResponseEntity<VisitReport> getVisitReportById(@PathVariable("id") Integer id){
 		VisitReport visitReport=service.getVisitReportById(id);
-		if(visitReport==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(visitReport,HttpStatus.OK);
 	}
 	
 	@GetMapping("/visit/{visitId}")
-	public ResponseEntity<List<VisitReport>> getVisitReportByVisitId(@PathVariable("visitId") int visitId){
-		List<VisitReport> visitReports=service.getVisitReportByVisitId(visitId);
+	public ResponseEntity<List<VisitReport>> getVisitReportByVisitId(@PathVariable("visitId") Integer visitId){
+		List<VisitReport> visitReports=service.getVisitReportsByVisitId(visitId);
 		return new ResponseEntity<>(visitReports,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<VisitReport> updateVisitReportById(@PathVariable("id") int id,@Valid @RequestBody VisitReportDto visitReportDto){
+	public ResponseEntity<VisitReport> updateVisitReportById(@PathVariable("id") Integer id,@Valid @RequestBody VisitReportDto visitReportDto){
 		VisitReport visitReport = service.getVisitReportById(id);
-		Visits visit=visitService.getVisitsById(visitReportDto.getVisitId());
-		visitReport.setFile_name(visitReportDto.getFile_name());
-		visitReport.setFile_type(visitReportDto.getFile_type());
-		visitReport.setFile_url(visitReportDto.getFile_url());
+		Visit visit=visitService.getVisitById(visitReportDto.getVisitId());
+		visitReport.setFileName(visitReportDto.getFileName());
+		visitReport.setFileType(visitReportDto.getFileType());
+		visitReport.setFileUrl(visitReportDto.getFileUrl());
 		visitReport.setVisit(visit);
 		
 		VisitReport updatedVisitReport=service.save(visitReport);
@@ -82,7 +77,7 @@ public class VisitReportController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteVisitReportById(@PathVariable("id") int id){
+	public ResponseEntity<Void> deleteVisitReportById(@PathVariable("id") Integer id){
 		service.deleteVisitReportById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

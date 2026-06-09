@@ -7,14 +7,14 @@ public class VisitReportDto {
 	@NotNull(message="Visit id is required")
 	private Integer visitId;
 	
-	@NotBlank(message="File name is required")
-	private String file_name;
-	
-	@NotBlank(message="File URL is required")
-	private String file_url;
-	
-	@NotBlank(message="File type is required")
-	private String file_type;
+	@NotBlank(message = "File name is required")
+	private String fileName;
+
+	@NotBlank(message = "File URL is required")
+	private String fileUrl;
+
+	@NotBlank(message = "File type is required")
+	private String fileType;
 	
 	public Integer getVisitId() {
 		return visitId;
@@ -22,24 +22,28 @@ public class VisitReportDto {
 	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
 	}
-	public String getFile_name() {
-		return file_name;
+	public String getFileName() {
+	    return fileName;
 	}
-	public void setFile_name(String file_name) {
-		this.file_name = file_name;
+
+	public void setFileName(String fileName) {
+	    this.fileName = fileName;
 	}
-	public String getFile_url() {
-		return file_url;
+
+	public String getFileUrl() {
+	    return fileUrl;
 	}
-	public void setFile_url(String file_url) {
-		this.file_url = file_url;
+
+	public void setFileUrl(String fileUrl) {
+	    this.fileUrl = fileUrl;
 	}
-	public String getFile_type() {
-		return file_type;
+
+	public String getFileType() {
+	    return fileType;
 	}
-	public void setFile_type(String file_type) {
-		this.file_type = file_type;
+
+	public void setFileType(String fileType) {
+	    this.fileType = fileType;
 	}
-	
 	
 }

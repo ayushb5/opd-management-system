@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import com.OPD.entities.VisitReport;
 @Repository
 public interface VisitReportRepository extends JpaRepository<VisitReport, Integer> {
-	List<VisitReport> findByVisitId(int visitId);
+	List<VisitReport> findByVisit_Id(Integer visitId);
 }	

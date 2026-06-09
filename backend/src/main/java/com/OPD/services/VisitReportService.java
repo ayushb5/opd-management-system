@@ -7,7 +7,7 @@ import com.OPD.entities.VisitReport;
 public interface VisitReportService {
 	VisitReport save(VisitReport visitReport);
 	List<VisitReport> getAllVisitReports();
-	VisitReport getVisitReportById(int id);
-	List<VisitReport> getVisitReportByVisitId(int visitId);
-	void deleteVisitReportById(int id);
+	VisitReport getVisitReportById(Integer id);
+	List<VisitReport> getVisitReportsByVisitId(Integer visitId);
+	void deleteVisitReportById(Integer id);
 }

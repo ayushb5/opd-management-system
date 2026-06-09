@@ -26,17 +26,17 @@ public class VisitReportServiceImpl implements VisitReportService {
 	}
 
 	@Override
-	public VisitReport getVisitReportById(int id) {
+	public VisitReport getVisitReportById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit Report not found with id: "+id));
 	}
 
 	@Override
-	public List<VisitReport> getVisitReportByVisitId(int visitId) {
-		return repository.findByVisitId(visitId);
+	public List<VisitReport> getVisitReportsByVisitId(Integer visitId) {
+		return repository.findByVisit_Id(visitId);
 	}
 
 	@Override
-	public void deleteVisitReportById(int id) {
+	public void deleteVisitReportById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit Report not found with id: "+id));
 		repository.deleteById(id);
 	}
