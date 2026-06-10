@@ -11,9 +11,9 @@ function AddDoctor() {
         email: "",
         password: "",
         specialization: "",
-        clinic_name: "",
+        clinicName: "",
         address: "",
-        mobileno: "",
+        mobileNo: "",
     }
 
     const handleSubmit = async (values, { setSubmitting }) => {
@@ -26,6 +26,7 @@ function AddDoctor() {
                 error.response?.data?.message || "Failed to add doctor"
             );
             console.error(error);
+            console.log(error.response.data);
         } finally {
             setSubmitting(false);
         }

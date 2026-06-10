@@ -10,7 +10,7 @@ function AddReceptionist() {
         name: "",
         email: "",
         password: "",
-        mobileno: "",
+        mobileNo: "",
         doctorId: ""
     }
 

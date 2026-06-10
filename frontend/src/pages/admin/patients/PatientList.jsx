@@ -49,8 +49,8 @@ function PatientList() {
 
     const filteredPatients = patients.filter(
         (patient) =>
-            patient.name?.toLowerCase().includes(search.toLowerCase()) ||
-            patient.mobileno?.includes(search)
+            patient.patientName?.toLowerCase().includes(search.toLowerCase()) ||
+            patient.mobileNo?.includes(search)
     );
 
     return (
@@ -75,7 +75,7 @@ function PatientList() {
 
                 <NavLink
                     to="add-patient"
-                    className="btn btn-primary text-nowrap"
+                    className="btn btn-primary add-btn text-nowrap"
                 >
                     Add Patient
                 </NavLink>
@@ -104,14 +104,14 @@ function PatientList() {
                                 <tr key={patient.id}>
 
                                     <td>{patient.id}</td>
-                                    <td className="text-nowrap">{patient.patient_name}</td>
+                                    <td className="text-nowrap">{patient.patientName}</td>
                                     <td>{patient.age}</td>
                                     <td>{patient.gender}</td>
-                                    <td>{patient.mobileno}</td>
+                                    <td>{patient.mobileNo}</td>
                                     <td className="text-nowrap">
                                         {patient.doctor?.name}
                                     </td>
-                                    <td>{patient.blood_group}</td>
+                                    <td>{patient.bloodGroup}</td>
 
                                     <td className="text-nowrap">
 
@@ -159,8 +159,8 @@ function PatientList() {
 
             <ConfirmationModal
                 show={showModal}
-                title="Delete Receptionist"
-                message="Are you sure you want to delete this receptionist?"
+                title="Delete Patient"
+                message="Are you sure you want to delete this Patient?"
                 onConfirm={handleDelete}
                 onClose={() => setShowModal(false)}
             />

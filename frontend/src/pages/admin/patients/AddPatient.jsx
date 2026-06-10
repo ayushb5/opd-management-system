@@ -8,12 +8,12 @@ function AddPatient() {
     const navigate = useNavigate();
     const initialValues = {
         doctorId: "",
-        patient_name: "",
+        patientName: "",
         age: "",
         gender: "",
-        mobileno: "",
+        mobileNo: "",
         address: "",
-        blood_group: "",
+        bloodGroup: "",
         height: "",
         smoking: "",
         alcohol: "",

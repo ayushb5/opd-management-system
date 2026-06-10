@@ -16,6 +16,8 @@ import PatientList from "./pages/admin/patients/PatientList";
 import AddPatient from "./pages/admin/patients/AddPatient"
 import EditPatient from "./pages/admin/patients/EditPatient";
 import VisitList from "./pages/admin/visits/VisitList";
+import AddVisit from "./pages/admin/visits/AddVisit";
+import EditVisit from "./pages/admin/visits/EditVisit";
 
 function App() {
   return (
@@ -110,7 +112,24 @@ function App() {
         </Route>
 
         <Route path="/admin/visits">
-          <Route index element={<VisitList />} />
+          <Route index element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <VisitList />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="add-visit" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <AddVisit />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="edit-visit/:id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <EditVisit />
+            </ProtectedRoute>
+          }
+          />
         </Route>
 
         <Route

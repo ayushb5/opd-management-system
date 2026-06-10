@@ -68,12 +68,12 @@ function ReceptionistForm({ initialValues, onSubmit, isEdit = false }) {
                     </div>
                 )}
                 <div className="col-lg-6">
-                    <label htmlFor="mobileno" className="form-label">
+                    <label htmlFor="mobileNo" className="form-label">
                         Mobile Number <span className="text-danger">*</span>
                     </label>
-                    <input type="tel" id="mobileno" name="mobileno" value={formik.values.mobileno} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
-                    {formik.touched.mobileno && formik.errors.mobileno && (
-                        <div className="text-danger">{formik.errors.mobileno}</div>
+                    <input type="tel" id="mobileNo" name="mobileNo" value={formik.values.mobileNo} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
+                    {formik.touched.mobileNo && formik.errors.mobileNo && (
+                        <div className="text-danger">{formik.errors.mobileNo}</div>
                     )}
                 </div>
             </div>

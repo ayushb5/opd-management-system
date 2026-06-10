@@ -4,7 +4,7 @@ export const receptionistValidationSchema = (isEdit) =>
   Yup.object({
     name: Yup.string().required("Doctor name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    mobileno: Yup.string()
+    mobileNo: Yup.string()
       .matches(/^[0-9]{10}$/, "Enter valid mobile number")
       .required("Mobile is required"),
     doctorId: Yup.string().required("Doctor is required"),

@@ -38,6 +38,7 @@ function DoctorList() {
             setShowModal(false);
         } catch (error) {
             toast.error("Failed to delete doctor");
+            console.error(error);
         }
     }
 
@@ -68,7 +69,7 @@ function DoctorList() {
 
                 <NavLink
                     to="add-doctor"
-                    className="btn btn-primary add-doctor-btn text-nowrap"
+                    className="btn btn-primary add-btn text-nowrap"
                 >
                     Add Doctor
                 </NavLink>
@@ -94,7 +95,7 @@ function DoctorList() {
                                     <td>{doctor.id}</td>
                                     <td className="text-nowrap">{doctor.name}</td>
                                     <td>{doctor.specialization}</td>
-                                    <td>{doctor.mobileno}</td>
+                                    <td>{doctor.mobileNo}</td>
                                     <td>{doctor.email}</td>
                                     <td className="text-nowrap">
                                         <button className="btn btn-warning btn-sm me-2"

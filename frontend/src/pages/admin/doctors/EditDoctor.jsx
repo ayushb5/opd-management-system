@@ -14,9 +14,9 @@ function EditDoctor() {
         name: "",
         email: "",
         specialization: "",
-        clinic_name: "",
+        clinicName: "",
         address: "",
-        mobileno: "",
+        mobileNo: "",
         status: "TRIAL"
     });
 
@@ -31,8 +31,8 @@ function EditDoctor() {
                 name: doctor.name || "",
                 email: doctor.email || "",
                 specialization: doctor.specialization || "",
-                clinic_name: doctor.clinic_name || "",
-                mobileno: doctor.mobileno || "",
+                clinicName: doctor.clinicName || "",
+                mobileNo: doctor.mobileNo || "",
                 status: doctor.status || "TRIAL",
                 address: doctor.address || ""
             })

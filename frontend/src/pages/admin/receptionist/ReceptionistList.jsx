@@ -47,6 +47,7 @@ function ReceptionistList() {
         } catch (error) {
             toast.error("Failed to delete receptionist");
             console.error(error);
+            console.log(error.response.data);
         }
     };
 
@@ -79,7 +80,7 @@ function ReceptionistList() {
 
                 <NavLink
                     to="add-receptionist"
-                    className="btn btn-primary text-nowrap"
+                    className="btn btn-primary add-btn text-nowrap"
                 >
                     Add Receptionist
                 </NavLink>
@@ -110,7 +111,7 @@ function ReceptionistList() {
                                     <td>{receptionist.id}</td>
                                     <td className="text-nowrap">{receptionist.name}</td>
                                     <td>{receptionist.email}</td>
-                                    <td>{receptionist.mobileno}</td>
+                                    <td>{receptionist.mobileNo}</td>
 
                                     <td className="text-nowrap">
                                         {receptionist.doctor?.name}

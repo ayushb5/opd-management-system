@@ -13,7 +13,7 @@ function EditReceptionist() {
     const [initialValues, setInitialValues] = useState({
         name: "",
         email: "",
-        mobileno: "",
+        mobileNo: "",
         status: "ACTIVE",
         doctorId: ""
     });
@@ -28,7 +28,7 @@ function EditReceptionist() {
             setInitialValues({
                 name: receptionist.name || "",
                 email: receptionist.email || "",
-                mobileno: receptionist.mobileno || "",
+                mobileNo: receptionist.mobileNo || "",
                 status: receptionist.status || "ACTIVE",
                 doctorId: receptionist.doctor?.id || ""
             })

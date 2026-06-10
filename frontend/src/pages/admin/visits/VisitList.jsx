@@ -3,7 +3,7 @@ import { Search, Pencil, Trash } from "react-bootstrap-icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../../components/ConfirmationModal";
 import { toast } from "react-toastify";
-import { deletePatient, getPatients } from "../../../services/patientService";
+import { deleteVisit, getVisits } from "../../../services/visitService";
 
 function VisitList() {
 
@@ -20,37 +20,42 @@ function VisitList() {
 
     const fetchVisits = async () => {
         try {
-            const data = await getPatients();
+            const data = await getVisits();
             setVisits(data);
         } catch (error) {
             console.error(error);
-            toast.error("Failed to load patients");
+            toast.error("Failed to load visits");
         }
     };
 
     const handleDelete = async () => {
         try {
-            await deletePatient(selectedPatientId);
+            await deleteVisit(selectedVisitId);
 
-            toast.success("Receptionist deleted successfully");
+            toast.success("Visit deleted successfully");
 
-            setPatients(
-                patients.filter(
-                    receptionist => receptionist.id !== selectedPatientId
+            setVisits(
+                visits.filter(
+                    visit => visit.id !== selectedVisitId
                 )
             );
 
             setShowModal(false);
         } catch (error) {
-            toast.error("Failed to delete patient");
+            toast.error("Failed to delete visit");
             console.error(error);
         }
     };
 
-    const filteredPatients = patients.filter(
-        (patient) =>
-            patient.name?.toLowerCase().includes(search.toLowerCase()) ||
-            patient.mobileno?.includes(search)
+    const filteredVisits = visits.filter(
+        (visit) =>
+            visit.patient?.patientName
+                ?.toLowerCase()
+                .includes(search.toLowerCase()) ||
+
+            visit.doctor?.name
+                ?.toLowerCase()
+                .includes(search.toLowerCase())
     );
 
     return (
@@ -66,7 +71,7 @@ function VisitList() {
                         <input
                             type="text"
                             className="form-control border-black"
-                            placeholder="Search receptionist..."
+                            placeholder="Search patient or doctor..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
@@ -74,10 +79,10 @@ function VisitList() {
                 </div>
 
                 <NavLink
-                    to="add-patient"
-                    className="btn btn-primary text-nowrap"
+                    to="add-visit"
+                    className="btn btn-primary add-btn text-nowrap"
                 >
-                    Add Patient
+                    Add Visit
                 </NavLink>
 
             </div>
@@ -88,38 +93,50 @@ function VisitList() {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Age</th>
-                            <th>Gender</th>
-                            <th className="text-nowrap">Mobile Number</th>
+                            <th>Date</th>
+                            <th>Patient</th>
                             <th>Doctor</th>
-                            <th className="text-nowrap">Blood Group</th>
+                            <th>Complaints</th>
+                            <th>Diagnosis</th>
+                            <th className="text-nowrap">Follow Up</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {filteredPatients.length > 0 ? (
-                            filteredPatients.map((patient) => (
-                                <tr key={patient.id}>
+                        {filteredVisits.length > 0 ? (
+                            filteredVisits.map((visit) => (
+                                <tr key={visit.id}>
+                                    <td>{visit.id}</td>
 
-                                    <td>{patient.id}</td>
-                                    <td className="text-nowrap">{patient.patient_name}</td>
-                                    <td>{patient.age}</td>
-                                    <td>{patient.gender}</td>
-                                    <td>{patient.mobileno}</td>
+                                    <td className="text-nowrap">{visit.visitDate}</td>
+
                                     <td className="text-nowrap">
-                                        {patient.doctor?.name}
+                                        {visit.patient?.patientName}
                                     </td>
-                                    <td>{patient.blood_group}</td>
 
                                     <td className="text-nowrap">
+                                        {visit.doctor?.name}
+                                    </td>
 
+                                    <td>
+                                        {visit.complaints}
+                                    </td>
+
+                                    <td>
+                                        {visit.diagnosis || "-"}
+                                    </td>
+
+                                    <td className="text-nowrap">
+                                        {visit.followupDate || "-"}
+                                    </td>
+
+                                    <td className="text-nowrap">
                                         <button
                                             className="btn btn-warning btn-sm me-2"
                                             onClick={() =>
                                                 navigate(
-                                                    `edit-patient/${patient.id}`
+                                                    `edit-visit/${visit.id}`
                                                 )
                                             }
                                         >
@@ -129,25 +146,22 @@ function VisitList() {
                                         <button
                                             className="btn btn-danger btn-sm"
                                             onClick={() => {
-                                                setSelectedPatientId(
-                                                    patient.id
-                                                );
+                                                setSelectedVisitId(visit.id);
                                                 setShowModal(true);
                                             }}
                                         >
                                             <Trash />
                                         </button>
                                     </td>
-
                                 </tr>
                             ))
                         ) : (
                             <tr>
                                 <td
-                                    colSpan={7}
+                                    colSpan={8}
                                     className="text-center"
                                 >
-                                    No receptionists found
+                                    No visits found
                                 </td>
                             </tr>
                         )}
@@ -159,8 +173,8 @@ function VisitList() {
 
             <ConfirmationModal
                 show={showModal}
-                title="Delete Receptionist"
-                message="Are you sure you want to delete this receptionist?"
+                title="Delete Visit"
+                message="Are you sure you want to delete this visit?"
                 onConfirm={handleDelete}
                 onClose={() => setShowModal(false)}
             />

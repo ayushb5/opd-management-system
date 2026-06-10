@@ -42,12 +42,12 @@ function DoctorForm({ initialValues, onSubmit, isEdit = false }) {
                     )}
                 </div>
                 <div className="col-lg-6">
-                    <label htmlFor="clinic_name" className="form-label">
+                    <label htmlFor="clinicName" className="form-label">
                         Clinic Name <span className="text-danger">*</span>
                     </label>
-                    <input type="text" id="clinic_name" name="clinic_name" value={formik.values.clinic_name} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
-                    {formik.touched.clinic_name && formik.errors.clinic_name && (
-                        <div className="text-danger">{formik.errors.clinic_name}</div>
+                    <input type="text" id="clinicName" name="clinicName" value={formik.values.clinicName} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
+                    {formik.touched.clinicName && formik.errors.clinicName && (
+                        <div className="text-danger">{formik.errors.clinicName}</div>
                     )}
                 </div>
             </div>
@@ -75,12 +75,12 @@ function DoctorForm({ initialValues, onSubmit, isEdit = false }) {
                     </div>
                 )}
                 <div className="col-lg-6">
-                    <label htmlFor="mobileno" className="form-label">
+                    <label htmlFor="mobileNo" className="form-label">
                         Mobile Number <span className="text-danger">*</span>
                     </label>
-                    <input type="tel" id="mobileno" name="mobileno" value={formik.values.mobileno} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
-                    {formik.touched.mobileno && formik.errors.mobileno && (
-                        <div className="text-danger">{formik.errors.mobileno}</div>
+                    <input type="tel" id="mobileNo" name="mobileNo" value={formik.values.mobileNo} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
+                    {formik.touched.mobileNo && formik.errors.mobileNo && (
+                        <div className="text-danger">{formik.errors.mobileNo}</div>
                     )}
                 </div>
             </div>

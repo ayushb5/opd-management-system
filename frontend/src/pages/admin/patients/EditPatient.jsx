@@ -13,12 +13,12 @@ function EditPatient() {
 
     const [initialValues, setInitialValues] = useState({
         doctorId: "",
-        patient_name: "",
+        patientName: "",
         age: "",
         gender: "",
-        mobileno: "",
+        mobileNo: "",
         address: "",
-        blood_group: "",
+        bloodGroup: "",
         height: "",
         smoking: "",
         alcohol: "",
@@ -34,12 +34,12 @@ function EditPatient() {
             const patient = await getPatientById(id);
             setInitialValues({
                 doctorId: patient.doctor?.id || "",
-                patient_name: patient.patient_name || "",
+                patientName: patient.patientName || "",
                 age: patient.age || "",
                 gender: patient.gender || "",
-                mobileno: patient.mobileno || "",
+                mobileNo: patient.mobileNo || "",
                 address: patient.address || "",
-                blood_group: patient.blood_group || "",
+                bloodGroup: patient.bloodGroup || "",
                 height: patient.height || "",
                 smoking: patient.smoking || "",
                 alcohol: patient.alcohol || "",

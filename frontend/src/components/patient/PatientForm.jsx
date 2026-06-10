@@ -30,7 +30,7 @@ function PatientForm({ initialValues, onSubmit, isEdit = false }) {
             <div className="row g-3">
                 <div className="col-lg-6">
                     <label htmlFor="doctorId" className="form-label">
-                        Select Doctor <span className="text-danger">*</span>
+                        Doctor <span className="text-danger">*</span>
                     </label>
                     <select name="doctorId" id="doctorId" value={formik.values.doctorId} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-select border-black">
                         <option value="">Select Doctor</option>
@@ -45,12 +45,12 @@ function PatientForm({ initialValues, onSubmit, isEdit = false }) {
                     )}
                 </div>
                 <div className="col-lg-6">
-                    <label htmlFor="name" className="form-label">
+                    <label htmlFor="patientName" className="form-label">
                         Patient Name <span className="text-danger">*</span>
                     </label>
-                    <input type="text" id="patient_name" name="patient_name" value={formik.values.patient_name} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
-                    {formik.touched.patient_name && formik.errors.patient_name && (
-                        <div className="text-danger">{formik.errors.patient_name}</div>
+                    <input type="text" id="patientName" name="patientName" value={formik.values.patientName} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
+                    {formik.touched.patientName && formik.errors.patientName && (
+                        <div className="text-danger">{formik.errors.patientName}</div>
                     )}
                 </div>
             </div>
@@ -83,12 +83,12 @@ function PatientForm({ initialValues, onSubmit, isEdit = false }) {
 
             <div className="row g-3 mt-1">
                 <div className="col-lg-6">
-                    <label htmlFor="mobileno" className="form-label">
+                    <label htmlFor="mobileNo" className="form-label">
                         Mobile Number <span className="text-danger">*</span>
                     </label>
-                    <input type="tel" id="mobileno" name="mobileno" value={formik.values.mobileno} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
-                    {formik.touched.mobileno && formik.errors.mobileno && (
-                        <div className="text-danger">{formik.errors.mobileno}</div>
+                    <input type="tel" id="mobileNo" name="mobileNo" value={formik.values.mobileNo} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-control border-black" />
+                    {formik.touched.mobileNo && formik.errors.mobileNo && (
+                        <div className="text-danger">{formik.errors.mobileNo}</div>
                     )}
                 </div>
             </div>
@@ -105,10 +105,10 @@ function PatientForm({ initialValues, onSubmit, isEdit = false }) {
 
             <div className="row g-3 mt-1">
                 <div className="col-lg-6">
-                    <label htmlFor="blood_group" className="form-label">
+                    <label htmlFor="bloodGroup" className="form-label">
                         Blood Group <span className="text-danger">*</span>
                     </label>
-                    <select name="blood_group" id="blood_group" value={formik.values.blood_group} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-select border-black">
+                    <select name="bloodGroup" id="bloodGroup" value={formik.values.bloodGroup} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-select border-black">
                         <option value="">Select Blood Group</option>
                         <option value="A+">A+</option>
                         <option value="A-">A-</option>
@@ -119,8 +119,8 @@ function PatientForm({ initialValues, onSubmit, isEdit = false }) {
                         <option value="O+">O+</option>
                         <option value="O-">O-</option>
                     </select>
-                    {formik.touched.blood_group && formik.errors.blood_group && (
-                        <div className="text-danger">{formik.errors.blood_group}</div>
+                    {formik.touched.bloodGroup && formik.errors.bloodGroup && (
+                        <div className="text-danger">{formik.errors.bloodGroup}</div>
                     )}
                 </div>
                 <div className="col-lg-6">

@@ -1,8 +1,8 @@
 import { List } from "react-bootstrap-icons";
 
 function Navbar() {
-    const email = localStorage.getItem("email");
     const role = localStorage.getItem("role");
+    const name = localStorage.getItem("name");
     return (
         <div className="bg-white shadow-sm p-3 d-flex align-items-center">
 
@@ -24,7 +24,7 @@ function Navbar() {
                     </small>
 
                     <small className="fw-semibold">
-                        {email}
+                        {name}
                     </small>
                 </div>
             </div>
