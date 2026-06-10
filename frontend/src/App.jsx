@@ -15,6 +15,7 @@ import EditReceptionist from "./pages/admin/receptionist/EditReceptionist";
 import PatientList from "./pages/admin/patients/PatientList";
 import AddPatient from "./pages/admin/patients/AddPatient"
 import EditPatient from "./pages/admin/patients/EditPatient";
+import VisitList from "./pages/admin/visits/VisitList";
 
 function App() {
   return (
@@ -106,6 +107,10 @@ function App() {
             </ProtectedRoute>
           }
           />
+        </Route>
+
+        <Route path="/admin/visits">
+          <Route index element={<VisitList />} />
         </Route>
 
         <Route

@@ -19,10 +19,10 @@ function EditReceptionist() {
     });
 
     useEffect(() => {
-        fetchDoctor();
+        fetchReceptionist();
     }, []);
 
-    const fetchDoctor = async () => {
+    const fetchReceptionist = async () => {
         try {
             const receptionist = await getReceptionist(id);
             setInitialValues({

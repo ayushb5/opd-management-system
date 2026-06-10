@@ -5,23 +5,23 @@ import ConfirmationModal from "../../../components/ConfirmationModal";
 import { toast } from "react-toastify";
 import { deletePatient, getPatients } from "../../../services/patientService";
 
-function PatientList() {
+function VisitList() {
 
-    const [patients, setPatients] = useState([]);
+    const [visits, setVisits] = useState([]);
     const [search, setSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [selectedPatientId, setSelectedPatientId] = useState(null);
+    const [selectedVisitId, setSelectedVisitId] = useState(null);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchPatients();
+        fetchVisits();
     }, []);
 
-    const fetchPatients = async () => {
+    const fetchVisits = async () => {
         try {
             const data = await getPatients();
-            setPatients(data);
+            setVisits(data);
         } catch (error) {
             console.error(error);
             toast.error("Failed to load patients");
@@ -66,7 +66,7 @@ function PatientList() {
                         <input
                             type="text"
                             className="form-control border-black"
-                            placeholder="Search patient..."
+                            placeholder="Search receptionist..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
@@ -168,4 +168,4 @@ function PatientList() {
     );
 }
 
-export default PatientList;
+export default VisitList;

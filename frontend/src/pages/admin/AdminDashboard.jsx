@@ -14,7 +14,7 @@ function AdminDashboard() {
                     <DashboardCard title={"Total Patients"} count={120} icon={<Person />} />
                 </div>
                 <div className="col-12 col-sm-6 col-xl-3">
-                    <DashboardCard title={"Total Appointments"} count={18} icon={<CalendarCheck />} />
+                    <DashboardCard title={"Total Visits"} count={18} icon={<CalendarCheck />} />
                 </div>
             </div>
         </div>
