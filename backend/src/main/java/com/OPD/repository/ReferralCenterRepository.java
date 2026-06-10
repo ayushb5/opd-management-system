@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import com.OPD.entities.ReferralCenter;
 @Repository
 public interface ReferralCenterRepository extends JpaRepository<ReferralCenter, Integer> {
-	List<ReferralCenter> findByDoctorId(int doctorId);
+	List<ReferralCenter> findByDoctor_Id(Integer doctorId);
 }

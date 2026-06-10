@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Medicine;
 import com.OPD.exception.ResourceNotFoundException;
-import com.OPD.repository.MedicinesRepository;
+import com.OPD.repository.MedicineRepository;
 import com.OPD.services.MedicineService;
 
 @Service
 public class MedicineServiceImpl implements MedicineService {
 
 	@Autowired
-	private MedicinesRepository repository;
+	private MedicineRepository repository;
 	
 	@Override
 	public Medicine save(Medicine medicine) {
@@ -27,17 +27,17 @@ public class MedicineServiceImpl implements MedicineService {
 	}
 
 	@Override
-	public Medicine getMedicineById(int id) {
+	public Medicine getMedicineById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Medicine not found with id: "+id));
 	}
 
 	@Override
-	public List<Medicine> getMedicinesByDoctorId(int id) {
-		return repository.findByDoctorId(id);
+	public List<Medicine> getMedicinesByDoctorId(Integer id) {
+		return repository.findByDoctor_Id(id);
 	}
 
 	@Override
-	public void deleteMedicineById(int id) {
+	public void deleteMedicineById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Medicine not found with id: "+id));
 		repository.deleteById(id);
 	}

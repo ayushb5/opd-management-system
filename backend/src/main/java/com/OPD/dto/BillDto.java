@@ -1,9 +1,6 @@
 package com.OPD.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,13 +11,13 @@ public class BillDto {
 	
 	@NotNull(message="Consultation fee is required")
 	@DecimalMin(value="0.0",message="Consultation fee cannot be negative")
-	private BigDecimal consultation_fee;
+	private BigDecimal consultationFee;
 	
 	@NotBlank(message="Payment status is required")
-	private String payment_status;
+	private String paymentStatus;
 	
 	@NotBlank(message="Payment mode is required")
-	private String payment_mode;
+	private String paymentMode;
 	
 	@NotNull(message="Concession is required")
 	@DecimalMin(value="0.0", message="Concession cannot be negative")
@@ -28,62 +25,66 @@ public class BillDto {
 	
 	@NotNull(message="Paid amount is required")
 	@DecimalMin(value="0.0", message="Paid amount cannot be negative")
-	private BigDecimal paid_amount;
+	private BigDecimal paidAmount;
 	
 	@NotNull(message="Total amount is required")
 	@DecimalMin(value="0.0", message="Total amount cannot be negative")
-	private BigDecimal total_amount;
-	
-	@NotNull(message="Pending amount is required")
-	@DecimalMin(value="0.0", message="Pending amount cannot be negative")
-	private BigDecimal pending_amount;
-	
+	private BigDecimal totalAmount;
+
 	public Integer getVisitId() {
 		return visitId;
 	}
+
 	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
 	}
-	public BigDecimal getConsultation_fee() {
-		return consultation_fee;
+
+	public BigDecimal getConsultationFee() {
+		return consultationFee;
 	}
-	public void setConsultation_fee(BigDecimal consultation_fee) {
-		this.consultation_fee = consultation_fee;
+
+	public void setConsultationFee(BigDecimal consultationFee) {
+		this.consultationFee = consultationFee;
 	}
-	public String getPayment_status() {
-		return payment_status;
+
+	public String getPaymentStatus() {
+		return paymentStatus;
 	}
-	public void setPayment_status(String payment_status) {
-		this.payment_status = payment_status;
+
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}
-	public String getPayment_mode() {
-		return payment_mode;
+
+	public String getPaymentMode() {
+		return paymentMode;
 	}
-	public void setPayment_mode(String payment_mode) {
-		this.payment_mode = payment_mode;
+
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
 	}
+
 	public BigDecimal getConcession() {
 		return concession;
 	}
+
 	public void setConcession(BigDecimal concession) {
 		this.concession = concession;
 	}
-	public BigDecimal getPaid_amount() {
-		return paid_amount;
+
+	public BigDecimal getPaidAmount() {
+		return paidAmount;
 	}
-	public void setPaid_amount(BigDecimal paid_amount) {
-		this.paid_amount = paid_amount;
+
+	public void setPaidAmount(BigDecimal paidAmount) {
+		this.paidAmount = paidAmount;
 	}
-	public BigDecimal getTotal_amount() {
-		return total_amount;
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
 	}
-	public void setTotal_amount(BigDecimal total_amount) {
-		this.total_amount = total_amount;
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
 	}
-	public BigDecimal getPending_amount() {
-		return pending_amount;
-	}
-	public void setPending_amount(BigDecimal pending_amount) {
-		this.pending_amount = pending_amount;
-	}
+
 }

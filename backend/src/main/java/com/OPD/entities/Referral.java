@@ -2,122 +2,159 @@ package com.OPD.entities;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="referrals")
 public class Referral {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name="visitId")
-	private Visits visit;
+	@JoinColumn(name="visit_id", nullable=false)
+	private Visit visit;
 	
 	@ManyToOne
-	@JoinColumn(name="patientId")
+	@JoinColumn(name="patient_id", nullable=false)
 	private Patient patient;
 	
 	@ManyToOne
-	@JoinColumn(name="doctorId")
+	@JoinColumn(name="doctor_id", nullable=false)
 	private Doctor doctor;
 
 	@ManyToOne
-	@JoinColumn(name="referralCenteId")
+	@JoinColumn(name="referral_center_id", nullable=false)
 	private ReferralCenter referralCenter;
 	
-	public enum Note_type{
+	public enum NoteType{
 		PATHOLOGY,
 		PHARMACY,
 		HIGHER_CENTER,
 		DIAGNOSTIC
 	}
-	private Note_type note_type;
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private NoteType noteType;
+	
+	@Column(nullable = false)
 	private String reason;
+	
+	@Column(columnDefinition = "TEXT")
 	private String details;
-	private LocalDateTime created_at;
-	public int getId() {
+	
+	@Column(nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+	
+	@PrePersist
+	public void onCreate() {
+		createdAt=LocalDateTime.now();
+	}
+	
+	public Referral() {
+	}
+
+	public Referral(Integer id, Visit visit, Patient patient, Doctor doctor, ReferralCenter referralCenter,
+			NoteType noteType, String reason, String details, LocalDateTime createdAt) {
+		super();
+		this.id = id;
+		this.visit = visit;
+		this.patient = patient;
+		this.doctor = doctor;
+		this.referralCenter = referralCenter;
+		this.noteType = noteType;
+		this.reason = reason;
+		this.details = details;
+		this.createdAt = createdAt;
+	}
+
+	@Override
+	public String toString() {
+		return "Referral [id=" + id + ", visit=" + visit + ", patient=" + patient + ", doctor=" + doctor
+				+ ", referralCenter=" + referralCenter + ", noteType=" + noteType + ", reason=" + reason + ", details="
+				+ details + ", createdAt=" + createdAt + "]";
+	}
+
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Visits getVisit() {
+
+	public Visit getVisit() {
 		return visit;
 	}
-	public void setVisit(Visits visit) {
+
+	public void setVisit(Visit visit) {
 		this.visit = visit;
 	}
+
 	public Patient getPatient() {
 		return patient;
 	}
+
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
 	public Doctor getDoctor() {
 		return doctor;
 	}
+
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
-	public ReferralCenter getReferral_centers() {
+
+	public ReferralCenter getReferralCenter() {
 		return referralCenter;
 	}
-	public void setReferral_centers(ReferralCenter referral_centers) {
-		this.referralCenter = referral_centers;
+
+	public void setReferralCenter(ReferralCenter referralCenter) {
+		this.referralCenter = referralCenter;
 	}
-	public Note_type getNote_type() {
-		return note_type;
+
+	public NoteType getNoteType() {
+		return noteType;
 	}
-	public void setNote_type(Note_type note_type) {
-		this.note_type = note_type;
+
+	public void setNoteType(NoteType noteType) {
+		this.noteType = noteType;
 	}
+
 	public String getReason() {
 		return reason;
 	}
+
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
+
 	public String getDetails() {
 		return details;
 	}
+
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	public LocalDateTime getCreated_at() {
-		return created_at;
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
-	public Referral(int id, Visits visit, Patient patient, Doctor doctor, ReferralCenter referral_centers,
-			Note_type note_type, String reason, String details, LocalDateTime created_at) {
-		super();
-		this.id = id;
-		this.visit = visit;
-		this.patient = patient;
-		this.doctor = doctor;
-		this.referralCenter = referral_centers;
-		this.note_type = note_type;
-		this.reason = reason;
-		this.details = details;
-		this.created_at = created_at;
-	}
-	@Override
-	public String toString() {
-		return "Referrals [id=" + id + ", visit=" + visit + ", patient=" + patient + ", doctor=" + doctor
-				+ ", referral_centers=" + referralCenter + ", note_type=" + note_type + ", reason=" + reason
-				+ ", details=" + details + ", created_at=" + created_at + "]";
-	}
-	public Referral() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
 	
 }

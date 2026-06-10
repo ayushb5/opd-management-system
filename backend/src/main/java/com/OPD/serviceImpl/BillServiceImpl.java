@@ -17,13 +17,26 @@ public class BillServiceImpl implements BillService {
 	private BillRepository repository;
 	@Override
 	public Bill save(Bill bill) {
-		if(bill.getPaid_amount().compareTo(bill.getTotal_amount())>0) {
+		if(bill.getPaidAmount().compareTo(bill.getTotalAmount())>0) {
 			throw new BadRequestException("Paid amount cannot exceed total amount");
 		}
 		
-		if (bill.getConcession().compareTo(bill.getTotal_amount()) > 0) {
+		if (bill.getConcession().compareTo(bill.getTotalAmount()) > 0) {
 	        throw new BadRequestException("Concession cannot exceed total amount");
 	    }
+		
+		if (bill.getConcession().add(bill.getPaidAmount()).compareTo(bill.getTotalAmount()) > 0) {
+		     throw new BadRequestException(
+		                "Concession + Paid Amount cannot exceed Total Amount");
+		}
+		
+		Bill existingBill = repository.findByVisit_Id(bill.getVisit().getId());
+
+		if (existingBill != null &&
+		    (bill.getId() == null || !existingBill.getId().equals(bill.getId()))) {
+		    throw new BadRequestException(
+		            "Bill already exists for visit id: " + bill.getVisit().getId());
+		}
 		return repository.save(bill);
 	}
 
@@ -33,17 +46,24 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public Bill getBillById(int id) {
+	public Bill getBillById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Bill not found with id: "+id));
 	}
 
 	@Override
-	public List<Bill> getBillsByVisitId(int visitId) {
-		return repository.findByVisitId(visitId);
+	public Bill getBillByVisitId(Integer visitId) {
+		 Bill bill = repository.findByVisit_Id(visitId);
+
+		 if (bill == null) {
+		        throw new ResourceNotFoundException(
+		                "Bill not found for visit id: " + visitId);
+		    }
+
+		 return bill;
 	}
 
 	@Override
-	public void deleteBillById(int id) {
+	public void deleteBillById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Bill not found with id: "+id));
 		repository.deleteById(id);
 	}

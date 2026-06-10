@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.OPD.entities.PathologyTest;
 @Repository
 public interface PathologyTestRepository extends JpaRepository<PathologyTest, Integer> {
-	List<PathologyTest> findByVisitId(int visitId);
-	List<PathologyTest> findByTestMasterId(int testId);
+	List<PathologyTest> findByVisit_Id(Integer visitId);
+	List<PathologyTest> findByTestMaster_Id(Integer testMasterId);
 }

@@ -2,96 +2,133 @@ package com.OPD.entities;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="referral_centers")
 public class ReferralCenter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name="doctor_id")
+	@JoinColumn(name="doctor_id",nullable=false)
 	private Doctor doctor;
 	
+	@Column(nullable = false)
 	private String name;
+	
 	public enum Type{
 		DOCTOR,
 		LAB,
 		HOSPITAL,
 		PHARMACY
 	}
-	private Type type;
-	private String contact_info;
-	private String address;
-	private LocalDateTime created_at;
 	
-	public int getId() {
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private Type type;
+	
+	@Column(nullable = false)
+	private String contactInfo;
+	
+	@Column(nullable = false)
+	private String address;
+	
+	@Column(nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+	
+	@PrePersist
+	public void onCreate() {
+		createdAt=LocalDateTime.now();
+	}
+	
+	public ReferralCenter() {
+    }
+
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Doctor getDoctor() {
 		return doctor;
 	}
+
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Type getType() {
 		return type;
 	}
+
 	public void setType(Type type) {
 		this.type = type;
 	}
-	public String getContact_info() {
-		return contact_info;
+
+	public String getContactInfo() {
+		return contactInfo;
 	}
-	public void setContact_info(String contact_info) {
-		this.contact_info = contact_info;
+
+	public void setContactInfo(String contactInfo) {
+		this.contactInfo = contactInfo;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public LocalDateTime getCreated_at() {
-		return created_at;
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
-	public ReferralCenter(int id, Doctor doctor, String name, Type type, String contact_info, String address,
-			LocalDateTime created_at) {
+
+	public ReferralCenter(Integer id, Doctor doctor, String name, Type type, String contactInfo, String address,
+			LocalDateTime createdAt) {
 		super();
 		this.id = id;
 		this.doctor = doctor;
 		this.name = name;
 		this.type = type;
-		this.contact_info = contact_info;
+		this.contactInfo = contactInfo;
 		this.address = address;
-		this.created_at = created_at;
+		this.createdAt = createdAt;
 	}
+
 	@Override
 	public String toString() {
-		return "Referral_centers [id=" + id + ", doctor=" + doctor + ", name=" + name + ", type=" + type
-				+ ", contact_info=" + contact_info + ", address=" + address + ", created_at=" + created_at + "]";
+		return "ReferralCenter [id=" + id + ", doctor=" + doctor + ", name=" + name + ", type=" + type
+				+ ", contactInfo=" + contactInfo + ", address=" + address + ", createdAt=" + createdAt + "]";
 	}
-	public ReferralCenter() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 	
 }

@@ -3,7 +3,7 @@ package com.OPD.entities;
 import java.time.LocalDateTime;
 
 import com.OPD.enums.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,117 +14,164 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 @Entity
+@Table(name="receptionists")
 public class Receptionist {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
+	
 	@ManyToOne
-	@JoinColumn(name="doctor_id")
+	@JoinColumn(name = "doctor_id", nullable = false)
 	private Doctor doctor;
 	
-	private String name;
-	@Column(unique = true)
+	@Column(nullable = false)
+    private String name;
+	
+	@Column(nullable = false, unique = true)
 	private String email;
-	@JsonIgnore
+	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Column(nullable = false)
 	private String password;
-	private String mobileno;
+	
+	@Column(nullable = false)
+	private String mobileNo;
+	
 	public enum Status{
 		ACTIVE,
 		INACTIVE
 	}
 	
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Status status;
+	
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Role role;
 	
-	private LocalDateTime created_at;
-	private LocalDateTime updated_at;
-	public int getId() {
+	@Column(nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+	
+	@PrePersist
+	public void onCreate() {
+		createdAt=LocalDateTime.now();
+		updatedAt=LocalDateTime.now();
+	}
+	
+	@PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+	
+	public Receptionist() {
+    }
+
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Doctor getDoctor() {
 		return doctor;
 	}
+
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getMobileno() {
-		return mobileno;
+
+	public String getMobileNo() {
+		return mobileNo;
 	}
-	public void setMobileno(String mobileno) {
-		this.mobileno = mobileno;
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
+
 	public Status getStatus() {
 		return status;
 	}
+
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
 	public Role getRole() {
 		return role;
 	}
+
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public LocalDateTime getCreated_at() {
-		return created_at;
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
-	public LocalDateTime getUpdated_at() {
-		return updated_at;
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
 	}
-	public void setUpdated_at(LocalDateTime updated_at) {
-		this.updated_at = updated_at;
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
-	public Receptionist(int id, Doctor doctor, String name, String email, String password, String mobileno,
-			Status status, Role role, LocalDateTime created_at, LocalDateTime updated_at) {
+
+	public Receptionist(Integer id, Doctor doctor, String name, String email, String password, String mobileNo,
+			Status status, Role role, LocalDateTime createdAt, LocalDateTime updatedAt) {
 		super();
 		this.id = id;
 		this.doctor = doctor;
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.mobileno = mobileno;
+		this.mobileNo = mobileNo;
 		this.status = status;
 		this.role = role;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
+
 	@Override
 	public String toString() {
-		return "Receptionist [id=" + id + ", doctor=" + doctor + ", name=" + name + ", email=" + email + ", password="
-				+ password + ", mobileno=" + mobileno + ", status=" + status + ", role=" + role + ", created_at="
-				+ created_at + ", updated_at=" + updated_at + "]";
+		return "Receptionist [id=" + id + ", doctor=" + doctor + ", name=" + name + ", email=" + email + ", mobileNo="
+				+ mobileNo + ", status=" + status + ", role=" + role + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + "]";
 	}
-	public Receptionist() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
 	
 }

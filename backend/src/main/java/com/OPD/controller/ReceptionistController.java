@@ -1,13 +1,11 @@
 package com.OPD.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.OPD.dto.ReceptionistDto;
 import com.OPD.entities.Doctor;
 import com.OPD.entities.Receptionist;
+import com.OPD.exception.DuplicateResourceException;
 import com.OPD.repository.ReceptionistRepository;
 import com.OPD.services.DoctorService;
 import com.OPD.services.ReceptionistService;
@@ -28,7 +27,7 @@ import com.OPD.services.ReceptionistService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/receptionist")
+@RequestMapping("/receptionists")
 @CrossOrigin
 public class ReceptionistController {
 	@Autowired
@@ -47,56 +46,59 @@ public class ReceptionistController {
 		
 		receptionist.setName(receptionistDto.getName());
 		if(repository.findByEmail(receptionistDto.getEmail()).isPresent()) {
-		    throw new RuntimeException("Email already exists");
+		    throw new DuplicateResourceException("Email already exists");
 		}
 		receptionist.setEmail(receptionistDto.getEmail());
-		receptionist.setPassword(passwordEncoder.encode(receptionistDto.getPassword()));
-		receptionist.setMobileno(receptionistDto.getMobileno());
+		receptionist.setMobileNo(receptionistDto.getMobileNo());
 		receptionist.setStatus(receptionistDto.getStatus());
 		receptionist.setDoctor(doctor);
-		receptionist.setCreated_at(LocalDateTime.now());
-		receptionist.setUpdated_at(LocalDateTime.now());
 		
-		Receptionist savedReceptionist=service.saveReceptionist(receptionist);
+		if (receptionistDto.getPassword() != null &&
+			!receptionistDto.getPassword().isBlank()) {
+
+			receptionist.setPassword(
+			passwordEncoder.encode(receptionistDto.getPassword()));
+		}
+		
+		Receptionist savedReceptionist=service.save(receptionist);
 		return new ResponseEntity<>(savedReceptionist,HttpStatus.CREATED);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Receptionist>> getAllReceptionist(){
-		List<Receptionist> receptionists=service.getAllReceptionist();
+	public ResponseEntity<List<Receptionist>> getAllReceptionists(){
+		List<Receptionist> receptionists=service.getAllReceptionists();
 		return new ResponseEntity<>(receptionists,HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Receptionist> getReceptionistById(@PathVariable("id") int id){
+	public ResponseEntity<Receptionist> getReceptionistById(@PathVariable("id") Integer id){
 		Receptionist receptionist=service.getReceptionistById(id);
 		return new ResponseEntity<>(receptionist,HttpStatus.OK);
 	}
 	
 	@GetMapping("/doctor/{doctorId}")
-	public ResponseEntity<List<Receptionist>> getReceptionistByDoctorId(@PathVariable("doctorId") int doctorId){
-		List<Receptionist> receptionists=service.getReceptionistByDoctorId(doctorId);
+	public ResponseEntity<List<Receptionist>> getReceptionistsByDoctorId(@PathVariable("doctorId") Integer doctorId){
+		List<Receptionist> receptionists=service.getReceptionistsByDoctorId(doctorId);
 		return new ResponseEntity<>(receptionists, HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Receptionist> updateReceptionistById(@PathVariable("id") int id, @Valid @RequestBody ReceptionistDto receptionistDto){
+	public ResponseEntity<Receptionist> updateReceptionistById(@PathVariable("id") Integer id, @Valid @RequestBody ReceptionistDto receptionistDto){
 		Receptionist receptionist=service.getReceptionistById(id);
 		Doctor doctor=doctorService.getDoctorById(receptionistDto.getDoctorId());
 		
 		receptionist.setName(receptionistDto.getName());
 		receptionist.setEmail(receptionistDto.getEmail());
-		receptionist.setMobileno(receptionistDto.getMobileno());
+		receptionist.setMobileNo(receptionistDto.getMobileNo());
 		receptionist.setStatus(receptionistDto.getStatus());
 		receptionist.setDoctor(doctor);
-		receptionist.setUpdated_at(LocalDateTime.now());
 		
-		Receptionist updatedReceptionist=service.saveReceptionist(receptionist);
+		Receptionist updatedReceptionist=service.save(receptionist);
 		return new ResponseEntity<>(updatedReceptionist,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteReceptionistById(@PathVariable("id") int id){
+	public ResponseEntity<Void> deleteReceptionistById(@PathVariable("id") Integer id){
 		service.deleteReceptionistById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

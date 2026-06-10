@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.OPD.entities.Receptionist;
 @Repository
 public interface ReceptionistRepository extends JpaRepository<Receptionist, Integer> {
-	List<Receptionist> findByDoctorId(int doctorId);
+	List<Receptionist> findByDoctor_Id(Integer doctorId);
 	Optional<Receptionist> findByEmail(String email);
 }

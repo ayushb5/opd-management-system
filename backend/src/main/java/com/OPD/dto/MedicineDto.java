@@ -8,7 +8,7 @@ public class MedicineDto {
 	private Integer doctorId;
 	
 	@NotBlank(message="Medicine name is required")
-	private String medicine_name;
+	private String medicineName;
 	
 	@NotBlank(message="Type is required")
 	private String type;
@@ -19,11 +19,11 @@ public class MedicineDto {
 	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
-	public String getMedicine_name() {
-		return medicine_name;
+	public String getMedicineName() {
+		return medicineName;
 	}
-	public void setMedicine_name(String medicine_name) {
-		this.medicine_name = medicine_name;
+	public void setMedicineName(String medicineName) {
+		this.medicineName = medicineName;
 	}
 	public String getType() {
 		return type;

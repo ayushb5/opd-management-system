@@ -2,76 +2,89 @@ package com.OPD.entities;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
-public class Diagnostics {
+@Table(name="diagnostics")
+public class Diagnostic {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name="visit_id")
-	private Visits visit;
+	@JoinColumn(name="visit_id",nullable=false)
+	private Visit visit;
 	
 	@ManyToOne
-	@JoinColumn(name="doctor_id")
+	@JoinColumn(name="doctor_id",nullable=false)
 	private Doctor doctor;
 	
+	@Column(nullable = false)
 	private String name;
-	private LocalDateTime created_at;
-	public int getId() {
+	
+	@Column(nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+	
+	@PrePersist
+	public void onCreate() {
+	    createdAt = LocalDateTime.now();
+	}
+	
+	public Diagnostic() {
+	}
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Visits getVisit() {
+
+	public Visit getVisit() {
 		return visit;
 	}
-	public void setVisit(Visits visit) {
+
+	public void setVisit(Visit visit) {
 		this.visit = visit;
 	}
+
 	public Doctor getDoctor() {
 		return doctor;
 	}
+
 	public void setDoctor(Doctor doctor) {
 		this.doctor = doctor;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public LocalDateTime getCreated_at() {
-		return created_at;
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
-	public Diagnostics(int id, Visits visit, Doctor doctor, String name, LocalDateTime created_at) {
-		super();
-		this.id = id;
-		this.visit = visit;
-		this.doctor = doctor;
-		this.name = name;
-		this.created_at = created_at;
-	}
+
 	@Override
-	public String toString() {
-		return "Diagnostics [id=" + id + ", visit=" + visit + ", doctor=" + doctor + ", name=" + name + ", created_at="
-				+ created_at + "]";
-	}
-	public Diagnostics() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
+    public String toString() {
+        return "Diagnostic [id=" + id +
+                ", name=" + name + "]";
+    }
 	
 }

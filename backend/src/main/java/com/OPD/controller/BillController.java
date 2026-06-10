@@ -1,5 +1,6 @@
 package com.OPD.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.BillDto;
 import com.OPD.entities.Bill;
-import com.OPD.entities.Visits;
+import com.OPD.entities.Visit;
 import com.OPD.services.BillService;
 import com.OPD.services.VisitService;
 
@@ -36,17 +37,24 @@ public class BillController {
 	@PostMapping
 	public ResponseEntity<Bill> saveBill(@Valid @RequestBody BillDto billDto){
 		Bill bill=new Bill();
-		Visits visit=visitService.getVisitsById(billDto.getVisitId());
+		Visit visit=visitService.getVisitById(billDto.getVisitId());
 
-		bill.setConsultation_fee(billDto.getConsultation_fee());
-		bill.setPayment_status(billDto.getPayment_status());
-		bill.setPayment_mode(billDto.getPayment_mode());
+		bill.setConsultationFee(billDto.getConsultationFee());
+		bill.setPaymentStatus(billDto.getPaymentStatus());
+		bill.setPaymentMode(billDto.getPaymentMode());
 		bill.setConcession(billDto.getConcession());
-		bill.setPaid_amount(billDto.getPaid_amount());
-		bill.setTotal_amount(billDto.getTotal_amount());
-		bill.setPending_amount(billDto.getPending_amount());
+		bill.setPaidAmount(billDto.getPaidAmount());
+		bill.setTotalAmount(billDto.getTotalAmount());
+		
+//		Pending amount
+		BigDecimal pendingAmount =
+		        billDto.getTotalAmount()
+		               .subtract(billDto.getConcession())
+		               .subtract(billDto.getPaidAmount());
+
+		bill.setPendingAmount(pendingAmount);
+		
 		bill.setVisit(visit);
-		bill.setCreated_at(LocalDateTime.now());
 		
 		Bill savedBill=service.save(bill);
 		return new ResponseEntity<>(savedBill,HttpStatus.CREATED);
@@ -59,29 +67,36 @@ public class BillController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Bill> getBillById(@PathVariable("id") int id){
+	public ResponseEntity<Bill> getBillById(@PathVariable("id") Integer id){
 		Bill bill=service.getBillById(id);
 		return new ResponseEntity<>(bill,HttpStatus.OK);
 	}
 	
 	@GetMapping("/visit/{visitId}")
-	public ResponseEntity<List<Bill>> getBillsByVisitId(@PathVariable("visitId") int visitId){
-		List<Bill> bills=service.getBillsByVisitId(visitId);
-		return new ResponseEntity<>(bills,HttpStatus.OK);
+	public ResponseEntity<Bill> getBillByVisitId(@PathVariable("visitId") Integer visitId){
+		Bill bill=service.getBillByVisitId(visitId);
+		return new ResponseEntity<>(bill,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Bill> updateBillById(@PathVariable("id") int id,@Valid @RequestBody BillDto billDto){
+	public ResponseEntity<Bill> updateBillById(@PathVariable("id") Integer id,@Valid @RequestBody BillDto billDto){
 		Bill bill=service.getBillById(id);
-		Visits visit=visitService.getVisitsById(billDto.getVisitId());
+		Visit visit=visitService.getVisitById(billDto.getVisitId());
 		
-		bill.setConsultation_fee(billDto.getConsultation_fee());
-		bill.setPayment_status(billDto.getPayment_status());
-		bill.setPayment_mode(billDto.getPayment_mode());
+		bill.setConsultationFee(billDto.getConsultationFee());
+		bill.setPaymentStatus(billDto.getPaymentStatus());
+		bill.setPaymentMode(billDto.getPaymentMode());
 		bill.setConcession(billDto.getConcession());
-		bill.setPaid_amount(billDto.getPaid_amount());
-		bill.setTotal_amount(billDto.getTotal_amount());
-		bill.setPending_amount(billDto.getPending_amount());
+		bill.setPaidAmount(billDto.getPaidAmount());
+		bill.setTotalAmount(billDto.getTotalAmount());
+		
+//		Pending amount
+		BigDecimal pendingAmount =
+		        billDto.getTotalAmount()
+		               .subtract(billDto.getConcession())
+		               .subtract(billDto.getPaidAmount());
+
+		bill.setPendingAmount(pendingAmount);
 		bill.setVisit(visit);
 		
 		Bill updatedBill=service.save(bill);
@@ -89,7 +104,7 @@ public class BillController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteBillById(@PathVariable("id") int id){
+	public ResponseEntity<Void> deleteBillById(@PathVariable("id") Integer id){
 		service.deleteBillById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

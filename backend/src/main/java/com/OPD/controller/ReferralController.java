@@ -1,6 +1,5 @@
 package com.OPD.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import com.OPD.entities.Doctor;
 import com.OPD.entities.Patient;
 import com.OPD.entities.Referral;
 import com.OPD.entities.ReferralCenter;
-import com.OPD.entities.Visits;
+import com.OPD.entities.Visit;
 import com.OPD.services.DoctorService;
 import com.OPD.services.PatientService;
 import com.OPD.services.ReferralCenterService;
@@ -31,7 +30,7 @@ import com.OPD.services.VisitService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/referral")
+@RequestMapping("/referrals")
 @CrossOrigin
 public class ReferralController {
 	@Autowired
@@ -48,19 +47,18 @@ public class ReferralController {
 	@PostMapping
 	public ResponseEntity<Referral> saveReferral(@Valid @RequestBody ReferralDto referralDto){
 		Referral referral=new Referral();
-		Visits visit=visitService.getVisitsById(referralDto.getVisitId());
+		Visit visit=visitService.getVisitById(referralDto.getVisitId());
 		Patient patient=patientService.getById(referralDto.getPatientId());
 		Doctor doctor=doctorService.getDoctorById(referralDto.getDoctorId());
 		ReferralCenter referralCenter=referralCenterService.getReferralCenterById(referralDto.getReferralCenterId());
 
-		referral.setNote_type(referralDto.getNote_type());
+		referral.setNoteType(referralDto.getNoteType());
 		referral.setReason(referralDto.getReason());
 		referral.setDetails(referralDto.getDetails());
-		referral.setCreated_at(LocalDateTime.now());
 		referral.setVisit(visit);
 		referral.setPatient(patient);
 		referral.setDoctor(doctor);
-		referral.setReferral_centers(referralCenter);
+		referral.setReferralCenter(referralCenter);
 		
 		Referral savedReferral=service.save(referral);
 		return new ResponseEntity<>(savedReferral,HttpStatus.CREATED);
@@ -73,58 +71,58 @@ public class ReferralController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Referral> getReferralById(@PathVariable("id") int id){
+	public ResponseEntity<Referral> getReferralById(@PathVariable("id") Integer id){
 		Referral referral=service.getReferralById(id);
 		return new ResponseEntity<>(referral,HttpStatus.OK);
 	}
 	
 	@GetMapping("/visit/{visitId}")
-	public ResponseEntity<List<Referral>> getReferralByVisitId(@PathVariable("visitId") int visitId){
+	public ResponseEntity<List<Referral>> getReferralByVisitId(@PathVariable("visitId") Integer visitId){
 		List<Referral> referrals=service.getReferralsByVisitId(visitId);
 		
 		return new ResponseEntity<>(referrals,HttpStatus.OK);
 	}
 	
 	@GetMapping("/patient/{patientId}")
-	public ResponseEntity<List<Referral>> getReferralByPatientId(@PathVariable("patientId") int patientId){
+	public ResponseEntity<List<Referral>> getReferralByPatientId(@PathVariable("patientId") Integer patientId){
 		List<Referral> referrals=service.getReferralsByPatientId(patientId);
 		return new ResponseEntity<>(referrals,HttpStatus.OK);
 	}
 	
 	@GetMapping("/doctor/{doctorId}")
-	public ResponseEntity<List<Referral>> getReferralByDoctorId(@PathVariable("doctorId") int doctorId){
+	public ResponseEntity<List<Referral>> getReferralByDoctorId(@PathVariable("doctorId") Integer doctorId){
 		List<Referral> referrals=service.getReferralsByDoctorId(doctorId);
 		return new ResponseEntity<>(referrals,HttpStatus.OK);
 	}
 	
 	@GetMapping("/referral-center/{referralCenterId}")
-	public ResponseEntity<List<Referral>> getReferralsByReferralCenterId(@PathVariable("referralCenterId") int referralCenterId){
+	public ResponseEntity<List<Referral>> getReferralsByReferralCenterId(@PathVariable("referralCenterId") Integer referralCenterId){
 		List<Referral> referrals=service.getReferralsByReferralCenterId(referralCenterId);
 		return new ResponseEntity<>(referrals,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Referral> updateReferral(@PathVariable("id") int id,@Valid @RequestBody ReferralDto referralDto){
+	public ResponseEntity<Referral> updateReferral(@PathVariable("id") Integer id,@Valid @RequestBody ReferralDto referralDto){
 		Referral referral=service.getReferralById(id);
-		Visits visit=visitService.getVisitsById(referralDto.getVisitId());
+		Visit visit=visitService.getVisitById(referralDto.getVisitId());
 		Patient patient=patientService.getById(referralDto.getPatientId());
 		Doctor doctor=doctorService.getDoctorById(referralDto.getDoctorId());
 		ReferralCenter referralCenter=referralCenterService.getReferralCenterById(referralDto.getReferralCenterId());
 
-		referral.setNote_type(referralDto.getNote_type());
+		referral.setNoteType(referralDto.getNoteType());
 		referral.setReason(referralDto.getReason());
 		referral.setDetails(referralDto.getDetails());
 		referral.setVisit(visit);
 		referral.setPatient(patient);
 		referral.setDoctor(doctor);
-		referral.setReferral_centers(referralCenter);
+		referral.setReferralCenter(referralCenter);
 		
 		Referral updatedReferral=service.save(referral);
 		return new ResponseEntity<>(updatedReferral,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteReferral(@PathVariable("id") int id){
+	public ResponseEntity<Void> deleteReferral(@PathVariable("id") Integer id){
 		service.deleteReferralById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

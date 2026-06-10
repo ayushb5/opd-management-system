@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.OPD.entities.Diagnostics;
+import com.OPD.entities.Diagnostic;
 import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.DiagnosticRepository;
 import com.OPD.services.DiagnosticService;
@@ -15,32 +15,32 @@ public class DiagnosticServiceImpl implements DiagnosticService {
 	private DiagnosticRepository repository;
 	
 	@Override
-	public Diagnostics save(Diagnostics diagnostic) {
+	public Diagnostic save(Diagnostic diagnostic) {
 		return repository.save(diagnostic);
 	}
 
 	@Override
-	public List<Diagnostics> getAllDiagnostic() {
+	public List<Diagnostic> getAllDiagnostics() {
 		return repository.findAll();
 	}
 
 	@Override
-	public Diagnostics getDiagnosticById(int id) {
+	public Diagnostic getDiagnosticById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Diagnostic not found with id: "+id));
 	}
 
 	@Override
-	public List<Diagnostics> getDiagnosticByVisitId(int visitId) {
-		return repository.findByVisitId(visitId);
+	public List<Diagnostic> getDiagnosticsByVisitId(Integer visitId) {
+		return repository.findByVisit_Id(visitId);
 	}
 
 	@Override
-	public List<Diagnostics> getDiagnosticByDoctorId(int doctorId) {
-		return repository.findByDoctorId(doctorId);
+	public List<Diagnostic> getDiagnosticsByDoctorId(Integer doctorId) {
+		return repository.findByDoctor_Id(doctorId);
 	}
 
 	@Override
-	public void deleteDiagnosticById(int id) {
+	public void deleteDiagnosticById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Diagnostic not found with id: "+id));
 		repository.deleteById(id);
 	}

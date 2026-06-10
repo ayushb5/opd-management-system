@@ -2,13 +2,13 @@ package com.OPD.services;
 
 import java.util.List;
 
-import com.OPD.entities.Diagnostics;
+import com.OPD.entities.Diagnostic;
 
 public interface DiagnosticService {
-	Diagnostics save(Diagnostics diagnostic);
-	List<Diagnostics> getAllDiagnostic();
-	Diagnostics getDiagnosticById(int id);
-	List<Diagnostics> getDiagnosticByVisitId(int visitId);
-	List<Diagnostics> getDiagnosticByDoctorId(int doctorId);
-	void deleteDiagnosticById(int id);
+	Diagnostic save(Diagnostic diagnostic);
+	List<Diagnostic> getAllDiagnostics();
+	Diagnostic getDiagnosticById(Integer id);
+	List<Diagnostic> getDiagnosticsByVisitId(Integer visitId);
+	List<Diagnostic> getDiagnosticsByDoctorId(Integer doctorId);
+	void deleteDiagnosticById(Integer id);
 }

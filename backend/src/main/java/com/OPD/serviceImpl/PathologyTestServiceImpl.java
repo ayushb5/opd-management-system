@@ -21,27 +21,27 @@ public class PathologyTestServiceImpl implements PathologyTestService {
 	}
 
 	@Override
-	public List<PathologyTest> getAllPathologyTest() {
+	public List<PathologyTest> getAllPathologyTests() {
 		return repository.findAll();
 	}
 
 	@Override
-	public PathologyTest getPathologyTestById(int id) {
+	public PathologyTest getPathologyTestById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Pathology Test not found with id: "+id));
 	}
 
 	@Override
-	public List<PathologyTest> getPathologyTestByVisitId(int visitId) {
-		return repository.findByVisitId(visitId);
+	public List<PathologyTest> getPathologyTestsByVisitId(Integer visitId) {
+		return repository.findByVisit_Id(visitId);
 	}
 
 	@Override
-	public List<PathologyTest> getPathologyTestByTestId(int testId) {
-		return repository.findByTestMasterId(testId);
+	public List<PathologyTest> getPathologyTestsByTestMasterId(Integer testMasterId) {
+		return repository.findByTestMaster_Id(testMasterId);
 	}
 
 	@Override
-	public void deleteByPathologyTestId(int id) {
+	public void deletePathologyTestById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Pathology Test not found with id: "+id));
 		repository.deleteById(id);
 	}

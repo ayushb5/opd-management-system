@@ -34,11 +34,11 @@ public class MedicineController {
 	private DoctorService doctorService;
 	
 	@PostMapping
-	public ResponseEntity<?> saveMedicine(@Valid @RequestBody MedicineDto medicineDto){
+	public ResponseEntity<Medicine> saveMedicine(@Valid @RequestBody MedicineDto medicineDto){
 		Medicine medicine=new Medicine();
 		Doctor doctor=doctorService.getDoctorById(medicineDto.getDoctorId());
 		
-		medicine.setMedicine_name(medicineDto.getMedicine_name());
+		medicine.setMedicineName(medicineDto.getMedicineName());
 		medicine.setType(medicineDto.getType());
 		medicine.setDoctor(doctor);
 		
@@ -53,24 +53,24 @@ public class MedicineController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Medicine> getMedicineById(@PathVariable("id") int id){
+	public ResponseEntity<Medicine> getMedicineById(@PathVariable("id") Integer id){
 		Medicine medicine=service.getMedicineById(id);
 		return new ResponseEntity<>(medicine,HttpStatus.OK);
 	}
 	
 	@GetMapping("/doctor/{id}")
-	public ResponseEntity<List<Medicine>> getMedicineByDoctorId(@PathVariable("id") int id){
+	public ResponseEntity<List<Medicine>> getMedicineByDoctorId(@PathVariable("id") Integer id){
 		List<Medicine> medicines=service.getMedicinesByDoctorId(id);
 		return new ResponseEntity<>(medicines,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{medicineId}")
-	public ResponseEntity<Medicine> updateMedicineById(@PathVariable("medicineId") int medicineId,@Valid @RequestBody MedicineDto medicineDto){
+	public ResponseEntity<Medicine> updateMedicineById(@PathVariable("medicineId") Integer medicineId,@Valid @RequestBody MedicineDto medicineDto){
 		Medicine medicine=service.getMedicineById(medicineId);
 		
 		Doctor doctor=doctorService.getDoctorById(medicineDto.getDoctorId());
 				
-		medicine.setMedicine_name(medicineDto.getMedicine_name());
+		medicine.setMedicineName(medicineDto.getMedicineName());
 		medicine.setType(medicineDto.getType());
 		medicine.setDoctor(doctor);
 		
@@ -79,7 +79,7 @@ public class MedicineController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteMedicineById(@PathVariable("id") int id){
+	public ResponseEntity<Void> deleteMedicineById(@PathVariable("id") Integer id){
 		service.deleteMedicineById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

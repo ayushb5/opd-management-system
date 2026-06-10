@@ -6,9 +6,9 @@ import com.OPD.entities.PathologyTest;
 
 public interface PathologyTestService {
 	PathologyTest save(PathologyTest pathologyTest);
-	List<PathologyTest> getAllPathologyTest();
-	PathologyTest getPathologyTestById(int id);
-	List<PathologyTest> getPathologyTestByVisitId(int visitId);
-	List<PathologyTest> getPathologyTestByTestId(int testId);
-	void deleteByPathologyTestId(int id);
+	List<PathologyTest> getAllPathologyTests();
+	PathologyTest getPathologyTestById(Integer id);
+	List<PathologyTest> getPathologyTestsByVisitId(Integer visitId);
+	List<PathologyTest> getPathologyTestsByTestMasterId(Integer testMasterId);
+	void deletePathologyTestById(Integer id);
 }

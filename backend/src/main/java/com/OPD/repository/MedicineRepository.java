@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.OPD.entities.Medicine;
 
 @Repository
-public interface MedicinesRepository extends JpaRepository<Medicine, Integer> {
-	List<Medicine> findByDoctorId(int id);
+public interface MedicineRepository extends JpaRepository<Medicine, Integer> {
+	List<Medicine> findByDoctor_Id(Integer doctorId);
 }

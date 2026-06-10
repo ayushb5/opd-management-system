@@ -24,17 +24,17 @@ public class ReferralCenterServiceImpl implements ReferralCenterService {
 	}
 
 	@Override
-	public ReferralCenter getReferralCenterById(int id) {
+	public ReferralCenter getReferralCenterById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Referral Center not found with id: "+id));
 	}
 
 	@Override
-	public List<ReferralCenter> getReferralCentersByDoctorId(int doctorId) {
-		return repository.findByDoctorId(doctorId);
+	public List<ReferralCenter> getReferralCentersByDoctorId(Integer doctorId) {
+		return repository.findByDoctor_Id(doctorId);
 	}
 
 	@Override
-	public void deleteReferralCenterById(int id) {
+	public void deleteReferralCenterById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Referral Center not found with id: "+id));
 		repository.deleteById(id);
 	}

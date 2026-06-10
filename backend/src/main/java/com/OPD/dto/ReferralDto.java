@@ -18,54 +18,69 @@ public class ReferralDto {
 	@NotNull(message="Referral Center id is required")
 	private Integer referralCenterId;
 	
-	private Referral.Note_type note_type;
+	@NotNull(message = "Note type is required")
+	private Referral.NoteType noteType;
 	
 	@NotBlank(message="Reason is required")
 	private String reason;
 	
 	@NotBlank(message="Details are required")
 	private String details;
-	
+
 	public Integer getVisitId() {
 		return visitId;
 	}
+
 	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
 	}
+
 	public Integer getPatientId() {
 		return patientId;
 	}
+
 	public void setPatientId(Integer patientId) {
 		this.patientId = patientId;
 	}
+
 	public Integer getDoctorId() {
 		return doctorId;
 	}
+
 	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
-	public int getReferralCenterId() {
+
+	public Integer getReferralCenterId() {
 		return referralCenterId;
 	}
+
 	public void setReferralCenterId(Integer referralCenterId) {
 		this.referralCenterId = referralCenterId;
 	}
-	public Referral.Note_type getNote_type() {
-		return note_type;
+
+	public Referral.NoteType getNoteType() {
+		return noteType;
 	}
-	public void setNote_type(Referral.Note_type note_type) {
-		this.note_type = note_type;
+
+	public void setNoteType(Referral.NoteType noteType) {
+		this.noteType = noteType;
 	}
+
 	public String getReason() {
 		return reason;
 	}
+
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
+
 	public String getDetails() {
 		return details;
 	}
+
 	public void setDetails(String details) {
 		this.details = details;
 	}
+
 }

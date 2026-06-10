@@ -1,6 +1,5 @@
 package com.OPD.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ import com.OPD.services.ReferralCenterService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/referral-center")
+@RequestMapping("/referral-centers")
 @CrossOrigin
 public class ReferralCenterController {
 	@Autowired
@@ -39,10 +38,9 @@ public class ReferralCenterController {
 		Doctor doctor=doctorService.getDoctorById(referralCenterDto.getDoctorId());
 		referralCenter.setName(referralCenterDto.getName());
 		referralCenter.setType(referralCenterDto.getType());
-		referralCenter.setContact_info(referralCenterDto.getContact_info());
+		referralCenter.setContactInfo(referralCenterDto.getContactInfo());
 		referralCenter.setAddress(referralCenterDto.getAddress());
 		referralCenter.setDoctor(doctor);
-		referralCenter.setCreated_at(LocalDateTime.now());
 		
 		ReferralCenter savedReferralCenter=service.save(referralCenter);
 		return new ResponseEntity<>(savedReferralCenter,HttpStatus.CREATED);
@@ -55,28 +53,25 @@ public class ReferralCenterController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ReferralCenter> getReferralCenterById(@PathVariable("id") int id){
+	public ResponseEntity<ReferralCenter> getReferralCenterById(@PathVariable("id") Integer id){
 		ReferralCenter referralCenter=service.getReferralCenterById(id);
-		if(referralCenter==null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<>(referralCenter,HttpStatus.OK);
 	}
 	
 	@GetMapping("/doctor/{doctorId}")
-	public ResponseEntity<List<ReferralCenter>> getReferralCentersByDoctorId(@PathVariable("doctorId") int doctorId){
+	public ResponseEntity<List<ReferralCenter>> getReferralCentersByDoctorId(@PathVariable("doctorId") Integer doctorId){
 		List<ReferralCenter> referralCenters=service.getReferralCentersByDoctorId(doctorId);
 		return new ResponseEntity<>(referralCenters,HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ReferralCenter> updateReferralCenterById(@PathVariable("id") int id,@Valid @RequestBody ReferralCenterDto referralCenterDto){
+	public ResponseEntity<ReferralCenter> updateReferralCenterById(@PathVariable("id") Integer id,@Valid @RequestBody ReferralCenterDto referralCenterDto){
 		ReferralCenter referralCenter=service.getReferralCenterById(id);
 		Doctor doctor=doctorService.getDoctorById(referralCenterDto.getDoctorId());
 		
 		referralCenter.setName(referralCenterDto.getName());
 		referralCenter.setType(referralCenterDto.getType());
-		referralCenter.setContact_info(referralCenterDto.getContact_info());
+		referralCenter.setContactInfo(referralCenterDto.getContactInfo());
 		referralCenter.setAddress(referralCenterDto.getAddress());
 		referralCenter.setDoctor(doctor);
 		
@@ -86,7 +81,7 @@ public class ReferralCenterController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteReferralCenterById(@PathVariable("id") int id){
+	public ResponseEntity<Void> deleteReferralCenterById(@PathVariable("id") Integer id){
 		service.deleteReferralCenterById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

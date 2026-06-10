@@ -7,7 +7,7 @@ import com.OPD.entities.Medicine;
 public interface MedicineService {
 	Medicine save(Medicine medicine);
 	List<Medicine> getAllMedicines();
-	Medicine getMedicineById(int id);
-	List<Medicine> getMedicinesByDoctorId(int doctorId);
-	void deleteMedicineById(int id);
+	Medicine getMedicineById(Integer id);
+	List<Medicine> getMedicinesByDoctorId(Integer doctorId);
+	void deleteMedicineById(Integer id);
 }

@@ -24,32 +24,32 @@ public class ReferralServiceImpl implements ReferralService {
 	}
 
 	@Override
-	public Referral getReferralById(int id) {
+	public Referral getReferralById(Integer id) {
 		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Referral not found with id: "+id));
 	}
 
 	@Override
-	public List<Referral> getReferralsByVisitId(int visitId) {
-		return repository.findByVisitId(visitId);
+	public List<Referral> getReferralsByVisitId(Integer visitId) {
+		return repository.findByVisit_Id(visitId);
 	}
 
 	@Override
-	public List<Referral> getReferralsByPatientId(int patientId) {
-		return repository.findByPatientId(patientId);
+	public List<Referral> getReferralsByPatientId(Integer patientId) {
+		return repository.findByPatient_Id(patientId);
 	}
 
 	@Override
-	public List<Referral> getReferralsByDoctorId(int doctorId) {
-		return repository.findByDoctorId(doctorId);
+	public List<Referral> getReferralsByDoctorId(Integer doctorId) {
+		return repository.findByDoctor_Id(doctorId);
 	}
 
 	@Override
-	public List<Referral> getReferralsByReferralCenterId(int referralCenterId) {
-		return repository.findByReferralCenterId(referralCenterId);
+	public List<Referral> getReferralsByReferralCenterId(Integer referralCenterId) {
+		return repository.findByReferralCenter_Id(referralCenterId);
 	}
 
 	@Override
-	public void deleteReferralById(int id) {
+	public void deleteReferralById(Integer id) {
 		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Referral not found with id: "+id));
 		repository.deleteById(id);
 	}

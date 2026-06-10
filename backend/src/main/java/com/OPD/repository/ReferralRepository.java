@@ -9,8 +9,8 @@ import com.OPD.entities.Referral;
 
 @Repository
 public interface ReferralRepository extends JpaRepository<Referral, Integer> {
-	List<Referral> findByVisitId(int visitId);
-	List<Referral> findByPatientId(int patientId);
-	List<Referral> findByDoctorId(int doctorId);
-	List<Referral> findByReferralCenterId(int referralCenterId);
+	List<Referral> findByVisit_Id(Integer visitId);
+	List<Referral> findByPatient_Id(Integer patientId);
+	List<Referral> findByDoctor_Id(Integer doctorId);
+	List<Referral> findByReferralCenter_Id(Integer referralCenterId);
 }

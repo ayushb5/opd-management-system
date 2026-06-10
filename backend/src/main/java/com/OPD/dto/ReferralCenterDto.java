@@ -11,42 +11,55 @@ public class ReferralCenterDto {
 	
 	@NotBlank(message="Name is required")
 	private String name;
+	
+	@NotNull(message = "Type is required")
 	private ReferralCenter.Type type;
 	
 	@NotBlank(message="Contact Info is required")
-	private String contact_info;
+	private String contactInfo;
 	
 	@NotBlank(message="Address is required")
 	private String address;
-	
+
 	public Integer getDoctorId() {
 		return doctorId;
 	}
+
 	public void setDoctorId(Integer doctorId) {
 		this.doctorId = doctorId;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public ReferralCenter.Type getType() {
 		return type;
 	}
+
 	public void setType(ReferralCenter.Type type) {
 		this.type = type;
 	}
-	public String getContact_info() {
-		return contact_info;
+
+	public String getContactInfo() {
+		return contactInfo;
 	}
-	public void setContact_info(String contact_info) {
-		this.contact_info = contact_info;
+
+	public void setContactInfo(String contactInfo) {
+		this.contactInfo = contactInfo;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	
 }
