@@ -26,7 +26,7 @@ import com.OPD.services.VisitService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/visit")
+@RequestMapping("/visits")
 @CrossOrigin
 public class VisitController {
 	@Autowired

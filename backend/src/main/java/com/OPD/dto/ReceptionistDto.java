@@ -34,7 +34,6 @@ public class ReceptionistDto {
     )
 	private String mobileNo;
 	
-	@NotNull(message = "Status is required")
 	private Receptionist.Status status;
 
 	public Integer getDoctorId() {

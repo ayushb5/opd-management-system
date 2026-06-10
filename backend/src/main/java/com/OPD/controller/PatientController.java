@@ -24,7 +24,7 @@ import com.OPD.services.PatientService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("/patients")
 @CrossOrigin
 public class PatientController {
 	@Autowired

@@ -25,7 +25,7 @@ import com.OPD.services.DoctorService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/doctor")
+@RequestMapping("/doctors")
 @CrossOrigin
 public class DoctorController {
 	@Autowired
@@ -49,7 +49,6 @@ public class DoctorController {
 		doctor.setClinicName(doctorDto.getClinicName());
 		doctor.setAddress(doctorDto.getAddress());
 		doctor.setMobileNo(doctorDto.getMobileNo());
-		doctor.setStatus(doctorDto.getStatus());
 		
 		Doctor savedDoctor=service.save(doctor);
 		

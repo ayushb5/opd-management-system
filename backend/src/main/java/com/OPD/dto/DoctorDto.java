@@ -40,7 +40,6 @@ public class DoctorDto {
 		)
 	private String mobileNo;
 	
-	@NotNull(message = "Status is required")
 	private Doctor.Status status;
 
 	public String getName() {

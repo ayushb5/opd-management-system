@@ -24,7 +24,7 @@ import com.OPD.services.TestMasterService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/test-master")
+@RequestMapping("/test-masters")
 @CrossOrigin
 public class TestMasterController {
 	@Autowired

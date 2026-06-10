@@ -6,6 +6,7 @@ public class LoginResponse {
 	private String token;
 	private Role role;
 	private String email;
+	private String name;
 	
 	public String getToken() {
 		return token;
@@ -24,12 +25,18 @@ public class LoginResponse {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}	
+	public String getName() {
+		return name;
 	}
-	
-	public LoginResponse(String token, Role role, String email) {
+	public void setName(String name) {
+		this.name = name;
+	}
+	public LoginResponse(String token, Role role, String email, String name) {
 		super();
 		this.token = token;
 		this.role = role;
 		this.email = email;
+		this.name = name;
 	}
 }
