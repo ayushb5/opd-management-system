@@ -1,5 +1,5 @@
 import DashboardCard from "../../components/DashboardCard"
-import { PersonBadge, CurrencyRupee, Person, CalendarCheck } from "react-bootstrap-icons"
+import { PersonBadge, CurrencyRupee, CalendarCheck, People } from "react-bootstrap-icons"
 function AdminDashboard() {
     return (
         <div className="container-fluid">
@@ -11,7 +11,7 @@ function AdminDashboard() {
                     <DashboardCard title={"Total Doctors"} count={12} icon={<PersonBadge />} />
                 </div>
                 <div className="col-12 col-sm-6 col-xl-3">
-                    <DashboardCard title={"Total Patients"} count={120} icon={<Person />} />
+                    <DashboardCard title={"Total Patients"} count={120} icon={<People />} />
                 </div>
                 <div className="col-12 col-sm-6 col-xl-3">
                     <DashboardCard title={"Total Earnings"} count={5000} icon={<CurrencyRupee

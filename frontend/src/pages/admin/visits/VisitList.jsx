@@ -55,6 +55,10 @@ function VisitList() {
 
             visit.doctor?.name
                 ?.toLowerCase()
+                .includes(search.toLowerCase()) ||
+
+            visit.complaints
+                ?.toLowerCase()
                 .includes(search.toLowerCase())
     );
 
