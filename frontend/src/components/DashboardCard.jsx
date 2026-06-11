@@ -4,7 +4,7 @@ function DashboardCard({ title, count, icon }) {
             <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 className="text-muted">{title}</h6>
+                        <h6 className="text-muted text-nowrap">{title}</h6>
                         <h3>{count}</h3>
                     </div>
 
