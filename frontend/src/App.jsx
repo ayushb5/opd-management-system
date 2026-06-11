@@ -18,6 +18,12 @@ import EditPatient from "./pages/admin/patients/EditPatient";
 import VisitList from "./pages/admin/visits/VisitList";
 import AddVisit from "./pages/admin/visits/AddVisit";
 import EditVisit from "./pages/admin/visits/EditVisit";
+import MedicineList from "./pages/admin/medicines/MedicineList";
+import AddMedicine from "./pages/admin/medicines/AddMedicine";
+import EditMedicine from "./pages/admin/medicines/EditMedicine";
+import ReferralCenterList from "./pages/admin/referralCenter/ReferralCenterList";
+import AddReferralCenter from "./pages/admin/referralCenter/AddReferralCenter";
+import EditReferralCenter from "./pages/admin/referralCenter/EditReferralCenter";
 
 function App() {
   return (
@@ -26,6 +32,7 @@ function App() {
 
       <Route element={<DashboardLayout />}>
 
+        {/* Admin */}
         <Route
           path="/admin/dashboard"
           element={
@@ -35,6 +42,7 @@ function App() {
           }
         />
 
+        {/* Admin - Doctor */}
         <Route
           path="/admin/doctors/"
         >
@@ -64,7 +72,7 @@ function App() {
           />
 
         </Route>
-
+        {/* Admin - Receptionist */}
         <Route path="/admin/receptionists">
           <Route index element={
             <ProtectedRoute allowedRole="ADMIN">
@@ -89,7 +97,7 @@ function App() {
             }
           />
         </Route>
-
+        {/* Admin - Patient */}
         <Route path="/admin/patients">
           <Route index element={
             <ProtectedRoute allowedRole="ADMIN">
@@ -110,7 +118,7 @@ function App() {
           }
           />
         </Route>
-
+        {/* Admin - Visit */}
         <Route path="/admin/visits">
           <Route index element={
             <ProtectedRoute allowedRole="ADMIN">
@@ -127,6 +135,50 @@ function App() {
           <Route path="edit-visit/:id" element={
             <ProtectedRoute allowedRole="ADMIN">
               <EditVisit />
+            </ProtectedRoute>
+          }
+          />
+        </Route>
+
+        {/* Admin - Medicine */}
+        <Route path="/admin/medicines">
+          <Route index element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <MedicineList />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="add-medicine" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <AddMedicine />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="edit-medicine/:id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <EditMedicine />
+            </ProtectedRoute>
+          }
+          />
+        </Route>
+
+        {/* Admin - Referrral Center */}
+        <Route path="/admin/referral-centers">
+          <Route index element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <ReferralCenterList />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="add-referral-center" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <AddReferralCenter />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="edit-referral-center/:id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <EditReferralCenter />
             </ProtectedRoute>
           }
           />
