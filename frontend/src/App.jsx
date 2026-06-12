@@ -24,6 +24,7 @@ import EditMedicine from "./pages/admin/medicines/EditMedicine";
 import ReferralCenterList from "./pages/admin/referralCenter/ReferralCenterList";
 import AddReferralCenter from "./pages/admin/referralCenter/AddReferralCenter";
 import EditReferralCenter from "./pages/admin/referralCenter/EditReferralCenter";
+import Visits from "./pages/doctor/visits/Visits";
 
 function App() {
   return (
@@ -184,6 +185,7 @@ function App() {
           />
         </Route>
 
+        {/* Doctor */}
         <Route
           path="/doctor/dashboard"
           element={
@@ -192,6 +194,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/doctor/visits/"
+        >
+          <Route index element={
+            <ProtectedRoute allowedRole="DOCTOR">
+              <Visits />
+            </ProtectedRoute>
+          }
+          />
+        </Route>
 
         <Route
           path="/receptionist/dashboard"
