@@ -17,7 +17,8 @@ function Sidebar({ showTitle = true }) {
             { name: "Referral Centers", path: "/admin/referral-centers", icon: <Diagram3Fill /> }
         ],
         DOCTOR: [
-            { name: "Dashboard", path: "/doctor/dashboard" },
+            { name: "Dashboard", path: "/doctor/dashboard", icon: <Grid /> },
+            { name: "Visits", path: "/doctor/visits", icon: <Clipboard2Check /> },
             { name: "Appointments", path: "/doctor/appointments" }
         ],
         RECEPTIONIST: [
