@@ -16,11 +16,11 @@ function DashboardLayout() {
                     tabIndex={-1}
                     style={{ width: "280px" }}
                 >
-                    <div className="offcanvas-header bg-primary">
+                    <div className="offcanvas-header bg-dark">
                         <h5 className="text-white">City Care Hospital</h5>
                         <button
                             type="button"
-                            className="btn-close mb-1"
+                            className="btn-close mb-1 bg-light"
                             data-bs-dismiss="offcanvas"
                         ></button>
                     </div>
