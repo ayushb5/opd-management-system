@@ -30,6 +30,14 @@ export const getVisit = async (id) => {
 //   return response.data;
 // };
 
+export const getVisitsByDoctorAndDate = async (doctorId, date) => {
+  const response = await axiosInstance.get(
+    `/visits/doctor/${doctorId}/date/${date}`,
+  );
+
+  return response.data;
+};
+
 // Update Visit by Id
 export const updateVisit = async (id, visitData) => {
   const response = await axiosInstance.put(`/visits/${id}`, visitData);
