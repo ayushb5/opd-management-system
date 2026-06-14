@@ -3,7 +3,11 @@ import { Grid, PersonBadge, People, ArrowBarRight, PersonVcard, Clipboard2Check,
 import { toast } from "react-toastify"
 
 function Sidebar({ showTitle = true }) {
-    const role = localStorage.getItem("role");
+    const user = JSON.parse(
+        localStorage.getItem("user") || "{}"
+    );
+
+    const role = user.role;
     const navigate = useNavigate();
 
     const menuItems = {
