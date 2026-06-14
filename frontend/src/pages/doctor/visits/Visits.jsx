@@ -1,26 +1,40 @@
 import { useEffect, useState } from "react";
-import { Search, Pencil, Trash } from "react-bootstrap-icons";
+import { Search } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "../../../components/ConfirmationModal";
 import { toast } from "react-toastify";
-import { deleteVisit, getVisits } from "../../../services/visitService";
+import { getVisitsByDoctorAndDate } from "../../../services/visitService";
 
 function Visits() {
 
     const [visits, setVisits] = useState([]);
     const [search, setSearch] = useState("");
-    const [showModal, setShowModal] = useState(false);
-    const [selectedVisitId, setSelectedVisitId] = useState(null);
+
+    const user = JSON.parse(
+        localStorage.getItem("user") || "{}"
+    );
+
+    const doctorId = user.id;
+
+    const [selectedDate, setSelectedDate] = useState(
+        new Date().toISOString().split("T")[0]
+    );
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchVisits();
-    }, []);
+        if (doctorId && selectedDate) {
+            fetchVisits();
+        } else {
+            setVisits([]);
+        }
+    }, [selectedDate, doctorId]);
 
     const fetchVisits = async () => {
         try {
-            const data = await getVisits();
+            const data = await getVisitsByDoctorAndDate(
+                doctorId,
+                selectedDate
+            );
             setVisits(data);
         } catch (error) {
             console.error(error);
@@ -28,32 +42,9 @@ function Visits() {
         }
     };
 
-    const handleDelete = async () => {
-        try {
-            await deleteVisit(selectedVisitId);
-
-            toast.success("Visit deleted successfully");
-
-            setVisits(
-                visits.filter(
-                    visit => visit.id !== selectedVisitId
-                )
-            );
-
-            setShowModal(false);
-        } catch (error) {
-            toast.error("Failed to delete visit");
-            console.error(error);
-        }
-    };
-
     const filteredVisits = visits.filter(
         (visit) =>
             visit.patient?.patientName
-                ?.toLowerCase()
-                .includes(search.toLowerCase()) ||
-
-            visit.doctor?.name
                 ?.toLowerCase()
                 .includes(search.toLowerCase()) ||
 
@@ -64,10 +55,11 @@ function Visits() {
 
     return (
         <>
-            <div className="d-flex align-items-center gap-2">
+            <h4 className="text-center mb-3">My Visits</h4>
+            <div className="d-flex align-items-center gap-3 mb-3">
 
                 <div className="flex-grow-1">
-                    <div className="input-group w-50">
+                    <div className="input-group">
                         <span className="input-group-text border-black">
                             <Search />
                         </span>
@@ -82,6 +74,15 @@ function Visits() {
                     </div>
                 </div>
 
+                <input
+                    type="date"
+                    className="form-control"
+                    style={{ width: "200px" }}
+                    value={selectedDate}
+                    onChange={(e) =>
+                        setSelectedDate(e.target.value)
+                    }
+                />
             </div>
 
             <div className="table-responsive mt-3">
@@ -92,10 +93,9 @@ function Visits() {
                             <th>ID</th>
                             <th>Date</th>
                             <th>Patient</th>
-                            <th>Doctor</th>
                             <th>Complaints</th>
-                            <th>Diagnosis</th>
                             <th className="text-nowrap">Follow Up</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -112,42 +112,40 @@ function Visits() {
                                         {visit.patient?.patientName}
                                     </td>
 
-                                    <td className="text-nowrap">
-                                        {visit.doctor?.name}
-                                    </td>
-
                                     <td>
                                         {visit.complaints}
-                                    </td>
-
-                                    <td>
-                                        {visit.diagnosis || "-"}
                                     </td>
 
                                     <td className="text-nowrap">
                                         {visit.followupDate || "-"}
                                     </td>
 
+                                    <td>
+                                        <span
+                                            className={`badge ${visit.status === "WAITING"
+                                                ? "bg-warning text-dark"
+                                                : visit.status === "IN_CONSULTATION"
+                                                    ? "bg-info"
+                                                    : visit.status === "COMPLETED"
+                                                        ? "bg-success"
+                                                        : "bg-danger"
+                                                }`}
+                                        >
+                                            {visit.status}
+                                        </span>
+                                    </td>
+
+
                                     <td className="text-nowrap">
                                         <button
-                                            className="btn btn-warning btn-sm me-2"
+                                            className="btn btn-primary btn-sm me-2"
                                             onClick={() =>
                                                 navigate(
-                                                    `edit-visit/${visit.id}`
+                                                    `${visit.id}`
                                                 )
                                             }
                                         >
-                                            <Pencil />
-                                        </button>
-
-                                        <button
-                                            className="btn btn-danger btn-sm"
-                                            onClick={() => {
-                                                setSelectedVisitId(visit.id);
-                                                setShowModal(true);
-                                            }}
-                                        >
-                                            <Trash />
+                                            Open
                                         </button>
                                     </td>
                                 </tr>
@@ -155,7 +153,7 @@ function Visits() {
                         ) : (
                             <tr>
                                 <td
-                                    colSpan={8}
+                                    colSpan={7}
                                     className="text-center"
                                 >
                                     No visits found
@@ -167,14 +165,6 @@ function Visits() {
 
                 </table>
             </div>
-
-            <ConfirmationModal
-                show={showModal}
-                title="Delete Visit"
-                message="Are you sure you want to delete this visit?"
-                onConfirm={handleDelete}
-                onClose={() => setShowModal(false)}
-            />
         </>
     );
 }
