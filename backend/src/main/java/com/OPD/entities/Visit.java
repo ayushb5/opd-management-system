@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,6 +40,17 @@ public class Visit {
 	private String diagnosis;
 	@Column(columnDefinition = "TEXT")
 	private String advice;
+	
+	public enum Status {
+	    WAITING,
+	    IN_CONSULTATION,
+	    COMPLETED,
+	    CANCELLED
+	}
+	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private Status status;
 	
 	private String bp;
 	
@@ -89,6 +102,10 @@ public class Visit {
 	public void onCreate() {
 	    createdAt = LocalDateTime.now();
 	    updatedAt = LocalDateTime.now();
+	    
+	    if(status == null) {
+	        status = Status.WAITING;
+	    }
 	}
 
 	@PreUpdate
@@ -134,6 +151,14 @@ public class Visit {
 
 	public void setComplaints(String complaints) {
 		this.complaints = complaints;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public String getDiagnosis() {
@@ -352,7 +377,7 @@ public class Visit {
 		this.updatedAt = updatedAt;
 	}
 
-	public Visit(Integer id, Patient patient, Doctor doctor, LocalDate visitDate, String complaints, String diagnosis,
+	public Visit(Integer id, Patient patient, Doctor doctor, LocalDate visitDate, String complaints,Status status, String diagnosis,
 			String advice, String bp, Integer pulse, Integer saturation, Double temperature, Integer respirationRate,
 			Double fastingSugar, Double ppSugar, Double randomSugar, String ureaCreatinine, String pastHistory,
 			String currentMedication, String additionalNotes, Double weight, String edema, String pallor,
@@ -364,6 +389,7 @@ public class Visit {
 		this.doctor = doctor;
 		this.visitDate = visitDate;
 		this.complaints = complaints;
+		this.status=status;
 		this.diagnosis = diagnosis;
 		this.advice = advice;
 		this.bp = bp;
@@ -403,7 +429,6 @@ public class Visit {
 
 	public Visit() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 }

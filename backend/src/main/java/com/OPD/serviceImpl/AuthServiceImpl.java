@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
 			if(!passwordEncoder.matches(loginDto.getPassword(), adminData.getPassword())) {
 				throw new InvalidCredentialsException("Invalid email or password");
 			}
-			return new LoginResponse(jwtService.generateToken(adminData.getEmail()),adminData.getRole(),adminData.getEmail(),adminData.getName());
+			return new LoginResponse(adminData.getId(),jwtService.generateToken(adminData.getEmail()),adminData.getRole(),adminData.getEmail(),adminData.getName());
 		}
 		
 		Optional<Doctor> doctor=doctorRepository.findByEmail(loginDto.getEmail());
@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
 			if(!passwordEncoder.matches(loginDto.getPassword(), doctorData.getPassword())) {
 				throw new InvalidCredentialsException("Invalid email or password");
 			}
-			return new LoginResponse(jwtService.generateToken(doctorData.getEmail()),doctorData.getRole(),doctorData.getEmail(),doctorData.getName());
+			return new LoginResponse(doctorData.getId(),jwtService.generateToken(doctorData.getEmail()),doctorData.getRole(),doctorData.getEmail(),doctorData.getName());
 		}
 		
 		Optional<Receptionist> receptionist=receptionistRepository.findByEmail(loginDto.getEmail());
@@ -56,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
 			if(!passwordEncoder.matches(loginDto.getPassword(), receptionistData.getPassword())) {
 				throw new InvalidCredentialsException("Invalid email or password");
 			}
-			return new LoginResponse(jwtService.generateToken(receptionistData.getEmail()), receptionistData.getRole(), receptionistData.getEmail(), receptionistData.getName());
+			return new LoginResponse(receptionistData.getId(),jwtService.generateToken(receptionistData.getEmail()), receptionistData.getRole(), receptionistData.getEmail(), receptionistData.getName());
 		}
 		throw new InvalidCredentialsException("Invalid email or password");
 	}

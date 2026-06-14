@@ -3,11 +3,18 @@ package com.OPD.response;
 import com.OPD.enums.Role;
 
 public class LoginResponse {
+	private Integer id;
 	private String token;
 	private Role role;
 	private String email;
 	private String name;
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getToken() {
 		return token;
 	}
@@ -32,8 +39,9 @@ public class LoginResponse {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public LoginResponse(String token, Role role, String email, String name) {
+	public LoginResponse(Integer id, String token, Role role, String email, String name) {
 		super();
+		this.id = id;
 		this.token = token;
 		this.role = role;
 		this.email = email;

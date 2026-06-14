@@ -1,5 +1,6 @@
 package com.OPD.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class VisitServiceImpl implements VisitService {
 	@Override
 	public List<Visit> getVisitsByPatientId(Integer patientId) {
 		return repository.findByPatient_Id(patientId);
+	}
+
+	@Override
+	public List<Visit> getVisitsByDoctorIdAndVisitDate(Integer doctorId, LocalDate visitDate) {
+		return repository.findByDoctor_IdAndVisitDate(doctorId, visitDate);
 	}
 
 }

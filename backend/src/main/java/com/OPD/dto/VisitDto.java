@@ -2,6 +2,8 @@ package com.OPD.dto;
 
 import java.time.LocalDate;
 
+import com.OPD.entities.Visit;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,10 +19,10 @@ public class VisitDto {
 	@NotBlank(message="Complaint is required")
 	private String complaints;
 	
-	@NotBlank(message="Diagnosis is required")
+	private Visit.Status status;
+	
 	private String diagnosis;
 	
-	@NotBlank(message="Advice is required")
 	private String advice;
 	
 	private String bp;
@@ -40,7 +42,6 @@ public class VisitDto {
 	private String currentMedication;
 	private String additionalNotes;
 	
-	@NotNull(message = "Weight is required")
 	private Double weight;
 	
 	private String edema;
@@ -61,7 +62,6 @@ public class VisitDto {
 	
 	private String ecg;
 	
-	@NotNull(message="Follow up date is required")
 	private LocalDate followupDate;
 
 	public Integer getDoctorId() {
@@ -94,6 +94,14 @@ public class VisitDto {
 
 	public void setComplaints(String complaints) {
 		this.complaints = complaints;
+	}
+	
+	public Visit.Status getStatus() {
+	    return status;
+	}
+	
+	public void setStatus(Visit.Status status) {
+	    this.status = status;
 	}
 
 	public String getDiagnosis() {

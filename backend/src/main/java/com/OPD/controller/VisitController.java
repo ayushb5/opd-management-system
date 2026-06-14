@@ -1,5 +1,6 @@
 package com.OPD.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class VisitController {
 
 		visit.setVisitDate(visitDto.getVisitDate());
 		visit.setComplaints(visitDto.getComplaints());
+		visit.setStatus(visitDto.getStatus());
 		visit.setDiagnosis(visitDto.getDiagnosis());
 		visit.setAdvice(visitDto.getAdvice());
 		visit.setBp(visitDto.getBp());
@@ -89,16 +91,29 @@ public class VisitController {
 		return new ResponseEntity<>(visit,HttpStatus.OK);
 	}
 	
-	@GetMapping("doctor/{doctorId}")
+	@GetMapping("/doctor/{doctorId}")
 	public ResponseEntity<List<Visit>> getVisitsByDoctor(@PathVariable("doctorId") Integer doctorId){
 		List<Visit> visits=service.getVisitsByDoctorId(doctorId);
 		return new ResponseEntity<>(visits,HttpStatus.OK);
 	}
 	
-	@GetMapping("patient/{patientId}")
+	@GetMapping("/patient/{patientId}")
 	public ResponseEntity<List<Visit>> getVisitsByPatient(@PathVariable("patientId") Integer patientId){
 		List<Visit> visits=service.getVisitsByPatientId(patientId);
 		return new ResponseEntity<>(visits,HttpStatus.OK);
+	}
+	
+	@GetMapping("/doctor/{doctorId}/date/{visitDate}")
+	public ResponseEntity<List<Visit>> getVisitsByDoctorIdAndVisitDate(
+	        @PathVariable Integer doctorId,
+	        @PathVariable LocalDate visitDate) {
+
+	    return ResponseEntity.ok(
+	        service.getVisitsByDoctorIdAndVisitDate(
+	            doctorId,
+	            visitDate
+	        )
+	    );
 	}
 	
 	@PutMapping("/{id}")
@@ -110,6 +125,7 @@ public class VisitController {
 
 		visit.setVisitDate(visitDto.getVisitDate());
 		visit.setComplaints(visitDto.getComplaints());
+		visit.setStatus(visitDto.getStatus());
 		visit.setDiagnosis(visitDto.getDiagnosis());
 		visit.setAdvice(visitDto.getAdvice());
 		visit.setBp(visitDto.getBp());

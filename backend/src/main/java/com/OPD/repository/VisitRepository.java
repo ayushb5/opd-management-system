@@ -1,5 +1,6 @@
 package com.OPD.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,8 @@ import com.OPD.entities.Visit;
 public interface VisitRepository extends JpaRepository<Visit, Integer> {
 	List<Visit> findByDoctor_Id(Integer doctorId);
 	List<Visit> findByPatient_Id(Integer patientId);
+	List<Visit> findByDoctor_IdAndVisitDate(
+	        Integer doctorId,
+	        LocalDate visitDate
+	);
 }

@@ -1,5 +1,6 @@
 package com.OPD.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.OPD.entities.Visit;
@@ -11,4 +12,8 @@ public interface VisitService {
 	void deleteVisitById(Integer id);
 	List<Visit> getVisitsByDoctorId(Integer doctorId);
     List<Visit> getVisitsByPatientId(Integer patientId);
+    List<Visit> getVisitsByDoctorIdAndVisitDate(
+            Integer doctorId,
+            LocalDate visitDate
+    );
 }
