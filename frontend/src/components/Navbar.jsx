@@ -1,10 +1,11 @@
 import { List } from "react-bootstrap-icons";
 
 function Navbar() {
-    const role = localStorage.getItem("role");
-    const name = localStorage.getItem("name");
+    const user = JSON.parse(
+        localStorage.getItem("user")
+    );
     return (
-        <div className="bg-white shadow-sm p-3 d-flex align-items-center">
+        <div className="bg-white shadow-sm p-2 d-flex align-items-center">
 
             <button className="btn btn-outline-primary d-lg-none me-3" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffCanvas">
                 <List />
@@ -15,7 +16,7 @@ function Navbar() {
 
             <div className="ms-auto d-flex align-items-center">
                 <span className="badge bg-primary me-2 ">
-                    {role}
+                    {user.role}
                 </span>
 
                 <div className="d-none d-md-block">
@@ -24,7 +25,7 @@ function Navbar() {
                     </small>
 
                     <small className="fw-semibold">
-                        {name}
+                        {user.name}
                     </small>
                 </div>
             </div>
