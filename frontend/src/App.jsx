@@ -25,6 +25,7 @@ import ReferralCenterList from "./pages/admin/referralCenter/ReferralCenterList"
 import AddReferralCenter from "./pages/admin/referralCenter/AddReferralCenter";
 import EditReferralCenter from "./pages/admin/referralCenter/EditReferralCenter";
 import Visits from "./pages/doctor/visits/Visits";
+import VisitDetails from "./pages/doctor/visits/VisitDetails";
 
 function App() {
   return (
@@ -204,6 +205,13 @@ function App() {
             </ProtectedRoute>
           }
           />
+          <Route path=":id" element={
+            <ProtectedRoute allowedRole="DOCTOR">
+              <VisitDetails />
+            </ProtectedRoute>
+          }
+          />
+
         </Route>
 
         <Route
