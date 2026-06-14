@@ -8,9 +8,38 @@
     font-weight: bold;
 }
 
+.visit-rows .col-12 {
+    width: 100%;
+}
+
+/* Scroll */
+.custom-scroll {
+    max-height: 220px;
+    overflow-y: auto;
+
+    scrollbar-width: none;
+}
+
+.custom-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+
 @media (max-width: 500.98px) {
     .add-btn {
         font-size: small !important;
         padding: 0.25rem 0.5rem !important;
+    }
+}
+
+@media(min-width:500px) {
+    .visit-rows .col-12 {
+        width: 50%;
+    }
+}
+
+@media(min-width:768px) {
+    .visit-rows .col-12 {
+        width: 33.333333%;
     }
 }
