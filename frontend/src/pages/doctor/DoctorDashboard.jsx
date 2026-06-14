@@ -1,4 +1,4 @@
-import { PersonBadge, CurrencyRupee, CalendarCheck, People, Calendar, HourglassSplit } from "react-bootstrap-icons"
+import { CalendarCheck, People, Calendar, HourglassSplit } from "react-bootstrap-icons"
 import DashboardCard from "../../components/DashboardCard"
 function DoctorDashboard() {
     return (
