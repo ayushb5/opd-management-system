@@ -22,8 +22,7 @@ function Sidebar({ showTitle = true }) {
         ],
         DOCTOR: [
             { name: "Dashboard", path: "/doctor/dashboard", icon: <Grid /> },
-            { name: "Visits", path: "/doctor/visits", icon: <Clipboard2Check /> },
-            { name: "Appointments", path: "/doctor/appointments" }
+            { name: "Visits", path: "/doctor/visits", icon: <Clipboard2Check /> }
         ],
         RECEPTIONIST: [
             { name: "Dashboard", path: "/receptionist/dashboard" },
