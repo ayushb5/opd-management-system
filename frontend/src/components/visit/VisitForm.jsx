@@ -610,6 +610,42 @@ function VisitForm({ initialValues, onSubmit, isEdit = false }) {
 
             </div>
 
+            {/* Status */}
+            {isEdit && (
+                <div className="card shadow-sm mb-4">
+
+                    <div className="card-header">
+                        <h5 className="mb-0">
+                            Status
+                        </h5>
+                    </div>
+
+                    <div className="card-body">
+
+                        <div className="row">
+
+                            <div className="col-md-4">
+
+                                <label className="form-label">
+                                    Select Status <span className="text-danger">*</span>
+                                </label>
+
+                                <select name="status" id="status" value={formik.values.status} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-select border-black">
+                                    <option value="WAITING">Waiting</option>
+                                    <option value="IN_CONSULTATION">In Consultation</option>
+                                    <option value="COMPLETED">Completed</option>
+                                    <option value="CANCELLED">Cancelled</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            )}
+
             <div className="text-center mb-5">
 
                 <button
