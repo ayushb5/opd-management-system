@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getVisit } from "../../../services/visitService";
-import { Activity, ArrowLeft, FileEarmarkText } from "react-bootstrap-icons";
+import { Activity, ArrowLeft, CalendarCheck, Capsule, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck } from "react-bootstrap-icons";
+import { getMedicine } from "../../../services/medicineService";
+import Prescription from "./prescription/Prescription";
 
 const capitalizeGender = (text) =>
     text
@@ -165,6 +167,163 @@ function VisitDetails() {
                         </div>
                     </div>
                 </div>
+                <div className="col-12 col-md-4">
+                    <div className="card h-100">
+                        <div className="card-header bg-light text-primary">
+                            <Clipboard2Pulse /> Diagnosis & Advice
+                        </div>
+                        <div className="card-body custom-scroll">
+                            <div className="d-flex flex-column mb-2">
+                                <label htmlFor="diagnosis" className="form-label">Diagnosis</label>
+                                <textarea name="diagnosis" id="diagnosis" className="form-control border-black" rows={2} value={visit.diagnosis}>
+                                </textarea>
+                            </div>
+                            <div className="d-flex flex-column">
+                                <label htmlFor="advice" className="form-label">Advice</label>
+                                <textarea name="advice" className="form-control border-black" id="advice" rows={2} value={visit.advice}></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="row mt-4 g-4 visit-rows">
+                <div className="col-12 col-md-4">
+                    <div className="card h-100">
+                        <div className="card-header bg-light text-primary">
+                            <Droplet /> Sugar Profile
+                        </div>
+                        <div className="card-body">
+                            <div className="d-flex h-100 flex-column gap-5">
+                                <div>
+                                    <span className="text-muted">Fasting Sugar</span>
+                                    <span className="ms-3">{visit.fastingSugar || "-"}</span>
+                                </div>
+                                <div>
+                                    <span className="text-muted">PP Sugar</span>
+                                    <span className="ms-3">{visit.ppSugar || "-"}</span>
+                                </div>
+                                <div>
+                                    <span className="text-muted">Random Sugar</span>
+                                    <span className="ms-3">{visit.randomSugar || "-"}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-12 col-md-4">
+                    <div className="card h-100">
+                        <div className="card-header bg-light text-primary">
+                            <ClipboardData /> Lab Findings
+                        </div>
+
+                        <div className="card-body">
+                            <div className="d-flex h-100 flex-column gap-5">
+                                <div>
+                                    <span className="text-muted">Hb</span>
+                                    <span className="ms-3">{visit.hb || "-"}</span>
+                                </div>
+                                <div>
+                                    <span className="text-muted">Urea / Creatinine</span>
+                                    <span className="ms-3">{visit.ureaCreatinine || "-"}</span>
+                                </div>
+                                <div>
+                                    <span className="text-muted">ECG</span>
+                                    <span className="ms-3">{visit.ecg || "-"}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-12 col-md-4">
+                    <div className="card h-100">
+                        <div className="card-header bg-light text-primary">
+                            <CalendarCheck /> Follow-up Date
+                        </div>
+                        <div className="card-body">
+                            <label htmlFor="followupDate" className="form-label">Next Review Date</label>
+                            <input
+                                type="date"
+                                name="followupDate"
+                                id="followupDate"
+                                className="form-control"
+                                style={{ width: "200px" }}
+                                value={visit.followupDate}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="row mt-4 g-4 visit-rows">
+                <div className="col-12 col-md-4">
+                    <div className="card h-100">
+                        <div className="card-header bg-light text-primary">
+                            <PersonCheck /> Clinical Examination
+                        </div>
+                        <div className="card-body">
+                            <div className="row mb-3 ms-1">
+                                <div className="col-4 form-check">
+                                    <input className="form-check-input" type="checkbox" id="edema" name="edema" checked={visit.edema == "YES"} />
+                                    <label htmlFor="edema" className="form-check-label">Edema</label>
+                                </div>
+                                <div className="col-4 form-check">
+                                    <input className="form-check-input" type="checkbox" id="pallor" name="pallor" checked={visit.pallor == "YES"} />
+                                    <label htmlFor="pallor" className="form-check-label">Pallor</label>
+                                </div>
+                                <div className="col-4 form-check">
+                                    <input className="form-check-input" type="checkbox" id="jaundice" name="jaundice" checked={visit.jaundice == "YES"} />
+                                    <label htmlFor="jaundice" className="form-check-label">Jaundice</label>
+                                </div>
+                            </div>
+                            <div className="row mb-3 ms-1">
+                                <div className="col-6">
+                                    <div className="text-muted">CVS</div>
+                                    <div className="fw-semibold">{visit.cvs || "-"}</div>
+                                </div>
+                                <div className="col-6">
+                                    <div className="text-muted">RS</div>
+                                    <div className="fw-semibold">{visit.rs || "-"}</div>
+                                </div>
+                            </div>
+                            <div className="row mb-3 ms-1">
+                                <div className="col-6">
+                                    <div className="text-muted">PA</div>
+                                    <div className="fw-semibold">{visit.pa || "-"}</div>
+                                </div>
+                                <div className="col-6">
+                                    <div className="text-muted">CNS</div>
+                                    <div className="fw-semibold">{visit.cns || "-"}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-12 col-md-4">
+                    <div className="card h-100">
+                        <div className="card-header bg-light text-primary">
+                            <ClockHistory /> Past History
+                        </div>
+                        <div className="card-body m-0 p-0 custom-scroll">
+                            <textarea name="pastHistory" id="" className="form-control border-none" value={visit.pastHistory || "-"} rows={8} />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-12 col-md-4">
+                    <div className="card h-100">
+                        <div className="card-header bg-light text-primary">
+                            <JournalText /> Additional Notes
+                        </div>
+
+                        <div className="card-body m-0 p-0 custom-scroll">
+                            <textarea name="additionalNotes" id="" className="form-control border-none" value={visit.additionalNotes || "-"} rows={8} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-4">
+                <Prescription visitId={visit.id} />
             </div>
         </>
     );
