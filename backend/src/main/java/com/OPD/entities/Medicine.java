@@ -15,6 +15,7 @@ public class Medicine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	@ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
@@ -74,7 +75,6 @@ public class Medicine {
 
 	public Medicine() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 }
