@@ -47,7 +47,8 @@ function EditVisit() {
         pa: "",
         cns: "",
 
-        followupDate: ""
+        followupDate: "",
+        status: ""
     });
 
     useEffect(() => {
@@ -95,7 +96,8 @@ function EditVisit() {
                 pa: visit.pa || "",
                 cns: visit.cns || "",
 
-                followupDate: visit.followupDate || ""
+                followupDate: visit.followupDate || "",
+                status: visit.status || ""
             });
 
         } catch (error) {
