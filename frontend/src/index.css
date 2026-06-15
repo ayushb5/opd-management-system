@@ -32,12 +32,6 @@
     }
 }
 
-@media(min-width:500px) {
-    .visit-rows .col-12 {
-        width: 50%;
-    }
-}
-
 @media(min-width:768px) {
     .visit-rows .col-12 {
         width: 33.333333%;
