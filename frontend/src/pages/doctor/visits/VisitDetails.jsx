@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getVisit } from "../../../services/visitService";
-import { Activity, ArrowLeft, CalendarCheck, Capsule, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck } from "react-bootstrap-icons";
-import { getMedicine } from "../../../services/medicineService";
+import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck } from "react-bootstrap-icons";
 import Prescription from "./prescription/Prescription";
 
 const capitalizeGender = (text) =>
