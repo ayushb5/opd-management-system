@@ -305,7 +305,7 @@ function VisitDetails() {
                             <ClockHistory /> Past History
                         </div>
                         <div className="card-body m-0 p-0 custom-scroll">
-                            <textarea name="pastHistory" id="" className="form-control border-none" value={visit.pastHistory || "-"} rows={8} />
+                            <textarea name="pastHistory" id="" className="form-control border-0" value={visit.pastHistory || "-"} rows={8} />
                         </div>
                     </div>
                 </div>
@@ -316,7 +316,7 @@ function VisitDetails() {
                         </div>
 
                         <div className="card-body m-0 p-0 custom-scroll">
-                            <textarea name="additionalNotes" id="" className="form-control border-none" value={visit.additionalNotes || "-"} rows={8} />
+                            <textarea name="additionalNotes" id="" className="form-control border-0" value={visit.additionalNotes || "-"} rows={8} />
                         </div>
                     </div>
                 </div>
