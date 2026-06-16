@@ -45,15 +45,31 @@ public class PrescriptionController {
 		Visit visit=visitService.getVisitById(prescriptionDto.getVisitId());
 		Medicine medicine=medicineService.getMedicineById(prescriptionDto.getMedicineId());
 		
-		prescription.setDosage(prescriptionDto.getDosage());
-		prescription.setDuration(prescriptionDto.getDuration());
+		String dosage =
+		        prescriptionDto.getDoseQuantity() + " "
+		      + prescriptionDto.getDoseUnit()
+		      + " ("
+		      + prescriptionDto.getMorningDose() + "-"
+		      + prescriptionDto.getAfternoonDose() + "-"
+		      + prescriptionDto.getEveningDose() + ")";
+
+		prescription.setDosage(dosage);
+		
 		prescription.setInstructions(prescriptionDto.getInstructions());
-		prescription.setQuantity(prescriptionDto.getQuantity());
 		prescription.setMorningDose(prescriptionDto.getMorningDose());
 		prescription.setAfternoonDose(prescriptionDto.getAfternoonDose());
 		prescription.setEveningDose(prescriptionDto.getEveningDose());
 		prescription.setDurationDays(prescriptionDto.getDurationDays());
-		prescription.setTotalQuantity(prescriptionDto.getTotalQuantity());
+		int totalQuantity =
+			    (
+			        prescriptionDto.getMorningDose()
+			        + prescriptionDto.getAfternoonDose()
+			        + prescriptionDto.getEveningDose()
+			    )
+			    * prescriptionDto.getDurationDays();
+
+			prescription.setTotalQuantity(totalQuantity);
+			prescription.setQuantity(totalQuantity);
 		prescription.setQuantityNote(prescriptionDto.getQuantityNote());
 		prescription.setDoseQuantity(prescriptionDto.getDoseQuantity());
 		prescription.setDoseUnit(prescriptionDto.getDoseUnit());
@@ -90,15 +106,32 @@ public class PrescriptionController {
 		Visit visit=visitService.getVisitById(prescriptionDto.getVisitId());
 		Medicine medicine=medicineService.getMedicineById(prescriptionDto.getMedicineId());
 		
-		prescription.setDosage(prescriptionDto.getDosage());
-		prescription.setDuration(prescriptionDto.getDuration());
+		String dosage =
+		        prescriptionDto.getDoseQuantity() + " "
+		      + prescriptionDto.getDoseUnit()
+		      + " ("
+		      + prescriptionDto.getMorningDose() + "-"
+		      + prescriptionDto.getAfternoonDose() + "-"
+		      + prescriptionDto.getEveningDose() + ")";
+
+		prescription.setDosage(dosage);
 		prescription.setInstructions(prescriptionDto.getInstructions());
-		prescription.setQuantity(prescriptionDto.getQuantity());
 		prescription.setMorningDose(prescriptionDto.getMorningDose());
 		prescription.setAfternoonDose(prescriptionDto.getAfternoonDose());
 		prescription.setEveningDose(prescriptionDto.getEveningDose());
 		prescription.setDurationDays(prescriptionDto.getDurationDays());
-		prescription.setTotalQuantity(prescriptionDto.getTotalQuantity());
+		int totalQuantity =
+			    (
+			        prescriptionDto.getMorningDose()
+			        + prescriptionDto.getAfternoonDose()
+			        + prescriptionDto.getEveningDose()
+			    )
+			    * prescriptionDto.getDurationDays();
+
+			prescription.setTotalQuantity(totalQuantity);
+			
+			prescription.setQuantity(totalQuantity);
+			
 		prescription.setQuantityNote(prescriptionDto.getQuantityNote());
 		prescription.setDoseQuantity(prescriptionDto.getDoseQuantity());
 		prescription.setDoseUnit(prescriptionDto.getDoseUnit());
