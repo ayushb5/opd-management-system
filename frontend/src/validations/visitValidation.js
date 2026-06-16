@@ -100,5 +100,4 @@ export const visitValidationSchema = () =>
       .transform((value, originalValue) =>
         originalValue === "" ? null : value,
       )
-      .required("Follow up date is required"),
   });
