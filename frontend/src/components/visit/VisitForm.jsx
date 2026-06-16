@@ -586,7 +586,7 @@ function VisitForm({ initialValues, onSubmit, isEdit = false }) {
                         <div className="col-md-4">
 
                             <label className="form-label">
-                                Follow Up Date <span className="text-danger">*</span>
+                                Follow Up Date
                             </label>
 
                             <input
@@ -597,11 +597,6 @@ function VisitForm({ initialValues, onSubmit, isEdit = false }) {
                                 onBlur={formik.handleBlur}
                                 className="form-control border-black"
                             />
-
-                            {formik.touched.followupDate && formik.errors.followupDate && (
-                                <div className="text-danger">{formik.errors.followupDate}</div>
-                            )}
-
                         </div>
 
                     </div>
