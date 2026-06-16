@@ -6,21 +6,23 @@ import { deletePrescription, getByVisitId } from "../../../../services/prescript
 import ConfirmationModal from '../../../../components/ConfirmationModal'
 import { toast } from "react-toastify"
 
-function Prescription({ id }) {
+function Prescription({ visitId }) {
     const [prescription, setPrescription] = useState([]);
     const [search, setSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [selectedDoctorId, setSelectedDoctorId] = useState(null);
+    const [selectedPrescriptionId, setSelectedPrescriptionId] = useState(null);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchPrescription();
-    }, [])
+        if (visitId) {
+            fetchPrescription();
+        }
+    }, [visitId]);
 
-    const fetchPrescription = async (id) => {
+    const fetchPrescription = async () => {
         try {
-            const prescriptionData = await getByVisitId(id);
+            const prescriptionData = await getByVisitId(visitId);
             setPrescription(prescriptionData);
         } catch (error) {
             console.error(error);
@@ -29,22 +31,24 @@ function Prescription({ id }) {
 
     const handleDelete = async () => {
         try {
-            await deletePrescription(selectedDoctorId);
-            toast.success("Doctor deleted successfully");
+            await deletePrescription(selectedPrescriptionId);
+            toast.success("Prescription deleted successfully");
 
             setPrescription(
-                prescription.filter(doctor => doctor.id != selectedDoctorId)
+                prescription.filter(item => item.id !== selectedPrescriptionId)
             );
 
             setShowModal(false);
         } catch (error) {
-            toast.error("Failed to delete doctor");
+            toast.error("Failed to delete prescription");
             console.error(error);
         }
     }
 
     const filteredPrescription = prescription.filter((prescription) =>
-        prescription.medicine.medicineName?.toLowerCase().includes(search.toLowerCase())
+        prescription.medicine?.medicineName
+            ?.toLowerCase()
+            .includes(search.toLowerCase())
     );
 
     return (
@@ -68,7 +72,7 @@ function Prescription({ id }) {
                 </div>
 
                 <NavLink
-                    to="add-prescription"
+                    to={`add-prescription/${visitId}`}
                     className="btn btn-primary add-btn text-nowrap"
                 >
                     Add Prescription
@@ -81,14 +85,14 @@ function Prescription({ id }) {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Medicine Name</th>
-                            <th>Dose (Qty)</th>
+                            <th className="text-nowrap">Medicine Name</th>
+                            <th className="text-nowrap">Dose (Qty)</th>
                             <th>Unit</th>
                             <th>Morning</th>
                             <th>Afternoon</th>
                             <th>Evening</th>
                             <th>Duration(Days)</th>
-                            <th>Total Qty</th>
+                            <th className="text-nowrap">Total Qty</th>
                             <th>Instructions</th>
                             <th>Actions</th>
                         </tr>
@@ -99,19 +103,24 @@ function Prescription({ id }) {
                                 <tr key={prescription.id}>
                                     <td>{prescription.id}</td>
                                     <td className="text-nowrap">{prescription.medicine.medicineName}</td>
-                                    <td>{prescription.dosage}</td>
-                                    <td>{doctor.mobileNo}</td>
-                                    <td>{doctor.email}</td>
+                                    <td>{prescription.doseQuantity}</td>
+                                    <td>{prescription.doseUnit}</td>
+                                    <td>{prescription.morningDose}</td>
+                                    <td>{prescription.afternoonDose}</td>
+                                    <td>{prescription.eveningDose}</td>
+                                    <td>{prescription.durationDays}</td>
+                                    <td>{prescription.totalQuantity}</td>
+                                    <td>{prescription.instructions}</td>
                                     <td className="text-nowrap">
                                         <button className="btn btn-warning btn-sm me-2"
-                                            onClick={() => navigate(`edit-doctor/${doctor.id}`)}
+                                            onClick={() => navigate(`edit-prescription/${prescription.id}`)}
                                         >
                                             <Pencil />
                                         </button>
 
                                         <button className="btn btn-danger btn-sm"
                                             onClick={() => {
-                                                setSelectedDoctorId(doctor.id);
+                                                setSelectedPrescriptionId(prescription.id);
                                                 setShowModal(true);
                                             }}
                                         >
@@ -133,8 +142,8 @@ function Prescription({ id }) {
 
             <ConfirmationModal
                 show={showModal}
-                title="Delete Doctor"
-                message="Are you sure you want to delete this doctor?"
+                title="Delete Prescription"
+                message="Are you sure you want to delete this prescription?"
                 onConfirm={handleDelete}
                 onClose={() => setShowModal(false)}
             />
