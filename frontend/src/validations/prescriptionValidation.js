@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 
-export const prescriptionValidationSchema = Yup.object({frontend/src/pages/doctor/visits/prescription/EditPrescription.jsx
+export const prescriptionValidationSchema = Yup.object({
+  medicineId: Yup.number().required("Medicine is required"),
 
   doseQuantity: Yup.string().required("Dose quantity is required"),
 
