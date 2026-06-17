@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getVisit } from "../../../services/visitService";
+import { getVisit, updateVisit } from "../../../services/visitService";
 import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck } from "react-bootstrap-icons";
 import Prescription from "./prescription/Prescription";
 
@@ -44,6 +44,20 @@ function VisitDetails() {
             year: "numeric"
         }
     );
+
+    const handleChange = (e) => {
+        setVisit({ ...visit, [e.target.name]: e.target.value });
+    }
+
+    const handleSaveConsultation = async () => {
+        try {
+            await updateVisit(id, { ...visit, doctorId: visit.doctor.id, patientId: visit.patient.id });
+            toast.success("Consultation saved successfully")
+        } catch (error) {
+            toast.error("Failed to save consultation");
+            console.error(error);
+        }
+    }
 
     return (
         <>
@@ -96,12 +110,7 @@ function VisitDetails() {
                                         id="status"
                                         className="form-select form-select-sm border-black"
                                         value={visit.status}
-                                        onChange={(e) =>
-                                            setVisit({
-                                                ...visit,
-                                                status: e.target.value
-                                            })
-                                        }
+                                        onChange={handleChange}
                                     >
                                         <option value="WAITING">Waiting</option>
                                         <option value="IN_CONSULTATION">In Consultation</option>
@@ -174,12 +183,11 @@ function VisitDetails() {
                         <div className="card-body custom-scroll">
                             <div className="d-flex flex-column mb-2">
                                 <label htmlFor="diagnosis" className="form-label">Diagnosis</label>
-                                <textarea name="diagnosis" id="diagnosis" className="form-control border-black" rows={2} value={visit.diagnosis}>
-                                </textarea>
+                                <textarea name="diagnosis" id="diagnosis" value={visit.diagnosis || ""} placeholder="Enter Diagnosis" onChange={handleChange} className="form-control border-black" rows={2} />
                             </div>
                             <div className="d-flex flex-column">
                                 <label htmlFor="advice" className="form-label">Advice</label>
-                                <textarea name="advice" className="form-control border-black" id="advice" rows={2} value={visit.advice}></textarea>
+                                <textarea name="advice" value={visit.advice || ""} onChange={handleChange} placeholder="Enter Advice" className="form-control border-black" id="advice" rows={2} />
                             </div>
                         </div>
                     </div>
@@ -196,15 +204,15 @@ function VisitDetails() {
                             <div className="d-flex h-100 flex-column gap-5">
                                 <div>
                                     <span className="text-muted">Fasting Sugar</span>
-                                    <span className="ms-3">{visit.fastingSugar || "-"}</span>
+                                    <span className="ms-3 fw-semibold">{visit.fastingSugar || "-"}</span>
                                 </div>
                                 <div>
                                     <span className="text-muted">PP Sugar</span>
-                                    <span className="ms-3">{visit.ppSugar || "-"}</span>
+                                    <span className="ms-3 fw-semibold">{visit.ppSugar || "-"}</span>
                                 </div>
                                 <div>
                                     <span className="text-muted">Random Sugar</span>
-                                    <span className="ms-3">{visit.randomSugar || "-"}</span>
+                                    <span className="ms-3 fw-semibold">{visit.randomSugar || "-"}</span>
                                 </div>
                             </div>
                         </div>
@@ -220,15 +228,15 @@ function VisitDetails() {
                             <div className="d-flex h-100 flex-column gap-5">
                                 <div>
                                     <span className="text-muted">Hb</span>
-                                    <span className="ms-3">{visit.hb || "-"}</span>
+                                    <span className="ms-3 fw-semibold">{visit.hb || "-"}</span>
                                 </div>
                                 <div>
                                     <span className="text-muted">Urea / Creatinine</span>
-                                    <span className="ms-3">{visit.ureaCreatinine || "-"}</span>
+                                    <span className="ms-3 fw-semibold">{visit.ureaCreatinine || "-"}</span>
                                 </div>
                                 <div>
                                     <span className="text-muted">ECG</span>
-                                    <span className="ms-3">{visit.ecg || "-"}</span>
+                                    <span className="ms-3 fw-semibold">{visit.ecg || "-"}</span>
                                 </div>
                             </div>
                         </div>
@@ -247,7 +255,8 @@ function VisitDetails() {
                                 id="followupDate"
                                 className="form-control"
                                 style={{ width: "200px" }}
-                                value={visit.followupDate}
+                                value={visit.followupDate || ""}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
@@ -263,15 +272,15 @@ function VisitDetails() {
                         <div className="card-body">
                             <div className="row mb-3 ms-1">
                                 <div className="col-4 form-check">
-                                    <input className="form-check-input" type="checkbox" id="edema" name="edema" checked={visit.edema == "YES"} />
+                                    <input className="form-check-input" type="checkbox" id="edema" name="edema" checked={visit.edema == "YES"} disabled />
                                     <label htmlFor="edema" className="form-check-label">Edema</label>
                                 </div>
                                 <div className="col-4 form-check">
-                                    <input className="form-check-input" type="checkbox" id="pallor" name="pallor" checked={visit.pallor == "YES"} />
+                                    <input className="form-check-input" type="checkbox" id="pallor" name="pallor" checked={visit.pallor == "YES"} disabled />
                                     <label htmlFor="pallor" className="form-check-label">Pallor</label>
                                 </div>
                                 <div className="col-4 form-check">
-                                    <input className="form-check-input" type="checkbox" id="jaundice" name="jaundice" checked={visit.jaundice == "YES"} />
+                                    <input className="form-check-input" type="checkbox" id="jaundice" name="jaundice" checked={visit.jaundice == "YES"} disabled />
                                     <label htmlFor="jaundice" className="form-check-label">Jaundice</label>
                                 </div>
                             </div>
@@ -303,8 +312,8 @@ function VisitDetails() {
                         <div className="card-header bg-light text-primary">
                             <ClockHistory /> Past History
                         </div>
-                        <div className="card-body m-0 p-0 custom-scroll">
-                            <textarea name="pastHistory" id="" className="form-control border-0" value={visit.pastHistory || "-"} rows={8} />
+                        <div className="card-body custom-scroll">
+                            {visit.pastHistory || "No Significant History"}
                         </div>
                     </div>
                 </div>
@@ -314,8 +323,8 @@ function VisitDetails() {
                             <JournalText /> Additional Notes
                         </div>
 
-                        <div className="card-body m-0 p-0 custom-scroll">
-                            <textarea name="additionalNotes" id="" className="form-control border-0" value={visit.additionalNotes || "-"} rows={8} />
+                        <div className="card-body custom-scroll">
+                            {visit.additionalNotes || "No Additional Notes"}
                         </div>
                     </div>
                 </div>
@@ -323,6 +332,14 @@ function VisitDetails() {
 
             <div className="mt-4">
                 <Prescription visitId={visit.id} />
+            </div>
+
+            <div className="d-flex justify-content-end mt-4">
+                <button
+                    className="btn btn-success" onClick={handleSaveConsultation}
+                >
+                    Save Consultation
+                </button>
             </div>
         </>
     );
