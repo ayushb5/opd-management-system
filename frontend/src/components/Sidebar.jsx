@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom"
-import { Grid, PersonBadge, People, ArrowBarRight, PersonVcard, Clipboard2Check, Capsule, Diagram3Fill } from "react-bootstrap-icons"
+import { Grid, PersonBadge, People, ArrowBarRight, PersonVcard, Clipboard2Check, Capsule, Diagram3Fill, Flask } from "react-bootstrap-icons"
 import { toast } from "react-toastify"
 
 function Sidebar({ showTitle = true }) {
@@ -18,7 +18,9 @@ function Sidebar({ showTitle = true }) {
             { name: "Patients", path: "/admin/patients", icon: <PersonVcard /> },
             { name: "Visits", path: "/admin/visits", icon: <Clipboard2Check /> },
             { name: "Medicines", path: "/admin/medicines", icon: <Capsule /> },
-            { name: "Referral Centers", path: "/admin/referral-centers", icon: <Diagram3Fill /> }
+            { name: "Referral Centers", path: "/admin/referral-centers", icon: <Diagram3Fill /> },
+            { name: "Test Masters", path: "/admin/test-masters", icon: <Flask /> },
+            { name: "Diagnostics", path: "/admin/diagnostics", icon: <Flask /> }
         ],
         DOCTOR: [
             { name: "Dashboard", path: "/doctor/dashboard", icon: <Grid /> },
