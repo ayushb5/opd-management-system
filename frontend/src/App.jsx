@@ -6,21 +6,21 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
 import ReceptionistDashboard from "./pages/receptionist/ReceptionistDashboard";
-import DoctorList from "./pages/admin/doctors/DoctorList";
-import AddDoctor from "./pages/admin/doctors/AddDoctor";
-import EditDoctor from "./pages/admin/doctors/EditDoctor";
-import ReceptionistList from "./pages/admin/receptionist/ReceptionistList";
-import AddReceptionist from "./pages/admin/receptionist/AddReceptionist";
-import EditReceptionist from "./pages/admin/receptionist/EditReceptionist";
-import PatientList from "./pages/admin/patients/PatientList";
-import AddPatient from "./pages/admin/patients/AddPatient"
-import EditPatient from "./pages/admin/patients/EditPatient";
-import VisitList from "./pages/admin/visits/VisitList";
-import AddVisit from "./pages/admin/visits/AddVisit";
-import EditVisit from "./pages/admin/visits/EditVisit";
-import MedicineList from "./pages/admin/medicines/MedicineList";
-import AddMedicine from "./pages/admin/medicines/AddMedicine";
-import EditMedicine from "./pages/admin/medicines/EditMedicine";
+import DoctorList from "./components/doctor/DoctorList";
+import AddDoctor from "./components/doctor/AddDoctor";
+import EditDoctor from "./components/doctor/EditDoctor";
+import ReceptionistList from "./components/receptionist/ReceptionistList";
+import AddReceptionist from "./components/receptionist/AddReceptionist";
+import EditReceptionist from "./components/receptionist/EditReceptionist";
+import PatientList from "./components/patient/PatientList";
+import AddPatient from "./components/patient/AddPatient"
+import EditPatient from "./components/patient/EditPatient";
+import VisitList from "./components/visit/VisitList";
+import AddVisit from "./components/visit/AddVisit";
+import EditVisit from "./components/visit/EditVisit";
+import MedicineList from "./components/medicine/MedicineList";
+import AddMedicine from "./components/medicine/AddMedicine";
+import EditMedicine from "./components/medicine/EditMedicine";
 import ReferralCenterList from "./pages/admin/referralCenter/ReferralCenterList";
 import AddReferralCenter from "./pages/admin/referralCenter/AddReferralCenter";
 import EditReferralCenter from "./pages/admin/referralCenter/EditReferralCenter";
@@ -28,6 +28,9 @@ import Visits from "./pages/doctor/visits/Visits";
 import VisitDetails from "./pages/doctor/visits/VisitDetails";
 import AddPrescription from "./pages/doctor/visits/prescription/AddPrescription";
 import EditPrescription from "./pages/doctor/visits/prescription/EditPrescription";
+import TestMaster from "./pages/admin/testMasters/TestMaster";
+import AddTestMaster from "./components/testMaster/AddTestMaster";
+import EditTestMaster from "./components/testMaster/EditTestMaster";
 
 function App() {
   return (
@@ -183,6 +186,26 @@ function App() {
           <Route path="edit-referral-center/:id" element={
             <ProtectedRoute allowedRole="ADMIN">
               <EditReferralCenter />
+            </ProtectedRoute>
+          }
+          />
+        </Route>
+        {/* Admin - Test Master */}
+        <Route path="/admin/test-masters">
+          <Route index element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <TestMaster />
+            </ProtectedRoute>
+          } />
+          <Route path="add-test-master" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <AddTestMaster />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="edit-test-master/:id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <EditTestMaster />
             </ProtectedRoute>
           }
           />
