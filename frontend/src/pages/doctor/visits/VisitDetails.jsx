@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getVisit, updateVisit } from "../../../services/visitService";
 import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck } from "react-bootstrap-icons";
-import Prescription from "./prescription/Prescription";
+import Prescription from "../../../components/prescription/PrescriptionList";
 
 const capitalizeGender = (text) =>
     text
