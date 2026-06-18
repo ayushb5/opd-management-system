@@ -2,7 +2,6 @@ import { useFormik } from "formik"
 import { prescriptionValidationSchema } from "../../validations/prescriptionValidation"
 import { useEffect, useState } from "react";
 import { getMedicines } from "../../services/medicineService"
-import { NavLink } from "react-router-dom";
 
 function PrescriptionForm({ initialValues, onSubmit, isEdit = false }) {
     const formik = useFormik({
@@ -75,6 +74,10 @@ function PrescriptionForm({ initialValues, onSubmit, isEdit = false }) {
                         onChange={formik.handleChange}
                         min={1}
                     />
+
+                    {formik.touched.doseQuantity && formik.errors.doseQuantity && (
+                        <div className="text-danger">{formik.errors.doseQuantity}</div>
+                    )}
                 </div>
             </div>
 
@@ -95,6 +98,10 @@ function PrescriptionForm({ initialValues, onSubmit, isEdit = false }) {
                         <option value="Syrup">Syrup</option>
                         <option value="Injection">Injection</option>
                     </select>
+
+                    {formik.touched.doseUnit && formik.errors.doseUnit && (
+                        <div className="text-danger">{formik.errors.doseUnit}</div>
+                    )}
                 </div>
                 <div className="col-lg-6">
                     <label htmlFor="durationDays" className="form-label">
@@ -107,8 +114,12 @@ function PrescriptionForm({ initialValues, onSubmit, isEdit = false }) {
                         className="form-control border-black"
                         value={formik.values.durationDays}
                         onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         min={1}
                     />
+                    {formik.touched.durationDays && formik.errors.durationDays && (
+                        <div className="text-danger">{formik.errors.durationDays}</div>
+                    )}
                 </div>
             </div>
             <div className="row g-3 mt-1">
@@ -123,8 +134,13 @@ function PrescriptionForm({ initialValues, onSubmit, isEdit = false }) {
                         className="form-control border-black"
                         value={formik.values.morningDose}
                         onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         min={0}
                     />
+
+                    {formik.touched.morningDose && formik.errors.morningDose && (
+                        <div className="text-danger">{formik.errors.morningDose}</div>
+                    )}
                 </div>
                 <div className="col-lg-4">
                     <label htmlFor="afternoonDose" className="form-label">
@@ -137,8 +153,12 @@ function PrescriptionForm({ initialValues, onSubmit, isEdit = false }) {
                         className="form-control border-black"
                         value={formik.values.afternoonDose}
                         onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         min={0}
                     />
+                    {formik.touched.afternoonDose && formik.errors.afternoonDose && (
+                        <div className="text-danger">{formik.errors.afternoonDose}</div>
+                    )}
                 </div>
                 <div className="col-lg-4">
                     <label htmlFor="eveningDose" className="form-label">
@@ -151,8 +171,12 @@ function PrescriptionForm({ initialValues, onSubmit, isEdit = false }) {
                         className="form-control border-black"
                         value={formik.values.eveningDose}
                         onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         min={0}
                     />
+                    {formik.touched.eveningDose && formik.errors.eveningDose && (
+                        <div className="text-danger">{formik.errors.eveningDose}</div>
+                    )}
                 </div>
             </div>
 
@@ -168,6 +192,9 @@ function PrescriptionForm({ initialValues, onSubmit, isEdit = false }) {
                     value={formik.values.instructions}
                     onChange={formik.handleChange}
                 />
+                {formik.touched.instructions && formik.errors.instructions && (
+                    <div className="text-danger">{formik.errors.instructions}</div>
+                )}
             </div>
 
             <div className="mt-3">
@@ -182,6 +209,10 @@ function PrescriptionForm({ initialValues, onSubmit, isEdit = false }) {
                     value={formik.values.quantityNote}
                     onChange={formik.handleChange}
                 />
+
+                {formik.touched.quantityNote && formik.errors.quantityNote && (
+                    <div className="text-danger">{formik.errors.quantityNote}</div>
+                )}
             </div>
 
             <div className="alert alert-info mt-4">
