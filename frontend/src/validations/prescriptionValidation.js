@@ -7,11 +7,11 @@ export const prescriptionValidationSchema = Yup.object({
 
   doseUnit: Yup.string().required("Dose unit is required"),
 
-  morningDose: Yup.number().min(0).required(),
+  morningDose: Yup.number().min(0).required("Morning dose is required"),
 
-  afternoonDose: Yup.number().min(0).required(),
+  afternoonDose: Yup.number().min(0).required("Afternoon dose is required"),
 
-  eveningDose: Yup.number().min(0).required(),
+  eveningDose: Yup.number().min(0).required("Evening dose is required"),
 
   durationDays: Yup.number()
     .integer("Must be a whole number")
