@@ -93,7 +93,7 @@ function TestMasterList() {
                             <th>ID</th>
                             <th>Doctor name</th>
                             <th>Test name</th>
-                            <th>Normal Range</th>
+                            <th className="text-nowrap">Normal Range</th>
                             <th>Unit</th>
                             <th>Actions</th>
                         </tr>
