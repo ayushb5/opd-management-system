@@ -57,7 +57,7 @@ function AddPrescription() {
                 <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={() => navigate(`/doctor/visits/${visitId}`)}
+                    onClick={() => navigate(-1)}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back
