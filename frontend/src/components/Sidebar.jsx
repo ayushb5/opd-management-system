@@ -21,6 +21,7 @@ function Sidebar({ showTitle = true }) {
             { name: "Referral Centers", path: "/admin/referral-centers", icon: <Diagram3Fill /> },
             { name: "Test Masters", path: "/admin/test-masters", icon: <Flask /> },
             { name: "Diagnostics", path: "/admin/diagnostics", icon: <Flask /> },
+            { name: "Pathology Tests", path: "/admin/pathology-tests", icon: <Receipt /> },
             { name: "Bills", path: "/admin/bills", icon: <Receipt /> }
         ],
         DOCTOR: [
