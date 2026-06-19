@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Search, Pencil, Trash } from "react-bootstrap-icons";
+import { Search } from "react-bootstrap-icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import ConfirmationModal from "../ConfirmationModal";
 import { toast } from "react-toastify";
@@ -137,24 +137,10 @@ function VisitList() {
 
                                     <td className="text-nowrap">
                                         <button
-                                            className="btn btn-warning btn-sm me-2"
-                                            onClick={() =>
-                                                navigate(
-                                                    `edit-visit/${visit.id}`
-                                                )
-                                            }
+                                            className="btn btn-primary btn-sm me-2"
+                                            onClick={() => { navigate(`${visit.id}`) }}
                                         >
-                                            <Pencil />
-                                        </button>
-
-                                        <button
-                                            className="btn btn-danger btn-sm"
-                                            onClick={() => {
-                                                setSelectedVisitId(visit.id);
-                                                setShowModal(true);
-                                            }}
-                                        >
-                                            <Trash />
+                                            Open
                                         </button>
                                     </td>
                                 </tr>
