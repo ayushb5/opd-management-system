@@ -25,7 +25,7 @@ import ReferralCenterList from "./pages/admin/referralCenter/ReferralCenterList"
 import AddReferralCenter from "./pages/admin/referralCenter/AddReferralCenter";
 import EditReferralCenter from "./pages/admin/referralCenter/EditReferralCenter";
 import Visits from "./pages/doctor/visits/Visits";
-import VisitDetails from "./pages/doctor/visits/VisitDetails";
+import VisitDetails from "./components/visit/VisitDetails";
 import AddPrescription from "./components/prescription/AddPrescription";
 import EditPrescription from "./components/prescription/EditPrescription";
 import TestMaster from "./pages/admin/testMasters/TestMaster";
@@ -37,6 +37,9 @@ import EditDiagnostic from "./components/diagnostic/EditDiagnostic";
 import Bill from "./pages/admin/bills/Bill";
 import AddBill from "./components/bill/AddBill";
 import EditBill from "./components/bill/EditBill";
+import PathologyTestList from "./components/pathologyTest/PathologyTestList";
+import AddPathologyTest from "./components/pathologyTest/AddPathologyTest";
+import EditPathologyTest from "./components/pathologyTest/EditPathologyTest";
 
 function App() {
   return (
@@ -151,6 +154,28 @@ function App() {
             </ProtectedRoute>
           }
           />
+
+          {/* ADMIN- VISIT DETAILS */}
+          <Route path=":id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <VisitDetails />
+            </ProtectedRoute>
+          }
+          />
+
+          {/* Admin -> Visit -> Prescription */}
+
+          <Route path=":id/add-prescription/:visitId" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <AddPrescription />
+            </ProtectedRoute>
+          } />
+
+          <Route path=":id/edit-prescription/:id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <EditPrescription />
+            </ProtectedRoute>
+          } />
         </Route>
 
         {/* Admin - Medicine */}
@@ -255,6 +280,27 @@ function App() {
           <Route path="edit-bill/:id" element={
             <ProtectedRoute allowedRole="ADMIN">
               <EditBill />
+            </ProtectedRoute>
+          }
+          />
+        </Route>
+
+        {/* Admin - Pathology Test */}
+        <Route path="/admin/pathology-tests">
+          <Route index element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <PathologyTestList />
+            </ProtectedRoute>
+          } />
+          <Route path="add-pathology-test" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <AddPathologyTest />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="edit-pathology-test/:id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <EditPathologyTest />
             </ProtectedRoute>
           }
           />
