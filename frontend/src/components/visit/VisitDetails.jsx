@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { getVisit, updateVisit } from "../../services/visitService";
 import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck } from "react-bootstrap-icons";
 import Prescription from "../prescription/PrescriptionList";
+import DiagnosticList from "../../components/diagnostic/DiagnosticList"
 
 const capitalizeGender = (text) =>
     text
@@ -332,6 +333,11 @@ function VisitDetails() {
 
             <div className="mt-4">
                 <Prescription visitId={visit.id} />
+            </div>
+
+            <div className="mt-4">
+                <h3 className="mb-4">Diagnostic</h3>
+                <DiagnosticList />
             </div>
 
             <div className="d-flex justify-content-end mt-4">
