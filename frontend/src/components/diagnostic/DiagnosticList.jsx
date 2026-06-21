@@ -30,7 +30,7 @@ function DiagnosticList() {
     const handleDelete = async () => {
         try {
             await deleteDiagnostic(selectedDiagnosticId);
-            toast.success("Doctor deleted successfully");
+            toast.success("Diagnostic deleted successfully");
 
             setDiagnostics(
                 diagnostics.filter(diagnostic => diagnostic.id != selectedDiagnosticId)
