@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 import { getVisit, updateVisit } from "../../services/visitService";
 import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck } from "react-bootstrap-icons";
 import Prescription from "../prescription/PrescriptionList";
-import DiagnosticList from "../../components/diagnostic/DiagnosticList"
+import VisitDiagnosticList from "../visitDiagnostic/VisitDiagnosticList";
+import VisitPathologyTestList from "../visitPathologyTest/VisitPathologyTestList";
 
 const capitalizeGender = (text) =>
     text
@@ -337,7 +338,12 @@ function VisitDetails() {
 
             <div className="mt-4">
                 <h3 className="mb-4">Diagnostic</h3>
-                <DiagnosticList />
+                <VisitDiagnosticList visitId={id} />
+            </div>
+
+            <div className="mt-4">
+                <h3 className="mb-4">Pathology Tests</h3>
+                <VisitPathologyTestList visitId={id} key={`pathology-${id}`} />
             </div>
 
             <div className="d-flex justify-content-end mt-4">
