@@ -34,12 +34,16 @@ import EditTestMaster from "./components/testMaster/EditTestMaster";
 import Diagnostic from "./pages/admin/diagnostics/Diagnostic";
 import AddDiagnostic from "./components/diagnostic/AddDiagnostic";
 import EditDiagnostic from "./components/diagnostic/EditDiagnostic";
+import AddVisitDiagnostic from "./components/visitDiagnostic/AddDiagnostic";
+import EditVisitDiagnostic from "./components/visitDiagnostic/EditDiagnostic";
 import Bill from "./pages/admin/bills/Bill";
 import AddBill from "./components/bill/AddBill";
 import EditBill from "./components/bill/EditBill";
 import PathologyTestList from "./components/pathologyTest/PathologyTestList";
 import AddPathologyTest from "./components/pathologyTest/AddPathologyTest";
 import EditPathologyTest from "./components/pathologyTest/EditPathologyTest";
+import AddVisitPathologyTest from "./components/visitPathologyTest/AddVisitPathologyTest";
+import EditVisitPathologyTest from "./components/visitPathologyTest/EditVisitPathologyTest";
 
 function App() {
   return (
@@ -153,6 +157,43 @@ function App() {
               <EditVisit />
             </ProtectedRoute>
           }
+          />
+          {/* Admin -> visit -> diagnostic */}
+          <Route
+            path=":visitId/add-diagnostic"
+            element={
+              <ProtectedRoute allowedRole="ADMIN">
+                <AddVisitDiagnostic />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path=":visitId/edit-diagnostic/:diagnosticId"
+            element={
+              <ProtectedRoute allowedRole="ADMIN">
+                <EditVisitDiagnostic />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin -> visit -> pathology test */}
+          <Route
+            path=":visitId/add-pathology-test"
+            element={
+              <ProtectedRoute allowedRole="ADMIN">
+                <AddVisitPathologyTest />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path=":visitId/edit-pathology-test/:testId"
+            element={
+              <ProtectedRoute allowedRole="ADMIN">
+                <EditVisitPathologyTest />
+              </ProtectedRoute>
+            }
           />
 
           {/* ADMIN- VISIT DETAILS */}
@@ -345,6 +386,44 @@ function App() {
               <EditPrescription />
             </ProtectedRoute>
           } />
+
+          {/* Admin -> visit -> diagnostic */}
+          <Route
+            path=":visitId/add-diagnostic"
+            element={
+              <ProtectedRoute allowedRole="DOCTOR">
+                <AddVisitDiagnostic />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path=":visitId/edit-diagnostic/:diagnosticId"
+            element={
+              <ProtectedRoute allowedRole="DOCTOR">
+                <EditVisitDiagnostic />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Doctor -> visit -> pathology test */}
+          <Route
+            path=":visitId/add-pathology-test"
+            element={
+              <ProtectedRoute allowedRole="DOCTOR">
+                <AddVisitPathologyTest />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path=":visitId/edit-pathology-test/:testId"
+            element={
+              <ProtectedRoute allowedRole="DOCTOR">
+                <EditVisitPathologyTest />
+              </ProtectedRoute>
+            }
+          />
         </Route>
 
         <Route
