@@ -44,6 +44,7 @@ import AddPathologyTest from "./components/pathologyTest/AddPathologyTest";
 import EditPathologyTest from "./components/pathologyTest/EditPathologyTest";
 import AddVisitPathologyTest from "./components/visitPathologyTest/AddVisitPathologyTest";
 import EditVisitPathologyTest from "./components/visitPathologyTest/EditVisitPathologyTest";
+import BillDetails from "./components/bill/BillDetails";
 
 function App() {
   return (
@@ -217,6 +218,7 @@ function App() {
               <EditPrescription />
             </ProtectedRoute>
           } />
+
         </Route>
 
         {/* Admin - Medicine */}
@@ -318,12 +320,27 @@ function App() {
             </ProtectedRoute>
           }
           />
+          <Route
+            path="add/:visitId"
+            element={
+              <ProtectedRoute allowedRole="ADMIN">
+                <AddBill />
+              </ProtectedRoute>
+            }
+          />
           <Route path="edit-bill/:id" element={
             <ProtectedRoute allowedRole="ADMIN">
               <EditBill />
             </ProtectedRoute>
           }
           />
+          <Route path="view/:id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <BillDetails />
+            </ProtectedRoute>
+          }
+          />
+
         </Route>
 
         {/* Admin - Pathology Test */}
@@ -345,6 +362,7 @@ function App() {
             </ProtectedRoute>
           }
           />
+
         </Route>
 
         {/* Doctor */}
@@ -387,7 +405,7 @@ function App() {
             </ProtectedRoute>
           } />
 
-          {/* Admin -> visit -> diagnostic */}
+          {/* DOCTOR -> visit -> diagnostic */}
           <Route
             path=":visitId/add-diagnostic"
             element={
