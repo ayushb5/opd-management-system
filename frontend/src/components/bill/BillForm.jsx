@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { getVisits } from "../../services/visitService"
 import { billValidationSchema } from "../../validations/billValidation"
 
-function BillForm({ initialValues, onSubmit, isEdit = false }) {
+function BillForm({ initialValues, onSubmit, isEdit = false, fixedVisit = false }) {
     const formik = useFormik({
         initialValues,
         validationSchema: billValidationSchema,
@@ -36,22 +36,33 @@ function BillForm({ initialValues, onSubmit, isEdit = false }) {
     return (
         <form onSubmit={formik.handleSubmit} className="mt-4">
             <div className="row g-3">
-                <div className="col-lg-6">
-                    <label htmlFor="visitId" className="form-label">
-                        Select Visit <span className="text-danger">*</span>
-                    </label>
-                    <select name="visitId" id="visitId" value={formik.values.visitId} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-select">
-                        <option value="">Select Visit</option>
-                        {visits.map((visit) => (
-                            <option key={visit.id} value={visit.id}>
-                                {visit.patient?.patientName} | {visit.visitDate} | {visit.doctor?.name}
-                            </option>
-                        ))}
-                    </select>
-                    {formik.touched.visitId && formik.errors.visitId && (
-                        <div className="text-danger">{formik.errors.visitId}</div>
-                    )}
-                </div>
+                {!fixedVisit ? (
+                    <div className="col-lg-6">
+                        <label htmlFor="visitId" className="form-label">
+                            Select Visit <span className="text-danger">*</span>
+                        </label>
+                        <select name="visitId" id="visitId" value={formik.values.visitId} onChange={formik.handleChange} onBlur={formik.handleBlur} className="form-select">
+                            <option value="">Select Visit</option>
+                            {visits.map((visit) => (
+                                <option key={visit.id} value={visit.id}>
+                                    {visit.patient?.patientName} | {visit.visitDate} | {visit.doctor?.name}
+                                </option>
+                            ))}
+                        </select>
+                        {formik.touched.visitId && formik.errors.visitId && (
+                            <div className="text-danger">{formik.errors.visitId}</div>
+                        )}
+                    </div>
+                ) : (<div className="col-lg-6">
+                    <label className="form-label">Visit ID</label>
+
+                    <input
+                        type="text"
+                        value={`Visit #${formik.values.visitId}`}
+                        className="form-control"
+                        disabled
+                    />
+                </div>)}
                 <div className="col-lg-6">
                     <label htmlFor="consultationFee" className="form-label">
                         Consultation fee <span className="text-danger">*</span>
