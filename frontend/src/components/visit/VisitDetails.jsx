@@ -6,6 +6,8 @@ import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, Clo
 import Prescription from "../prescription/PrescriptionList";
 import VisitDiagnosticList from "../visitDiagnostic/VisitDiagnosticList";
 import VisitPathologyTestList from "../visitPathologyTest/VisitPathologyTestList";
+import { CashStack } from "react-bootstrap-icons";
+import { getByVisitId } from "../../services/billService";
 
 const capitalizeGender = (text) =>
     text
@@ -17,10 +19,12 @@ function VisitDetails() {
     const { id } = useParams();
 
     const [visit, setVisit] = useState(null);
+    const [bill, setBill] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchVisit();
+        fetchBill();
     }, [id]);
 
     const fetchVisit = async () => {
@@ -31,6 +35,15 @@ function VisitDetails() {
         catch (error) {
             console.error(error);
             toast.error("Failed to load visit");
+        }
+    };
+    const fetchBill = async () => {
+        try {
+            const data = await getByVisitId(id);
+            setBill(data);
+        } catch (error) {
+            setBill(null);
+            console.error(error);
         }
     };
 
@@ -61,18 +74,44 @@ function VisitDetails() {
         }
     }
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user.role;
+
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
                 <span className="fs-2 fw-semibold">Visit Consultation</span>
-                <button
-                    type="button"
-                    className="btn btn-outline-secondary"
-                    onClick={() => navigate(-1)}
-                >
-                    <ArrowLeft className="me-2" />
-                    Go Back
-                </button>
+                <div className="d-flex gap-2">
+                    {role === "ADMIN" && (
+                        bill ? (
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={() => navigate(`/admin/bills/view/${bill.id}`)}
+                            >
+                                View Bill
+                            </button>
+                        ) : (
+                            <button
+                                type="button"
+                                className="btn btn-success"
+                                onClick={() => navigate(`/admin/bills/add/${visit.id}`)}
+                            >
+                                <CashStack className="me-2" />
+                                Generate Bill
+                            </button>
+                        )
+                    )}
+
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={() => navigate("/admin/visits")}
+                    >
+                        <ArrowLeft className="me-2" />
+                        Go Back
+                    </button>
+                </div>
             </div>
 
             <div className="card mt-3">
@@ -150,7 +189,7 @@ function VisitDetails() {
                                 </div>
                                 <div className="col-6">
                                     <div className="text-muted">Temp</div>
-                                    <div className="fw-semibold">{visit.pulse || "-"}</div>
+                                    <div className="fw-semibold">{visit.temperature || "-"}</div>
                                 </div>
                             </div>
                             <div className="row mb-3">
