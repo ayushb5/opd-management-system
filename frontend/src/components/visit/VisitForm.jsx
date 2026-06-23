@@ -4,7 +4,7 @@ import { visitValidationSchema } from "../../validations/visitValidation";
 import { getDoctors } from "../../services/doctorService";
 import { getPatients } from "../../services/patientService";
 
-function VisitForm({ initialValues, onSubmit, isEdit = false }) {
+function VisitForm({ initialValues, onSubmit, isEdit = false, isFollowUp = false }) {
     const formik = useFormik({
         initialValues,
         validationSchema: visitValidationSchema(),
@@ -39,7 +39,13 @@ function VisitForm({ initialValues, onSubmit, isEdit = false }) {
     }
     return (
         <form onSubmit={formik.handleSubmit} className="mt-4">
-
+            {isFollowUp && (
+                <div className="alert alert-info">
+                    <strong>Follow-up Visit:</strong> Patient and doctor are selected from
+                    the previous visit. Add today’s consultation details and save as a new
+                    visit.
+                </div>
+            )}
             {/* Visit Information */}
 
             <div className="card shadow-sm mb-4">
@@ -62,6 +68,7 @@ function VisitForm({ initialValues, onSubmit, isEdit = false }) {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 className="form-select border-black"
+                                disabled={isFollowUp}
                             >
                                 <option value="">
                                     Select Doctor
@@ -92,6 +99,7 @@ function VisitForm({ initialValues, onSubmit, isEdit = false }) {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 className="form-select border-black"
+                                disabled={isFollowUp}
                             >
                                 <option value="">
                                     Select Patient
@@ -647,7 +655,11 @@ function VisitForm({ initialValues, onSubmit, isEdit = false }) {
                     type="submit"
                     className="btn btn-primary px-5"
                 >
-                    {isEdit ? "Update Visit" : "Add Visit"}
+                    {isEdit
+                        ? "Update Visit"
+                        : isFollowUp
+                            ? "Save Follow-up Visit"
+                            : "Add Visit"}
                 </button>
 
             </div>
