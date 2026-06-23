@@ -45,6 +45,7 @@ import EditPathologyTest from "./components/pathologyTest/EditPathologyTest";
 import AddVisitPathologyTest from "./components/visitPathologyTest/AddVisitPathologyTest";
 import EditVisitPathologyTest from "./components/visitPathologyTest/EditVisitPathologyTest";
 import BillDetails from "./components/bill/BillDetails";
+import FollowUpList from "./components/followup/FollowUpList";
 
 function App() {
   return (
@@ -442,7 +443,27 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="add"
+            element={
+              <ProtectedRoute allowedRole="DOCTOR">
+                <AddVisit />
+              </ProtectedRoute>
+            }
+          />
         </Route>
+
+        {/* DOCTOR->FollowUp */}
+
+        <Route
+          path="/doctor/follow-ups"
+          element={
+            <ProtectedRoute allowedRole="DOCTOR">
+              <FollowUpList />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/receptionist/dashboard"
