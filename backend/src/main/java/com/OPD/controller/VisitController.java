@@ -116,6 +116,21 @@ public class VisitController {
 	    );
 	}
 	
+	@GetMapping("/doctor/{doctorId}/follow-ups")
+	public ResponseEntity<List<Visit>> getDoctorFollowUps(@PathVariable Integer doctorId){
+		return ResponseEntity.ok(service.getDoctorFollowUps(doctorId));
+	}
+	
+	@GetMapping("/doctor/{doctorId}/follow-ups/today")
+	public ResponseEntity<List<Visit>> getTodayFollowUps(@PathVariable Integer doctorId){
+		return ResponseEntity.ok(service.getTodayFollowUps(doctorId));
+	}
+	
+	@GetMapping("/doctor/{doctorId}/follow-ups/overdue")
+	public ResponseEntity<List<Visit>> getOverdueFollowUps(@PathVariable Integer doctorId){
+		return ResponseEntity.ok(service.getOverdueFollowUps(doctorId));
+	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<Visit> updateVisitById(@PathVariable("id") Integer id,@Valid @RequestBody VisitDto visitDto){
 		Visit visit=service.getVisitById(id);

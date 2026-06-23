@@ -53,4 +53,19 @@ public class VisitServiceImpl implements VisitService {
 		return repository.findByDoctor_IdAndVisitDate(doctorId, visitDate);
 	}
 
+	@Override
+	public List<Visit> getDoctorFollowUps(Integer doctorId) {
+		return repository.findByDoctor_IdAndFollowupDateIsNotNull(doctorId);
+	}
+
+	@Override
+	public List<Visit> getTodayFollowUps(Integer doctorId) {
+		return repository.findByDoctor_IdAndFollowupDate(doctorId, LocalDate.now());
+	}
+
+	@Override
+	public List<Visit> getOverdueFollowUps(Integer doctorId) {
+		return repository.findByDoctor_IdAndFollowupDateBefore(doctorId, LocalDate.now());
+	}
+
 }

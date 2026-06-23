@@ -16,4 +16,16 @@ public interface VisitRepository extends JpaRepository<Visit, Integer> {
 	        Integer doctorId,
 	        LocalDate visitDate
 	);
+	
+	List<Visit> findByDoctor_IdAndFollowupDateIsNotNull(Integer doctorId);
+
+	List<Visit> findByDoctor_IdAndFollowupDate(
+	        Integer doctorId,
+	        LocalDate followupDate
+	);
+	
+	List<Visit> findByDoctor_IdAndFollowupDateBefore(
+	        Integer doctorId,
+	        LocalDate followupDate
+	);
 }

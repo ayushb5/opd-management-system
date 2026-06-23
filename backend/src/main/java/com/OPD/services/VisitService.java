@@ -16,4 +16,10 @@ public interface VisitService {
             Integer doctorId,
             LocalDate visitDate
     );
+    
+    List<Visit> getDoctorFollowUps(Integer doctorId);
+
+    List<Visit> getTodayFollowUps(Integer doctorId);
+
+    List<Visit> getOverdueFollowUps(Integer doctorId);
 }
