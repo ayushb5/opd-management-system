@@ -1,17 +1,21 @@
 import { ArrowLeft } from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
 import { addVisit } from "../../services/visitService";
 import VisitForm from "./VisitForm";
 
 function AddVisit() {
     const navigate = useNavigate();
+
+    const location = useLocation();
+    const followUpData = location.state;
+
     const initialValues = {
-        doctorId: "",
-        patientId: "",
+        doctorId: followUpData?.doctorId || "",
+        patientId: followUpData?.patientId || "",
 
         // Visit Information
-        visitDate: "",
+        visitDate: new Date().toLocaleDateString("en-CA"),
 
         // Complaints & Diagnosis
         complaints: "",
@@ -52,11 +56,19 @@ function AddVisit() {
         followupDate: ""
     };
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user?.role;
+    console.log(role);
+
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
             await addVisit(values);
             toast.success("Visit added successfully");
-            navigate("/admin/visits/")
+            navigate(
+                role === "DOCTOR"
+                    ? "/doctor/visits"
+                    : "/admin/visits"
+            );
         } catch (error) {
             toast.error(
                 error.response?.data?.message || "Failed to add visits"
@@ -73,13 +85,17 @@ function AddVisit() {
                 <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={() => navigate("/admin/visits")}
+                    onClick={() => navigate(
+                        role === "DOCTOR"
+                            ? "/doctor/visits"
+                            : "/admin/visits"
+                    )}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back
                 </button>
-            </div>
-            <VisitForm initialValues={initialValues} onSubmit={handleSubmit} />
+            </div >
+            <VisitForm initialValues={initialValues} onSubmit={handleSubmit} isFollowUp={followUpData?.isFollowUp} />
         </>
     )
 }
