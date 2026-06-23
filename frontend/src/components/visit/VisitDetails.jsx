@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getVisit, updateVisit } from "../../services/visitService";
+import { deleteVisit, getVisit, updateVisit } from "../../services/visitService";
 import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck } from "react-bootstrap-icons";
 import Prescription from "../prescription/PrescriptionList";
 import VisitDiagnosticList from "../visitDiagnostic/VisitDiagnosticList";
 import VisitPathologyTestList from "../visitPathologyTest/VisitPathologyTestList";
 import { CashStack } from "react-bootstrap-icons";
 import { getByVisitId } from "../../services/billService";
+import ConfirmationModal from "../ConfirmationModal";
 
 const capitalizeGender = (text) =>
     text
@@ -20,6 +21,7 @@ function VisitDetails() {
 
     const [visit, setVisit] = useState(null);
     const [bill, setBill] = useState(null);
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -64,7 +66,11 @@ function VisitDetails() {
         setVisit({ ...visit, [e.target.name]: e.target.value });
     }
 
-    const handleSaveConsultation = async () => {
+    const storedUser = localStorage.getItem("user");
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    const role = user?.role;
+
+    const handleSaveVisit = async () => {
         try {
             await updateVisit(id, { ...visit, doctorId: visit.doctor.id, patientId: visit.patient.id });
             toast.success("Consultation saved successfully")
@@ -74,8 +80,47 @@ function VisitDetails() {
         }
     }
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    const role = user.role;
+    const handleDelete = async () => {
+        try {
+            await deleteVisit(id);
+
+            toast.success("Visit deleted successfully");
+
+            setShowModal(false);
+
+            navigate(
+                role === "ADMIN"
+                    ? "/admin/visits"
+                    : "/doctor/visits"
+            );
+        } catch (error) {
+            console.error(error);
+
+            const backendMessage = error.response?.data?.message || "";
+
+            if (
+                backendMessage.includes("foreign key constraint") ||
+                backendMessage.includes("Cannot delete or update a parent row")
+            ) {
+                toast.error(
+                    "Failed to delete visit. Delete related records first."
+                );
+                console.error(error.response?.data?.message)
+            } else {
+                toast.error("Failed to delete visit");
+            }
+        }
+    };
+
+    const handleGoBack = () => {
+        if (role == "ADMIN") {
+
+            navigate("/admin/visits");
+        }
+        if (role == "DOCTOR") {
+            navigate("/doctor/visits/");
+        }
+    }
 
     return (
         <>
@@ -106,7 +151,7 @@ function VisitDetails() {
                     <button
                         type="button"
                         className="btn btn-outline-secondary"
-                        onClick={() => navigate("/admin/visits")}
+                        onClick={handleGoBack}
                     >
                         <ArrowLeft className="me-2" />
                         Go Back
@@ -385,13 +430,32 @@ function VisitDetails() {
                 <VisitPathologyTestList visitId={id} key={`pathology-${id}`} />
             </div>
 
-            <div className="d-flex justify-content-end mt-4">
+            <div className="d-flex justify-content-end gap-2 mt-4 mb-4">
+                {role === "ADMIN" && (
+                    <button
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={() => setShowModal(true)}
+                    >
+                        Delete Visit
+                    </button>
+                )}
+
                 <button
-                    className="btn btn-success" onClick={handleSaveConsultation}
+                    type="button"
+                    className="btn btn-success"
+                    onClick={handleSaveVisit}
                 >
-                    Save Consultation
+                    Save Visit
                 </button>
             </div>
+            <ConfirmationModal
+                show={showModal}
+                title="Delete Visit"
+                message="Are you sure you want to delete this visit? Related prescription, diagnostics, pathology tests, and bill may also be deleted."
+                onConfirm={handleDelete}
+                onClose={() => setShowModal(false)}
+            />
         </>
     );
 }
