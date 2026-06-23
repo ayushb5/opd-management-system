@@ -30,11 +30,36 @@ export const getVisit = async (id) => {
 //   return response.data;
 // };
 
+// Get Visit by Doctor and Date
 export const getVisitsByDoctorAndDate = async (doctorId, date) => {
   const response = await axiosInstance.get(
     `/visits/doctor/${doctorId}/date/${date}`,
   );
 
+  return response.data;
+};
+
+// Get all Follow-ups by Doctor Id
+export const getFollowUpsByDoctor = async (doctorId) => {
+  const response = await axiosInstance.get(
+    `/visits/doctor/${doctorId}/follow-ups`,
+  );
+  return response.data;
+};
+
+// Get Today's Follow-ups by Doctor Id
+export const getTodayFollowUpsByDoctor = async (doctorId) => {
+  const response = await axiosInstance.get(
+    `/visits/doctor/${doctorId}/follow-ups/today`,
+  );
+  return response.data;
+};
+
+// Get Overdue Follow-ups by Doctor Id
+export const getOverdueFollowUpsByDoctor = async (doctorId) => {
+  const response = await axiosInstance.get(
+    `/visits/doctor/${doctorId}/follow-ups/overdue`,
+  );
   return response.data;
 };
 
