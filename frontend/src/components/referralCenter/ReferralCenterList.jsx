@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Pencil, Search, Trash } from "react-bootstrap-icons";
-import { getReferralCenters, deleteReferralCenter } from "../../../services/referralCenterService"
-import ConfirmationModal from "../../../components/ConfirmationModal";
+import { getReferralCenters, deleteReferralCenter } from "../../services/referralCenterService"
+import ConfirmationModal from "../ConfirmationModal";
 
 function ReferralCenterList() {
     const [referralCenters, setReferralCenters] = useState([]);

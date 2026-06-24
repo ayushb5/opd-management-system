@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { ArrowLeft } from "react-bootstrap-icons";
-import { getReferralCenter, updateReferralCenter } from "../../../services/referralCenterService";
-import ReferralCenterForm from "../../../components/referralCenter/ReferralCenterForm";
+import { getReferralCenter, updateReferralCenter } from "../../services/referralCenterService";
+import ReferralCenterForm from "./ReferralCenterForm";
 function EditReferralCenter() {
     const { id } = useParams();
     const navigate = useNavigate();

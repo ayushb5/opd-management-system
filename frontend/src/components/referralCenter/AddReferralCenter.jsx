@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { addReferralCenter } from '../../../services/referralCenterService';
+import { addReferralCenter } from '../../services/referralCenterService';
 import { toast } from 'react-toastify';
 import { ArrowLeft } from 'react-bootstrap-icons';
-import ReferralCenterForm from '../../../components/referralCenter/ReferralCenterForm';
+import ReferralCenterForm from './ReferralCenterForm';
 
 function AddReferralCenter() {
     const navigate = useNavigate();
