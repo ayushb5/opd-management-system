@@ -23,7 +23,7 @@ export const getReferralCenter = async (id) => {
 
 //Get ReferralCenter by Doctor Id
 // export const getByDoctorId = async (id) => {
-//   const response = await axiosInstance.get(`/doctors/${id}`);
+//   const response = await axiosInstance.get(`/referral-centers/doctor/${id}`);
 //   return response.data;
 // };
 
