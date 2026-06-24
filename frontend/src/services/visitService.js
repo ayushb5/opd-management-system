@@ -30,6 +30,13 @@ export const getVisit = async (id) => {
 //   return response.data;
 // };
 
+// Get Visit by date
+export const getVisitsByDate = async (date) => {
+  const response = await axiosInstance.get(`/visits/date/${date}`);
+
+  return response.data;
+};
+
 // Get Visit by Doctor and Date
 export const getVisitsByDoctorAndDate = async (doctorId, date) => {
   const response = await axiosInstance.get(
