@@ -21,9 +21,9 @@ import EditVisit from "./components/visit/EditVisit";
 import MedicineList from "./components/medicine/MedicineList";
 import AddMedicine from "./components/medicine/AddMedicine";
 import EditMedicine from "./components/medicine/EditMedicine";
-import ReferralCenterList from "./pages/admin/referralCenter/ReferralCenterList";
-import AddReferralCenter from "./pages/admin/referralCenter/AddReferralCenter";
-import EditReferralCenter from "./pages/admin/referralCenter/EditReferralCenter";
+import ReferralCenterList from "./components/referralCenter/ReferralCenterList";
+import AddReferralCenter from "./components/referralCenter/AddReferralCenter";
+import EditReferralCenter from "./components/referralCenter/EditReferralCenter";
 import Visits from "./pages/doctor/visits/Visits";
 import VisitDetails from "./components/visit/VisitDetails";
 import AddPrescription from "./components/prescription/AddPrescription";
@@ -46,6 +46,8 @@ import AddVisitPathologyTest from "./components/visitPathologyTest/AddVisitPatho
 import EditVisitPathologyTest from "./components/visitPathologyTest/EditVisitPathologyTest";
 import BillDetails from "./components/bill/BillDetails";
 import FollowUpList from "./components/followup/FollowUpList";
+import AddReferral from "./components/referral/AddReferral";
+import EditReferral from "./components/referral/EditReferral";
 
 function App() {
   return (
@@ -220,6 +222,18 @@ function App() {
             </ProtectedRoute>
           } />
 
+          {/* Admin -> Visit -> Referral */}
+          <Route path=":visitId/add-referral" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <AddReferral />
+            </ProtectedRoute>
+          } />
+          <Route path=":visitId/edit-referral/:id" element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <EditReferral />
+            </ProtectedRoute>
+          } />
+
         </Route>
 
         {/* Admin - Medicine */}
@@ -391,6 +405,12 @@ function App() {
             </ProtectedRoute>
           }
           />
+          <Route path="edit-visit/:id" element={
+            <ProtectedRoute allowedRole="DOCTOR">
+              <EditVisit />
+            </ProtectedRoute>
+          }
+          />
 
           {/* Doctor-Visits-Prescription */}
 
@@ -452,6 +472,18 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* DOCTOR -> Visit -> Referral */}
+          <Route path=":visitId/add-referral" element={
+            <ProtectedRoute allowedRole="DOCTOR">
+              <AddReferral />
+            </ProtectedRoute>
+          } />
+          <Route path=":visitId/edit-referral/:id" element={
+            <ProtectedRoute allowedRole="DOCTOR">
+              <EditReferral />
+            </ProtectedRoute>
+          } />
         </Route>
 
         {/* DOCTOR->FollowUp */}
