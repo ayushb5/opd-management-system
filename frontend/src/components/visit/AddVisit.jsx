@@ -85,11 +85,7 @@ function AddVisit() {
                 <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={() => navigate(
-                        role === "DOCTOR"
-                            ? "/doctor/visits"
-                            : "/admin/visits"
-                    )}
+                    onClick={() => navigate(-1)}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back

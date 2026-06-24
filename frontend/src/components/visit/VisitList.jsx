@@ -1,71 +1,53 @@
 import { useEffect, useState } from "react";
-import { Search } from "react-bootstrap-icons";
+import { CalendarDate, Search } from "react-bootstrap-icons";
 import { NavLink, useNavigate } from "react-router-dom";
-import ConfirmationModal from "../ConfirmationModal";
 import { toast } from "react-toastify";
-import { deleteVisit, getVisits } from "../../services/visitService";
+
+import { getVisitsByDate } from "../../services/visitService";
 
 function VisitList() {
-
     const [visits, setVisits] = useState([]);
     const [search, setSearch] = useState("");
-    const [showModal, setShowModal] = useState(false);
-    const [selectedVisitId, setSelectedVisitId] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(
+        new Date().toLocaleDateString("en-CA")
+    );
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchVisits();
-    }, []);
+        fetchVisitsByDate(selectedDate);
+    }, [selectedDate]);
 
-    const fetchVisits = async () => {
+    const fetchVisitsByDate = async (date) => {
         try {
-            const data = await getVisits();
+            setLoading(true);
+
+            const data = await getVisitsByDate(date);
             setVisits(data);
         } catch (error) {
             console.error(error);
             toast.error("Failed to load visits");
+            setVisits([]);
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleDelete = async () => {
-        try {
-            await deleteVisit(selectedVisitId);
+    const filteredVisits = visits.filter((visit) => {
+        const query = search.toLowerCase();
 
-            toast.success("Visit deleted successfully");
-
-            setVisits(
-                visits.filter(
-                    visit => visit.id !== selectedVisitId
-                )
-            );
-
-            setShowModal(false);
-        } catch (error) {
-            toast.error("Failed to delete visit");
-            console.error(error);
-        }
-    };
-
-    const filteredVisits = visits.filter(
-        (visit) =>
-            visit.patient?.patientName
-                ?.toLowerCase()
-                .includes(search.toLowerCase()) ||
-
-            visit.doctor?.name
-                ?.toLowerCase()
-                .includes(search.toLowerCase()) ||
-
-            visit.complaints
-                ?.toLowerCase()
-                .includes(search.toLowerCase())
-    );
+        return (
+            visit.patient?.patientName?.toLowerCase().includes(query) ||
+            visit.doctor?.name?.toLowerCase().includes(query) ||
+            visit.complaints?.toLowerCase().includes(query) ||
+            visit.diagnosis?.toLowerCase().includes(query)
+        );
+    });
 
     return (
         <>
-            <div className="d-flex align-items-center gap-2">
-
+            <div className="d-flex flex-wrap align-items-center gap-2">
                 <div className="flex-grow-1">
                     <div className="input-group">
                         <span className="input-group-text border-black">
@@ -75,12 +57,37 @@ function VisitList() {
                         <input
                             type="text"
                             className="form-control border-black"
-                            placeholder="Search patient or doctor..."
+                            placeholder="Search patient, doctor, complaint..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
                 </div>
+
+                <div className="input-group" style={{ width: "230px" }}>
+                    <span className="input-group-text border-black">
+                        <CalendarDate />
+                    </span>
+
+                    <input
+                        type="date"
+                        className="form-control border-black"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                    />
+                </div>
+
+                <button
+                    type="button"
+                    className="btn btn-outline-primary text-nowrap"
+                    onClick={() =>
+                        setSelectedDate(
+                            new Date().toLocaleDateString("en-CA")
+                        )
+                    }
+                >
+                    Today
+                </button>
 
                 <NavLink
                     to="add-visit"
@@ -88,12 +95,20 @@ function VisitList() {
                 >
                     Add Visit
                 </NavLink>
+            </div>
 
+            <div className="d-flex justify-content-between align-items-center mt-3">
+                <span className="text-muted">
+                    Visits for: <strong>{selectedDate}</strong>
+                </span>
+
+                <span className="badge bg-primary">
+                    {filteredVisits.length} Visit(s)
+                </span>
             </div>
 
             <div className="table-responsive mt-3">
                 <table className="table table-hover align-middle">
-
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -108,28 +123,32 @@ function VisitList() {
                     </thead>
 
                     <tbody>
-                        {filteredVisits.length > 0 ? (
+                        {loading ? (
+                            <tr>
+                                <td colSpan={8} className="text-center py-4">
+                                    Loading visits...
+                                </td>
+                            </tr>
+                        ) : filteredVisits.length > 0 ? (
                             filteredVisits.map((visit) => (
                                 <tr key={visit.id}>
                                     <td>{visit.id}</td>
 
-                                    <td className="text-nowrap">{visit.visitDate}</td>
-
                                     <td className="text-nowrap">
-                                        {visit.patient?.patientName}
+                                        {visit.visitDate || "-"}
                                     </td>
 
                                     <td className="text-nowrap">
-                                        {visit.doctor?.name}
+                                        {visit.patient?.patientName || "-"}
                                     </td>
 
-                                    <td>
-                                        {visit.complaints}
+                                    <td className="text-nowrap">
+                                        {visit.doctor?.name || "-"}
                                     </td>
 
-                                    <td>
-                                        {visit.diagnosis || "-"}
-                                    </td>
+                                    <td>{visit.complaints || "-"}</td>
+
+                                    <td>{visit.diagnosis || "-"}</td>
 
                                     <td className="text-nowrap">
                                         {visit.followupDate || "-"}
@@ -137,8 +156,9 @@ function VisitList() {
 
                                     <td className="text-nowrap">
                                         <button
-                                            className="btn btn-primary btn-sm me-2"
-                                            onClick={() => { navigate(`${visit.id}`) }}
+                                            type="button"
+                                            className="btn btn-primary btn-sm"
+                                            onClick={() => navigate(`${visit.id}`)}
                                         >
                                             Open
                                         </button>
@@ -147,27 +167,14 @@ function VisitList() {
                             ))
                         ) : (
                             <tr>
-                                <td
-                                    colSpan={8}
-                                    className="text-center"
-                                >
-                                    No visits found
+                                <td colSpan={8} className="text-center py-4">
+                                    No visits found for this date.
                                 </td>
                             </tr>
                         )}
-
                     </tbody>
-
                 </table>
             </div>
-
-            <ConfirmationModal
-                show={showModal}
-                title="Delete Visit"
-                message="Are you sure you want to delete this visit?"
-                onConfirm={handleDelete}
-                onClose={() => setShowModal(false)}
-            />
         </>
     );
 }

@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { deleteVisit, getVisit, updateVisit } from "../../services/visitService";
-import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck } from "react-bootstrap-icons";
+import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck, PencilSquare } from "react-bootstrap-icons";
 import Prescription from "../prescription/PrescriptionList";
 import VisitDiagnosticList from "../visitDiagnostic/VisitDiagnosticList";
 import VisitPathologyTestList from "../visitPathologyTest/VisitPathologyTestList";
 import { CashStack } from "react-bootstrap-icons";
 import { getByVisitId } from "../../services/billService";
 import ConfirmationModal from "../ConfirmationModal";
+import ReferralList from "../referral/ReferralList";
 
 const capitalizeGender = (text) =>
     text
@@ -147,7 +148,20 @@ function VisitDetails() {
                             </button>
                         )
                     )}
-
+                    <button
+                        type="button"
+                        className="btn btn-outline-warning text-dark"
+                        onClick={() =>
+                            navigate(
+                                role === "DOCTOR"
+                                    ? `/doctor/visits/edit-visit/${visit.id}`
+                                    : `/admin/visits/edit-visit/${visit.id}`
+                            )
+                        }
+                    >
+                        <PencilSquare className="me-2" />
+                        Edit Visit
+                    </button>
                     <button
                         type="button"
                         className="btn btn-outline-secondary"
@@ -428,6 +442,11 @@ function VisitDetails() {
             <div className="mt-4">
                 <h3 className="mb-4">Pathology Tests</h3>
                 <VisitPathologyTestList visitId={id} key={`pathology-${id}`} />
+            </div>
+
+            <div className="mt-4">
+                <h3 className="mb-4">Referrals</h3>
+                <ReferralList visitId={id} patientId={visit.patient.id} doctorId={visit.doctor.id} />
             </div>
 
             <div className="d-flex justify-content-end gap-2 mt-4 mb-4">

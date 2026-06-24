@@ -11,6 +11,18 @@ function EditVisit() {
 
     const [loading, setLoading] = useState(true);
 
+    const storedUser = localStorage.getItem("user");
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    const role = user?.role;
+
+    const goToVisitList = () => {
+        navigate(
+            role === "DOCTOR"
+                ? "/doctor/visits"
+                : "/admin/visits"
+        );
+    };
+
     const [initialValues, setInitialValues] = useState({
         doctorId: "",
         patientId: "",
@@ -113,8 +125,7 @@ function EditVisit() {
             await updateVisit(id, values);
 
             toast.success("Visit updated successfully");
-            navigate("/admin/visits");
-
+            goToVisitList();
         } catch (error) {
             toast.error(
                 error.response?.data?.message ||
@@ -141,7 +152,7 @@ function EditVisit() {
                 <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={() => navigate("/admin/visits")}
+                    onClick={goToVisitList}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back
