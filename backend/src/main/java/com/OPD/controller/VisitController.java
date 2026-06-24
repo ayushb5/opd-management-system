@@ -179,4 +179,11 @@ public class VisitController {
 		service.deleteVisitById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	@GetMapping("/date/{visitDate}")
+	public ResponseEntity<List<Visit>> getVisitsByDate(
+	        @PathVariable LocalDate visitDate
+	) {
+	    return ResponseEntity.ok(service.getVisitsByDate(visitDate));
+	}
 }

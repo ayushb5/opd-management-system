@@ -10,6 +10,7 @@ public interface VisitService {
 	List<Visit> getAllVisits();
 	Visit getVisitById(Integer id);
 	void deleteVisitById(Integer id);
+	List<Visit> getVisitsByDate(LocalDate visitDate);
 	List<Visit> getVisitsByDoctorId(Integer doctorId);
     List<Visit> getVisitsByPatientId(Integer patientId);
     List<Visit> getVisitsByDoctorIdAndVisitDate(

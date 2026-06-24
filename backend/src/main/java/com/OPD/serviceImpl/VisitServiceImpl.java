@@ -39,6 +39,11 @@ public class VisitServiceImpl implements VisitService {
 	}
 
 	@Override
+	public List<Visit> getVisitsByDate(LocalDate visitDate) {
+	    return repository.findByVisitDate(visitDate);
+	}
+	
+	@Override
 	public List<Visit> getVisitsByDoctorId(Integer doctorId) {
 		return repository.findByDoctor_Id(doctorId);
 	}

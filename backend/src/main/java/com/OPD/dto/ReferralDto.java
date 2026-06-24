@@ -24,7 +24,6 @@ public class ReferralDto {
 	@NotBlank(message="Reason is required")
 	private String reason;
 	
-	@NotBlank(message="Details are required")
 	private String details;
 
 	public Integer getVisitId() {

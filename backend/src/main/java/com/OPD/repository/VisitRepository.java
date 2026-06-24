@@ -10,6 +10,7 @@ import com.OPD.entities.Visit;
 
 @Repository
 public interface VisitRepository extends JpaRepository<Visit, Integer> {
+	List<Visit> findByVisitDate(LocalDate visitDate);
 	List<Visit> findByDoctor_Id(Integer doctorId);
 	List<Visit> findByPatient_Id(Integer patientId);
 	List<Visit> findByDoctor_IdAndVisitDate(
