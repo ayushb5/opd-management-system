@@ -8,6 +8,9 @@ import BillForm from "./BillForm";
 function EditBill() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user.role;
+    const basePath = role === "RECEPTIONIST" ? "/receptionist" : "/admin";
 
     const [loading, setLoading] = useState(true);
 
@@ -49,7 +52,7 @@ function EditBill() {
         try {
             await updateBill(id, values);
             toast.success("Bill updated successfully");
-            navigate("/admin/bills/");
+            navigate(`${basePath}/bills`);
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to update bill");
             console.error(error);
@@ -69,7 +72,7 @@ function EditBill() {
                 <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={() => navigate("/admin/bills")}
+                    onClick={() => navigate(`${basePath}/bills`)}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back
