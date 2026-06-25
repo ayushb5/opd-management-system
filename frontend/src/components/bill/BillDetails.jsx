@@ -10,6 +10,9 @@ function BillDetails() {
     const [bill, setBill] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user.role;
+
     useEffect(() => {
         fetchBill();
     }, [id]);
@@ -60,12 +63,24 @@ function BillDetails() {
     const patient = bill.visit?.patient;
     const doctor = bill.visit?.doctor;
 
+
+
     const handlePrintPdf = () => {
         window.open(
             `http://localhost:8080/bills/${bill.id}/pdf`,
             "_blank"
         );
     };
+
+    const goToVisitList = () => {
+        if (role == "ADMIN") {
+            navigate(`/admin/visits/${bill.visit.id}`);
+        } else if (role == "DOCTOR") {
+            navigate(`/doctor/visits/${bill.visit.id}`);
+        } else if (role == "RECEPTIONIST") {
+            navigate(`/receptionist/visits/${bill.visit.id}`);
+        }
+    }
 
 
     return (
@@ -77,19 +92,23 @@ function BillDetails() {
                     <button
                         type="button"
                         className="btn btn-outline-secondary"
-                        onClick={() => navigate(`/admin/visits/${bill.visit?.id}`)}
+                        onClick={goToVisitList}
+                        title="Go Back"
+                        aria-label="Go Back"
                     >
-                        <ArrowLeft className="me-2" />
-                        Go Back
+                        <ArrowLeft className="me-md-2" />
+                        <span className="d-none d-md-inline">Go Back</span>
                     </button>
 
                     <button
                         type="button"
                         className="btn btn-primary"
                         onClick={handlePrintPdf}
+                        title="Print PDF"
+                        aria-label="Print PDF"
                     >
-                        <Printer className="me-2" />
-                        Print PDF
+                        <Printer className="me-md-2" />
+                        <span className="d-none d-md-inline">Print PDF</span>
                     </button>
                 </div>
             </div>
