@@ -18,6 +18,9 @@ function EditReferralCenter() {
         address: ""
     });
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user.role;
+
     useEffect(() => {
         fetchReferralCenter();
     }, []);
@@ -40,11 +43,19 @@ function EditReferralCenter() {
         }
     }
 
+    const handleNavigation = () => {
+        if (role == "ADMIN") {
+            navigate("/admin/referral-centers")
+        } else if (role == "RECEPTIONIST") {
+            navigate("/receptionist/referral-centers")
+        }
+    }
+
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
             await updateReferralCenter(id, values);
             toast.success("Referral Center updated successfully");
-            navigate("/admin/referral-centers/");
+            handleNavigation();
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to update referral center");
             console.error(error);
@@ -64,7 +75,7 @@ function EditReferralCenter() {
                 <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={() => navigate("/admin/referral-centers")}
+                    onClick={handleNavigation}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back

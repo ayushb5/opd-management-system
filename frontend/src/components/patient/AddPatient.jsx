@@ -6,6 +6,9 @@ import PatientForm from "./PatientForm";
 
 function AddPatient() {
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user.role;
+
     const initialValues = {
         doctorId: "",
         patientName: "",
@@ -24,7 +27,7 @@ function AddPatient() {
         try {
             await addPatient(values);
             toast.success("Patient added successfully");
-            navigate("/admin/patients/")
+            handleGoBack();
         } catch (error) {
             toast.error(
                 error.response?.data?.message || "Failed to add patient"
@@ -34,6 +37,15 @@ function AddPatient() {
             setSubmitting(false);
         }
     }
+
+    const handleGoBack = () => {
+        if (role == "ADMIN") {
+            navigate("/admin/patients");
+        } else if (role == "RECEPTIONIST") {
+            navigate("/receptionist/patients");
+        }
+    }
+    
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
@@ -41,7 +53,7 @@ function AddPatient() {
                 <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={() => navigate("/admin/patients")}
+                    onClick={handleGoBack}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back

@@ -14,17 +14,26 @@ function AddReferralCenter() {
         address: ""
     }
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user.role;
+
+    const handleNavigation = () => {
+        if (role == "ADMIN") {
+            navigate("/admin/referral-centers")
+        } else if (role == "RECEPTIONIST") {
+            navigate("/receptionist/referral-centers")
+        }
+    }
+
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
             await addReferralCenter(values);
             toast.success("Referral Center added successfully");
-            navigate("/admin/referral-centers/")
+            handleNavigation();
         } catch (error) {
             toast.error(
                 error.response?.data?.message || "Failed to add referral centers"
             );
-            console.error(error);
-            console.log(error.response.data);
         } finally {
             setSubmitting(false);
         }
@@ -35,7 +44,7 @@ function AddReferralCenter() {
             <div className="d-flex justify-content-between align-items-center">
                 <span className="fs-2 fw-semibold">Add Referral Center</span>
                 <button type="button" className="btn btn-outline-secondary"
-                    onClick={() => navigate("/admin/referral-centers")}
+                    onClick={handleNavigation}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back

@@ -9,6 +9,9 @@ function EditPatient() {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user.role;
+
     const [loading, setLoading] = useState(true);
 
     const [initialValues, setInitialValues] = useState({
@@ -70,6 +73,14 @@ function EditPatient() {
         return <div>Loading...</div>;
     }
 
+    const handleGoBack = () => {
+        if (role == "ADMIN") {
+            navigate("/admin/patients");
+        } else if (role == "RECEPTIONIST") {
+            navigate("/receptionist/patients");
+        }
+    }
+
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
@@ -77,7 +88,7 @@ function EditPatient() {
                 <button
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={() => navigate("/admin/patients")}
+                    onClick={handleGoBack}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back
