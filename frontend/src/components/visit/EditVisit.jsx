@@ -16,11 +16,18 @@ function EditVisit() {
     const role = user?.role;
 
     const goToVisitList = () => {
-        navigate(
-            role === "DOCTOR"
-                ? "/doctor/visits"
-                : "/admin/visits"
-        );
+        console.log(role);
+        switch (role) {
+            case "ADMIN":
+                navigate("/admin/visits");
+                break;
+            case "DOCTOR":
+                navigate("/doctor/visits");
+                break;
+            case "RECEPTIONIST":
+                navigate("/receptionist/visits");
+                break;
+        }
     };
 
     const [initialValues, setInitialValues] = useState({
