@@ -30,8 +30,11 @@ function Sidebar({ showTitle = true }) {
             { name: "Follow-ups", path: "/doctor/follow-ups", icon: <ClockHistory /> }
         ],
         RECEPTIONIST: [
-            { name: "Dashboard", path: "/receptionist/dashboard" },
-            { name: "Patients", path: "/receptionist/patients" }
+            { name: "Dashboard", path: "/receptionist/dashboard", icon: <Grid /> },
+            { name: "Patients", path: "/receptionist/patients", icon: <PersonVcard /> },
+            { name: "Visits", path: "/receptionist/visits", icon: <Clipboard2Check /> },
+            { name: "Referral Centers", path: "/receptionist/referral-centers", icon: <Diagram3Fill /> },
+            { name: "Bills", path: "/receptionist/bills", icon: <Receipt /> },
         ]
     }
 
