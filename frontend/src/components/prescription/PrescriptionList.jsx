@@ -5,6 +5,9 @@ import { Pencil, Trash } from "react-bootstrap-icons";
 import { deletePrescription, getByVisitId } from "../../services/prescriptionService";
 import ConfirmationModal from '../ConfirmationModal'
 import { toast } from "react-toastify"
+import { Printer } from "react-bootstrap-icons";
+import { printPrescriptionPdf } from "../../services/prescriptionService";
+
 
 function PrescriptionList({ visitId }) {
     const [prescription, setPrescription] = useState([]);
@@ -57,7 +60,7 @@ function PrescriptionList({ visitId }) {
             <div className="d-flex align-items-center gap-2 mt-4">
 
                 <div className="flex-grow-1">
-                    <div className="input-group w-50">
+                    <div className="input-group">
                         <span className="input-group-text border-black">
                             <Search />
                         </span>
@@ -70,6 +73,15 @@ function PrescriptionList({ visitId }) {
                         />
                     </div>
                 </div>
+
+                <button
+                    type="button"
+                    className="btn btn-success text-nowrap"
+                    onClick={() => printPrescriptionPdf(visitId)}
+                    title="Print Prescription"
+                >
+                    <Printer className="me-1" />
+                </button>
 
                 <NavLink
                     to={`add-prescription/${visitId}`}
