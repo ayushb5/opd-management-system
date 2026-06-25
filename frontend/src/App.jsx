@@ -94,8 +94,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-
         </Route>
+
         {/* Admin - Receptionist */}
         <Route path="/admin/receptionists">
           <Route index element={
@@ -496,7 +496,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-
+        {/* RECEPTIONIST */}
         <Route
           path="/receptionist/dashboard"
           element={
@@ -505,6 +505,187 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Receptionist - Patient */}
+        <Route
+          path="/receptionist/patients/"
+        >
+          <Route index element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <PatientList />
+            </ProtectedRoute>
+          }
+          />
+
+          <Route
+            path="add-patient"
+            element={
+              <ProtectedRoute allowedRole="RECEPTIONIST">
+                <AddPatient />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="edit-patient/:id"
+            element={
+              <ProtectedRoute allowedRole="RECEPTIONIST">
+                <EditPatient />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+
+        {/* RECEPTIONIST - Visit */}
+        <Route path="/receptionist/visits">
+          <Route index element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <VisitList />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="add-visit" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <AddVisit />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="edit-visit/:id" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <EditVisit />
+            </ProtectedRoute>
+          }
+          />
+          {/* Receptionist -> visit -> diagnostic */}
+          <Route
+            path=":visitId/add-diagnostic"
+            element={
+              <ProtectedRoute allowedRole="RECEPTIONIST">
+                <AddVisitDiagnostic />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path=":visitId/edit-diagnostic/:diagnosticId"
+            element={
+              <ProtectedRoute allowedRole="RECEPTIONIST">
+                <EditVisitDiagnostic />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Receptionist -> visit -> pathology test */}
+          <Route
+            path=":visitId/add-pathology-test"
+            element={
+              <ProtectedRoute allowedRole="RECEPTIONIST">
+                <AddVisitPathologyTest />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path=":visitId/edit-pathology-test/:testId"
+            element={
+              <ProtectedRoute allowedRole="RECEPTIONIST">
+                <EditVisitPathologyTest />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* RECEPTIONIST- VISIT DETAILS */}
+          <Route path=":id" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <VisitDetails />
+            </ProtectedRoute>
+          }
+          />
+
+          {/* Receptionist -> Visit -> Prescription */}
+
+          <Route path=":id/add-prescription/:visitId" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <AddPrescription />
+            </ProtectedRoute>
+          } />
+
+          <Route path=":id/edit-prescription/:id" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <EditPrescription />
+            </ProtectedRoute>
+          } />
+
+          {/* Receptionist -> Visit -> Referral */}
+          <Route path=":visitId/add-referral" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <AddReferral />
+            </ProtectedRoute>
+          } />
+          <Route path=":visitId/edit-referral/:id" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <EditReferral />
+            </ProtectedRoute>
+          } />
+        </Route>
+
+        {/* RECEPTIONIST - Bill */}
+        <Route path="/receptionist/bills">
+          <Route index element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <Bill />
+            </ProtectedRoute>
+          } />
+          <Route path="add-bill" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <AddBill />
+            </ProtectedRoute>
+          }
+          />
+          <Route
+            path="add/:visitId"
+            element={
+              <ProtectedRoute allowedRole="RECEPTIONIST">
+                <AddBill />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="edit-bill/:id" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <EditBill />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="view/:id" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <BillDetails />
+            </ProtectedRoute>
+          }
+          />
+        </Route>
+
+        {/* Receptionist - Referrral Center */}
+        <Route path="/receptionist/referral-centers">
+          <Route index element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <ReferralCenterList />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="add-referral-center" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <AddReferralCenter />
+            </ProtectedRoute>
+          }
+          />
+          <Route path="edit-referral-center/:id" element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <EditReferralCenter />
+            </ProtectedRoute>
+          }
+          />
+        </Route>
+
       </Route>
     </Routes>
   )
