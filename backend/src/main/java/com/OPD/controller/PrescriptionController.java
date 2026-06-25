@@ -3,7 +3,10 @@ package com.OPD.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +23,7 @@ import com.OPD.entities.Medicine;
 import com.OPD.entities.Prescription;
 import com.OPD.entities.Visit;
 import com.OPD.services.MedicineService;
+import com.OPD.services.PrescriptionPdfService;
 import com.OPD.services.PrescriptionService;
 import com.OPD.services.VisitService;
 
@@ -38,6 +42,9 @@ public class PrescriptionController {
 	@Autowired
 	private MedicineService medicineService;
 	
+	@Autowired
+	private PrescriptionPdfService prescriptionPdfService;
+
 	@PostMapping
 	public ResponseEntity<Prescription> savePrescription(@Valid @RequestBody PrescriptionDto prescriptionDto){
 		Prescription prescription=new Prescription();
@@ -95,6 +102,24 @@ public class PrescriptionController {
 		List<Prescription> prescriptions=service.getPrescriptionsByVisitId(visitId);
 		return new ResponseEntity<>(prescriptions,HttpStatus.OK);
 	}
+	// Download Prescription PDF
+	@GetMapping("/visit/{visitId}/pdf")
+	public ResponseEntity<byte[]> downloadPrescriptionPdf(
+	        @PathVariable Integer visitId) {
+
+	    byte[] pdfBytes = prescriptionPdfService.generatePrescriptionPdf(visitId);
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_PDF);
+	    headers.setContentDisposition(
+	            ContentDisposition.inline()
+	                    .filename("prescription-visit-" + visitId + ".pdf")
+	                    .build()
+	    );
+
+	    return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+	}
+
 	@GetMapping("/medicine/{medicineId}")
 	public ResponseEntity<List<Prescription>> getPrescriptionByMedicineId(@PathVariable("medicineId") Integer medicineId){
 		List<Prescription> prescriptions=service.getPrescriptionsByMedicineId(medicineId);
