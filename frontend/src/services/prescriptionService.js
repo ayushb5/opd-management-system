@@ -24,6 +24,14 @@ export const getByVisitId = async (id) => {
   return response.data;
 };
 
+// Print Prescription
+export const printPrescriptionPdf = (visitId) => {
+  window.open(
+    `http://localhost:8080/prescriptions/visit/${visitId}/pdf`,
+    "_blank",
+  );
+};
+
 // Update Prescription by Id
 export const updatePrescription = async (id, prescriptionData) => {
   const response = await axiosInstance.put(
