@@ -7,9 +7,10 @@ import BillForm from "./BillForm";
 function AddBill() {
     const navigate = useNavigate();
     const { visitId } = useParams();
+    const hasVisitId = Boolean(visitId && visitId !== "undefined");
 
     const initialValues = {
-        visitId: visitId || "",
+        visitId: hasVisitId ? visitId : "",
         consultationFee: "",
         totalAmount: "",
         concession: "",
@@ -18,17 +19,32 @@ function AddBill() {
         paymentStatus: ""
     }
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user.role;
+    const basePath = role === "RECEPTIONIST" ? "/receptionist" : "/admin";
+
+    const getBackPath = () => {
+        if (hasVisitId) {
+            return `${basePath}/visits/${visitId}`;
+        }
+
+        return `${basePath}/bills`;
+    };
+
+    const handleGoBack = () => {
+        navigate(getBackPath());
+    };
+
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
             await addBill(values);
-            if (visitId) {
+            if (hasVisitId) {
                 toast.success("Bill generated successfully");
-                navigate(`/admin/visits/${visitId}`);
             } else {
                 toast.success("Bill added successfully");
-                navigate("/admin/bills/")
             }
 
+            navigate(getBackPath());
         } catch (error) {
             toast.error(
                 error.response?.data?.message || "Failed to add bill"
@@ -39,13 +55,6 @@ function AddBill() {
         }
     }
 
-    const handleGoBack = () => {
-        if (visitId) {
-            navigate(`/admin/visits/${visitId}`);
-        } else {
-            navigate("/admin/bills");
-        }
-    };
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
@@ -59,7 +68,7 @@ function AddBill() {
                     Go Back
                 </button>
             </div>
-            <BillForm initialValues={initialValues} onSubmit={handleSubmit} fixedVisit={Boolean(visitId)} />
+            <BillForm initialValues={initialValues} onSubmit={handleSubmit} fixedVisit={hasVisitId} />
         </>
     )
 }
