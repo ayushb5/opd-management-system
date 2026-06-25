@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { deleteVisit, getVisit, updateVisit } from "../../services/visitService";
-import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck, PencilSquare } from "react-bootstrap-icons";
+import { Activity, ArrowLeft, CalendarCheck, Clipboard2Pulse, ClipboardData, ClockHistory, Droplet, FileEarmarkText, JournalText, PersonCheck, PencilSquare, PlusLg, Eye } from "react-bootstrap-icons";
 import Prescription from "../prescription/PrescriptionList";
 import VisitDiagnosticList from "../visitDiagnostic/VisitDiagnosticList";
 import VisitPathologyTestList from "../visitPathologyTest/VisitPathologyTestList";
@@ -115,60 +115,89 @@ function VisitDetails() {
 
     const handleGoBack = () => {
         if (role == "ADMIN") {
-
             navigate("/admin/visits");
-        }
-        if (role == "DOCTOR") {
+        } else if (role == "DOCTOR") {
             navigate("/doctor/visits/");
+        } else if (role == "RECEPTIONIST") {
+            navigate("/receptionist/visits");
+        }
+    }
+
+    const handleRedirect = () => {
+        if (role == "ADMIN") {
+            navigate(`/admin/visits/edit-visit/${visit.id}`)
+        } else if (role == "DOCTOR") {
+            navigate(`/doctor/visits/edit-visit/${visit.id}`)
+        } else if (role == "RECEPTIONIST") {
+            navigate(`/receptionist/visits/edit-visit/${visit.id}`)
         }
     }
 
     return (
         <>
-            <div className="d-flex justify-content-between align-items-center">
-                <span className="fs-2 fw-semibold">Visit Consultation</span>
-                <div className="d-flex gap-2">
-                    {role === "ADMIN" && (
+            <div className="d-flex justify-content-between align-items-center gap-2 mb-3">
+                <span className="fs-2 fw-semibold">Visit Details</span>
+
+                <div className="d-flex align-items-center justify-content-end gap-2 ms-auto">
+                    {(role === "ADMIN" || role === "RECEPTIONIST") && (
                         bill ? (
                             <button
                                 type="button"
                                 className="btn btn-primary"
-                                onClick={() => navigate(`/admin/bills/view/${bill.id}`)}
+                                onClick={() =>
+                                    navigate(`/${role.toLowerCase()}/bills/view/${bill.id}`)
+                                }
+                                title="View Bill"
+                                aria-label="View Bill"
                             >
-                                View Bill
+                                {/* Mobile */}
+                                <Eye className="me-1 d-md-none" />
+                                <small className="d-md-none">Bill</small>
+
+                                {/* Tablet / Desktop */}
+                                <span className="d-none d-md-inline">View Bill</span>
                             </button>
                         ) : (
                             <button
                                 type="button"
                                 className="btn btn-success"
-                                onClick={() => navigate(`/admin/bills/add/${visit.id}`)}
+                                onClick={() =>
+                                    navigate(`/${role.toLowerCase()}/bills/add/${visit.id}`)
+                                }
+                                title="Generate Bill"
+                                aria-label="Generate Bill"
                             >
-                                <CashStack className="me-2" />
-                                Generate Bill
+                                {/* Mobile */}
+                                <PlusLg className="me-1 d-md-none" />
+                                <span className="d-md-none">Bill</span>
+
+                                {/* Tablet / Desktop */}
+                                <CashStack className="me-2 d-none d-md-inline" />
+                                <span className="d-none d-md-inline">Generate Bill</span>
                             </button>
                         )
                     )}
+
                     <button
                         type="button"
                         className="btn btn-outline-warning text-dark"
-                        onClick={() =>
-                            navigate(
-                                role === "DOCTOR"
-                                    ? `/doctor/visits/edit-visit/${visit.id}`
-                                    : `/admin/visits/edit-visit/${visit.id}`
-                            )
-                        }
+                        onClick={handleRedirect}
+                        title="Edit Visit"
+                        aria-label="Edit Visit"
                     >
-                        <PencilSquare className="me-2" />
-                        Edit Visit
+                        <PencilSquare className="me-md-2" />
+                        <span className="d-none d-md-inline">Edit Visit</span>
                     </button>
+
                     <button
                         type="button"
                         className="btn btn-outline-secondary"
                         onClick={handleGoBack}
+                        title="Go Back"
+                        aria-label="Go Back"
                     >
-                        <ArrowLeft className="me-2" />
-                        Go Back
+                        <ArrowLeft className="me-md-2" />
+                        <span className="d-none d-md-inline">Go Back</span>
                     </button>
                 </div>
             </div>
