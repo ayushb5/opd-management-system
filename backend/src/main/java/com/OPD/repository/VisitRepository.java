@@ -29,4 +29,11 @@ public interface VisitRepository extends JpaRepository<Visit, Integer> {
 	        Integer doctorId,
 	        LocalDate followupDate
 	);
+	
+	long countByVisitDate(LocalDate visitDate);
+	
+	long countByDoctorIdAndVisitDate(Integer doctorId, LocalDate visitDate);
+	
+	long countByDoctorIdAndVisitDateAndStatus(Integer doctorId, LocalDate visitDate, Visit.Status status);
+
 }
