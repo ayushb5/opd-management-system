@@ -32,8 +32,11 @@ public interface VisitRepository extends JpaRepository<Visit, Integer> {
 	
 	long countByVisitDate(LocalDate visitDate);
 	
-	long countByDoctorIdAndVisitDate(Integer doctorId, LocalDate visitDate);
+	long countByDoctor_IdAndVisitDate(Integer doctorId, LocalDate visitDate);
 	
-	long countByDoctorIdAndVisitDateAndStatus(Integer doctorId, LocalDate visitDate, Visit.Status status);
+	long countByDoctor_IdAndVisitDateAndStatus(Integer doctorId, LocalDate visitDate, Visit.Status status);
 
+	long countByStatusIn(List<Visit.Status> statuses);
+	
+	List<Visit> findTop5ByOrderByVisitDateDescIdDesc();
 }
