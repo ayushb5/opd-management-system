@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.AdminDto;
 import com.OPD.entities.Admin;
+import com.OPD.response.DashboardResponse;
 import com.OPD.services.AdminService;
+import com.OPD.services.DashboardService;
 
 import jakarta.validation.Valid;
 
@@ -28,6 +30,8 @@ import jakarta.validation.Valid;
 public class AdminController {
 	@Autowired
 	private AdminService service;
+	@Autowired
+	private DashboardService dashboardService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	@PostMapping
@@ -52,6 +56,11 @@ public class AdminController {
 	public ResponseEntity<Admin> getAdminById(@PathVariable("id") Integer id){
 		Admin admin=service.getAdminById(id);
 		return new ResponseEntity<>(admin,HttpStatus.OK);
+	}
+	
+	@GetMapping("/dashboard")
+	public ResponseEntity<DashboardResponse> getDashboard() {
+	    return ResponseEntity.ok(dashboardService.getAdminDashboard());
 	}
 	
 	@PutMapping("/{id}")
