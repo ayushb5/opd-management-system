@@ -7,8 +7,10 @@ export const addPatient = async (patientData) => {
 };
 
 // Get all Patients
-export const getPatients = async () => {
-  const response = await axiosInstance.get("/patients");
+export const getPatients = async (page = 0, size = 10, search = "") => {
+  const response = await axiosInstance.get("/patients", {
+    params: { page, size, search },
+  });
   return response.data;
 };
 
@@ -17,12 +19,6 @@ export const getPatientById = async (id) => {
   const response = await axiosInstance.get(`/patients/${id}`);
   return response.data;
 };
-
-//Get Patients by Doctor Id
-// export const getByDoctorId = async (id) => {
-//   const response = await axiosInstance.get(`/doctors/${id}`);
-//   return response.data;
-// };
 
 // Update Patient by Id
 export const updatePatient = async (id, patientData) => {
