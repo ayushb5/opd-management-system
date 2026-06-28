@@ -4,10 +4,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import ConfirmationModal from "../ConfirmationModal";
 import { toast } from "react-toastify";
 import { deletePatient, getPatients } from "../../services/patientService";
+import Pagination from "../Pagination";
 
 function PatientList() {
 
     const [patients, setPatients] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [selectedPatientId, setSelectedPatientId] = useState(null);
@@ -16,12 +20,13 @@ function PatientList() {
 
     useEffect(() => {
         fetchPatients();
-    }, []);
+    }, [currentPage, pageSize, search]);
 
     const fetchPatients = async () => {
         try {
-            const data = await getPatients();
-            setPatients(data);
+            const data = await getPatients(currentPage, pageSize, search);
+            setPatients(data.content);
+            setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error);
             toast.error("Failed to load patients");
@@ -32,13 +37,9 @@ function PatientList() {
         try {
             await deletePatient(selectedPatientId);
 
-            toast.success("Receptionist deleted successfully");
+            toast.success("Patient deleted successfully");
 
-            setPatients(
-                patients.filter(
-                    receptionist => receptionist.id !== selectedPatientId
-                )
-            );
+            await fetchPatients();
 
             setShowModal(false);
         } catch (error) {
@@ -46,12 +47,6 @@ function PatientList() {
             console.error(error);
         }
     };
-
-    const filteredPatients = patients.filter(
-        (patient) =>
-            patient.patientName?.toLowerCase().includes(search.toLowerCase()) ||
-            patient.mobileNo?.includes(search)
-    );
 
     return (
         <>
@@ -68,7 +63,10 @@ function PatientList() {
                             className="form-control border-black"
                             placeholder="Search patient..."
                             value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                setCurrentPage(0);
+                            }}
                         />
                     </div>
                 </div>
@@ -99,8 +97,8 @@ function PatientList() {
                     </thead>
 
                     <tbody>
-                        {filteredPatients.length > 0 ? (
-                            filteredPatients.map((patient) => (
+                        {patients.length > 0 ? (
+                            patients.map((patient) => (
                                 <tr key={patient.id}>
 
                                     <td>{patient.id}</td>
@@ -147,7 +145,7 @@ function PatientList() {
                                     colSpan={7}
                                     className="text-center"
                                 >
-                                    No receptionists found
+                                    No patients found
                                 </td>
                             </tr>
                         )}
@@ -156,6 +154,8 @@ function PatientList() {
 
                 </table>
             </div>
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
             <ConfirmationModal
                 show={showModal}
