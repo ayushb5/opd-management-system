@@ -4,4 +4,6 @@ import com.OPD.response.DashboardResponse;
 
 public interface DashboardService {
 	DashboardResponse getAdminDashboard();
+	DashboardResponse getDoctorDashboard(Integer doctorId);
+	DashboardResponse getReceptionistDashboard();
 }
