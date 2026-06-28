@@ -20,6 +20,8 @@ import com.OPD.dto.DoctorDto;
 import com.OPD.entities.Doctor;
 import com.OPD.exception.DuplicateResourceException;
 import com.OPD.repository.DoctorRepository;
+import com.OPD.response.DashboardResponse;
+import com.OPD.services.DashboardService;
 import com.OPD.services.DoctorService;
 
 import jakarta.validation.Valid;
@@ -32,6 +34,8 @@ public class DoctorController {
 	private DoctorRepository repository;
 	@Autowired
 	private DoctorService service;
+	@Autowired
+	private DashboardService dashboardService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -65,6 +69,11 @@ public class DoctorController {
 	public ResponseEntity<Doctor> getDoctorById(@PathVariable("id") Integer id){
 		Doctor doctor=service.getDoctorById(id);
 		return new ResponseEntity<>(doctor,HttpStatus.OK);
+	}
+	
+	@GetMapping("/dashboard/{doctorId}")
+	public ResponseEntity<DashboardResponse> getDashboard(@PathVariable("doctorId") Integer doctorId){
+		return ResponseEntity.ok(dashboardService.getDoctorDashboard(doctorId));
 	}
 	
 	@PutMapping("/{id}")
