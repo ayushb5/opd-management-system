@@ -1,23 +1,54 @@
-import { CalendarCheck, People, Calendar, HourglassSplit } from "react-bootstrap-icons"
+import { useEffect, useState } from "react"
 import DashboardCard from "../../components/DashboardCard"
+import { CalendarCheck, People, HourglassSplit, ClockHistory } from "react-bootstrap-icons"
+import { getDoctorDashboard } from "../../services/dashboardService";
+import RecentVisitTable from "../../components/RecentVisitTable";
+
 function DoctorDashboard() {
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const doctorId = user.id;
+
+    const [dashboard, setDashboard] = useState({
+        todayVisits: 0,
+        totalPatients: 0,
+        pendingVisits: 0,
+        todayFollowups: 0,
+        recentVisits: []
+    });
+
+    useEffect(() => {
+        fetchDashboardStats();
+    }, [])
+
+    const fetchDashboardStats = async () => {
+        try {
+            const response = await getDoctorDashboard(doctorId);
+            setDashboard(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <div className="container-fluid">
-            <div className="row g-4">
+            <div className="row g-4 mb-4">
                 <div className="col-12 col-sm-6 col-xl-3">
-                    <DashboardCard title={"Today's Visits"} count={18} icon={<Calendar />} />
+                    <DashboardCard title={"Today's Visits"} count={dashboard.todayVisits} icon={<CalendarCheck />} />
                 </div>
                 <div className="col-12 col-sm-6 col-xl-3">
-                    <DashboardCard title={"Today's total Patients"} count={120} icon={<People />} />
+                    <DashboardCard title={"Total Patients"} count={dashboard.totalPatients} icon={<People />} />
                 </div>
                 <div className="col-12 col-sm-6 col-xl-3">
-                    <DashboardCard title={"Pending Consultations"} count={12} icon={<HourglassSplit />} />
-                </div>
-                <div className="col-12 col-sm-6 col-xl-3">
-                    <DashboardCard title={"Completed Visits"} count={6} icon={<CalendarCheck
+                    <DashboardCard title={"Pending Visits"} count={dashboard.pendingVisits} icon={<HourglassSplit
                     />} />
                 </div>
+                <div className="col-12 col-sm-6 col-xl-3">
+                    <DashboardCard title={"Today's Follow-ups"} count={dashboard.todayFollowups} icon={<ClockHistory />} />
+                </div>
             </div>
+
+            <RecentVisitTable recentVisits={dashboard.recentVisits} />
         </div>
     )
 }
