@@ -32,7 +32,7 @@ function RecentVisitTable({ recentVisits }) {
                                 <th>#</th>
                                 <th>Patient</th>
                                 <th>Doctor</th>
-                                <th>Visit Date</th>
+                                <th className="text-nowrap">Visit Date</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -50,9 +50,9 @@ function RecentVisitTable({ recentVisits }) {
                                 recentVisits.map((visit, index) => (
                                     <tr key={visit.visitId}>
                                         <td>{index + 1}</td>
-                                        <td>{visit.patientName}</td>
-                                        <td>{visit.doctorName}</td>
-                                        <td>{visit.visitDate}</td>
+                                        <td className="text-nowrap">{visit.patientName}</td>
+                                        <td className="text-nowrap">{visit.doctorName}</td>
+                                        <td className="text-nowrap">{visit.visitDate}</td>
                                         <td>{getStatusBadge(visit.status)}</td>
                                     </tr>
                                 ))
