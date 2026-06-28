@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import DashboardCard from "../../components/DashboardCard"
 import { PersonBadge, CalendarCheck, People, HourglassSplit } from "react-bootstrap-icons"
-import { getDashboard } from "../../services/dashboardService";
+import { getAdminDashboard } from "../../services/dashboardService";
 import RecentVisitTable from "../../components/RecentVisitTable";
 
 function AdminDashboard() {
@@ -19,7 +19,7 @@ function AdminDashboard() {
 
     const fetchDashboardStats = async () => {
         try {
-            const response = await getDashboard();
+            const response = await getAdminDashboard();
             setDashboard(response.data);
         } catch (error) {
             console.error(error);
