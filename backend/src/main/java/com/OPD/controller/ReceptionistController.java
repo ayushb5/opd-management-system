@@ -21,6 +21,8 @@ import com.OPD.entities.Doctor;
 import com.OPD.entities.Receptionist;
 import com.OPD.exception.DuplicateResourceException;
 import com.OPD.repository.ReceptionistRepository;
+import com.OPD.response.DashboardResponse;
+import com.OPD.services.DashboardService;
 import com.OPD.services.DoctorService;
 import com.OPD.services.ReceptionistService;
 
@@ -36,6 +38,8 @@ public class ReceptionistController {
 	private ReceptionistService service;
 	@Autowired
 	private DoctorService doctorService;
+	@Autowired
+	private DashboardService dashboardService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -80,6 +84,11 @@ public class ReceptionistController {
 	public ResponseEntity<List<Receptionist>> getReceptionistsByDoctorId(@PathVariable("doctorId") Integer doctorId){
 		List<Receptionist> receptionists=service.getReceptionistsByDoctorId(doctorId);
 		return new ResponseEntity<>(receptionists, HttpStatus.OK);
+	}
+	
+	@GetMapping("/dashboard")
+	public ResponseEntity<DashboardResponse> getReceptionistDashboard() {
+	    return ResponseEntity.ok(dashboardService.getReceptionistDashboard());
 	}
 	
 	@PutMapping("/{id}")
