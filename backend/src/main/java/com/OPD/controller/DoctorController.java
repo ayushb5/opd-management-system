@@ -3,6 +3,7 @@ package com.OPD.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.DoctorDto;
@@ -60,8 +62,8 @@ public class DoctorController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Doctor>> getAllDoctors(){
-		List<Doctor> doctors=service.getAllDoctors();
+	public ResponseEntity<Page<Doctor>> getAllDoctors(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "") String search){
+		Page<Doctor> doctors=service.getAllDoctors(page,size,search);
 		return new ResponseEntity<>(doctors,HttpStatus.OK);
 	}
 	
