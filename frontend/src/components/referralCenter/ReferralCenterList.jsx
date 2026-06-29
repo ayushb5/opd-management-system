@@ -4,9 +4,13 @@ import { toast } from "react-toastify";
 import { Pencil, Search, Trash } from "react-bootstrap-icons";
 import { getReferralCenters, deleteReferralCenter } from "../../services/referralCenterService"
 import ConfirmationModal from "../ConfirmationModal";
+import Pagination from "../Pagination";
 
 function ReferralCenterList() {
     const [referralCenters, setReferralCenters] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [selectedRCId, setSelectedRCId] = useState(null);
@@ -14,14 +18,16 @@ function ReferralCenterList() {
 
     useEffect(() => {
         fetchReferralCenters();
-    }, []);
+    }, [[currentPage, pageSize, search]]);
 
     const fetchReferralCenters = async () => {
         try {
-            const rcData = await getReferralCenters();
-            setReferralCenters(rcData);
+            const data = await getReferralCenters(currentPage, pageSize, search);
+            setReferralCenters(data.content);
+            setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error);
+            toast.error("Failed to load Referral Centers");
         }
     };
 
@@ -30,22 +36,14 @@ function ReferralCenterList() {
             await deleteReferralCenter(selectedRCId);
             toast.success("Referral Center deleted successfully");
 
-            setReferralCenters(
-                referralCenters.filter((rc) => rc.id != selectedRCId),
-            );
+            await fetchReferralCenters();
+
             setShowModal(false);
         } catch (error) {
             toast.error("Failed to delete referral center");
             console.error(error);
         }
     };
-
-    const filteredRC = referralCenters.filter(
-        (rc) =>
-            rc.name?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-            rc.type?.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
-            rc.doctor.name?.toLowerCase().includes(search.toLowerCase())
-    );
 
     return (
         <>
@@ -60,7 +58,11 @@ function ReferralCenterList() {
                             className="form-control border-black"
                             placeholder="Search referral center..."
                             value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                setCurrentPage(0);
+                            }
+                            }
                         />
                     </div>
                 </div>
@@ -87,8 +89,8 @@ function ReferralCenterList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredRC.length > 0 ? (
-                            filteredRC.map((rc) => (
+                        {referralCenters.length > 0 ? (
+                            referralCenters.map((rc) => (
                                 <tr key={rc.id}>
                                     <td>{rc.id}</td>
                                     <td className="text-nowrap">{rc.name}</td>
@@ -126,6 +128,8 @@ function ReferralCenterList() {
                     </tbody>
                 </table>
             </div>
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
             <ConfirmationModal
                 show={showModal}

@@ -5,9 +5,13 @@ import { Pencil, Trash } from "react-bootstrap-icons";
 import ConfirmationModal from "../ConfirmationModal";
 import { toast } from "react-toastify"
 import { deleteBill, getBills } from "../../services/billService";
+import Pagination from "../Pagination";
 
 function BillList() {
     const [bills, setBills] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [selectBillId, setSelecetedBillId] = useState(null);
@@ -16,14 +20,16 @@ function BillList() {
 
     useEffect(() => {
         fetchBills();
-    }, [])
+    }, [currentPage, pageSize, search])
 
     const fetchBills = async () => {
         try {
-            const billsData = await getBills();
-            setBills(billsData);
+            const data = await getBills(currentPage, pageSize, search);
+            setBills(data.content);
+            setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error);
+            toast.error("Failed to load bills");
         }
     }
 
@@ -32,21 +38,14 @@ function BillList() {
             await deleteBill(selectBillId);
             toast.success("Doctor deleted successfully");
 
-            setBills(
-                bills.filter(bill => bill.id != selectBillId)
-            );
+            await fetchBills();
+
             setShowModal(false);
         } catch (error) {
             toast.error("Failed to delete bill");
             console.error(error);
         }
     }
-
-    const filteredBills = bills.filter((bill) =>
-        bill.visit?.patient?.patientName
-            ?.toLowerCase()
-            .includes(search.toLowerCase())
-    );
 
     return (
         <>
@@ -62,7 +61,11 @@ function BillList() {
                             className="form-control border-black"
                             placeholder="Search Bill..."
                             value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                setCurrentPage(0);
+                            }
+                            }
                         />
                     </div>
                 </div>
@@ -90,8 +93,8 @@ function BillList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredBills.length > 0 ? (
-                            filteredBills.map((bill) => (
+                        {bills.length > 0 ? (
+                            bills.map((bill) => (
                                 <tr key={bill.id}>
                                     <td>{bill.id}</td>
                                     <td className="text-nowrap">{bill.visit.patient.patientName}</td>
@@ -127,6 +130,8 @@ function BillList() {
                     </tbody>
                 </table>
             </div>
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
             <ConfirmationModal
                 show={showModal}

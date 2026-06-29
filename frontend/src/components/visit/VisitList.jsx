@@ -7,6 +7,9 @@ import { getVisitsByDate } from "../../services/visitService";
 
 function VisitList() {
     const [visits, setVisits] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [selectedDate, setSelectedDate] = useState(
         new Date().toLocaleDateString("en-CA")
@@ -17,12 +20,11 @@ function VisitList() {
 
     useEffect(() => {
         fetchVisitsByDate(selectedDate);
-    }, [selectedDate]);
+    }, [selectedDate, currentPage, pageSize, search]);
 
     const fetchVisitsByDate = async (date) => {
         try {
             setLoading(true);
-
             const data = await getVisitsByDate(date);
             setVisits(data);
         } catch (error) {
@@ -59,7 +61,11 @@ function VisitList() {
                             className="form-control border-black"
                             placeholder="Search patient, doctor, complaint..."
                             value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                setCurrentPage(0);
+                            }
+                            }
                         />
                     </div>
                 </div>

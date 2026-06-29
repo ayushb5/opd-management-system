@@ -7,10 +7,14 @@ import {
 } from "../../services/receptionistService";
 import ConfirmationModal from "../ConfirmationModal";
 import { toast } from "react-toastify";
+import Pagination from "../Pagination";
 
 function ReceptionistList() {
 
     const [receptionists, setReceptionists] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [selectedReceptionistId, setSelectedReceptionistId] = useState(null);
@@ -19,12 +23,13 @@ function ReceptionistList() {
 
     useEffect(() => {
         fetchReceptionists();
-    }, []);
+    }, [currentPage, pageSize, search]);
 
     const fetchReceptionists = async () => {
         try {
-            const data = await getReceptionists();
-            setReceptionists(data);
+            const data = await getReceptionists(currentPage, pageSize, search);
+            setReceptionists(data.content);
+            setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error);
             toast.error("Failed to load receptionists");
@@ -37,26 +42,14 @@ function ReceptionistList() {
 
             toast.success("Receptionist deleted successfully");
 
-            setReceptionists(
-                receptionists.filter(
-                    receptionist => receptionist.id !== selectedReceptionistId
-                )
-            );
+            await fetchReceptionists();
 
             setShowModal(false);
         } catch (error) {
             toast.error("Failed to delete receptionist");
             console.error(error);
-            console.log(error.response.data);
         }
     };
-
-    const filteredReceptionists = receptionists.filter(
-        (receptionist) =>
-            receptionist.name?.toLowerCase().includes(search.toLowerCase()) ||
-            receptionist.email?.toLowerCase().includes(search.toLowerCase()) ||
-            receptionist.mobileno?.includes(search)
-    );
 
     return (
         <>
@@ -73,7 +66,11 @@ function ReceptionistList() {
                             className="form-control border-black"
                             placeholder="Search receptionist..."
                             value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                setCurrentPage(0);
+                            }
+                            }
                         />
                     </div>
                 </div>
@@ -104,8 +101,8 @@ function ReceptionistList() {
 
                     <tbody>
 
-                        {filteredReceptionists.length > 0 ? (
-                            filteredReceptionists.map((receptionist) => (
+                        {receptionists.length > 0 ? (
+                            receptionists.map((receptionist) => (
                                 <tr key={receptionist.id}>
 
                                     <td>{receptionist.id}</td>
@@ -173,6 +170,8 @@ function ReceptionistList() {
 
                 </table>
             </div>
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
             <ConfirmationModal
                 show={showModal}

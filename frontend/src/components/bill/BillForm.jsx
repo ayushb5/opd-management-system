@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
-import { getVisits } from "../../services/visitService"
+import { getAllVisits } from "../../services/visitService"
 import { billValidationSchema } from "../../validations/billValidation"
 
 function BillForm({ initialValues, onSubmit, isEdit = false, fixedVisit = false }) {
@@ -19,7 +19,7 @@ function BillForm({ initialValues, onSubmit, isEdit = false, fixedVisit = false 
 
     const fetchVisits = async () => {
         try {
-            const data = await getVisits();
+            const data = await getAllVisits();
             setVisits(data);
         } catch (error) {
             console.error(error);

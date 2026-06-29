@@ -1,8 +1,8 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { pathologyTestValidationSchema } from "../../validations/pathologyValidation"
-import { getVisits } from "../../services/visitService";
-import { getTestMasters } from "../../services/testMasterService";
+import { getAllVisits } from "../../services/visitService";
+import { getAllTestMasters } from "../../services/testMasterService";
 
 function PathologyTestForm({ initialValues, onSubmit, isEdit = false }) {
     const formik = useFormik({
@@ -22,7 +22,7 @@ function PathologyTestForm({ initialValues, onSubmit, isEdit = false }) {
 
     const fetchVisits = async () => {
         try {
-            const data = await getVisits();
+            const data = await getAllVisits();
             setVisits(data);
         } catch (error) {
             console.error(error);
@@ -31,7 +31,7 @@ function PathologyTestForm({ initialValues, onSubmit, isEdit = false }) {
 
     const fetchTestMasters = async () => {
         try {
-            const data = await getTestMasters();
+            const data = await getAllTestMasters();
             setTestMasters(data);
         } catch (error) {
             console.error(error);

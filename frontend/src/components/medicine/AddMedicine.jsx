@@ -31,9 +31,9 @@ function AddMedicine() {
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
-                <span className="fs-2 fw-semibold">Add Referral Center</span>
+                <span className="fs-2 fw-semibold">Add Medicine</span>
                 <button type="button" className="btn btn-outline-secondary"
-                    onClick={() => navigate("/admin/referral-centers")}
+                    onClick={() => navigate("/admin/medicines")}
                 >
                     <ArrowLeft className="me-2" />
                     Go Back

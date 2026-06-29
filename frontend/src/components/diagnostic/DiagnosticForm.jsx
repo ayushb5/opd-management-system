@@ -3,8 +3,8 @@ import {
     diagnosticValidationSchema
 } from "../../validations/diagnosticValidation"
 import { useEffect, useState } from "react"
-import { getDoctors } from "../../services/doctorService"
-import { getVisits } from "../../services/visitService"
+import { getAllDoctors } from "../../services/doctorService"
+import { getAllVisits } from "../../services/visitService"
 
 function DiagnosticForm({ initialValues, onSubmit, isEdit = false }) {
     const formik = useFormik({
@@ -24,7 +24,7 @@ function DiagnosticForm({ initialValues, onSubmit, isEdit = false }) {
 
     const fetchDoctors = async () => {
         try {
-            const data = await getDoctors();
+            const data = await getAllDoctors();
             setDoctors(data);
         } catch (error) {
             console.error(error);
@@ -33,7 +33,7 @@ function DiagnosticForm({ initialValues, onSubmit, isEdit = false }) {
 
     const fetchVisits = async () => {
         try {
-            const data = await getVisits();
+            const data = await getAllVisits();
             setVisits(data);
         } catch (error) {
             console.error(error);

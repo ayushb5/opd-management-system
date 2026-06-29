@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { referralCenterValidationSchema } from "../../validations/referralCenterValidation"
-import { getDoctors } from "../../services/doctorService"
+import { getAllDoctors } from "../../services/doctorService"
 
 function ReferralCenterForm({ initialValues, onSubmit, isEdit = false }) {
     const formik = useFormik({
@@ -19,7 +19,7 @@ function ReferralCenterForm({ initialValues, onSubmit, isEdit = false }) {
 
     const fetchDoctors = async () => {
         try {
-            const data = await getDoctors();
+            const data = await getAllDoctors();
             setDoctors(data);
         } catch (error) {
             console.error(error);

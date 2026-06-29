@@ -4,10 +4,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { toast } from "react-toastify";
 import { deleteTestMaster, getTestMasters } from "../../services/testMasterService";
+import Pagination from "../Pagination";
 
 function TestMasterList() {
 
     const [testMaster, setTestMaster] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [selectedTestMasterId, setSelectedTestMasterId] = useState(null);
@@ -16,12 +20,13 @@ function TestMasterList() {
 
     useEffect(() => {
         fetchTestMaster();
-    }, []);
+    }, [currentPage, pageSize, search]);
 
     const fetchTestMaster = async () => {
         try {
-            const data = await getTestMasters();
-            setTestMaster(data);
+            const data = await getTestMasters(currentPage, pageSize, search);
+            setTestMaster(data.content);
+            setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error);
             toast.error("Failed to load Test Masters");
@@ -34,11 +39,7 @@ function TestMasterList() {
 
             toast.success("Test Master deleted successfully");
 
-            setTestMaster(
-                testMaster.filter(
-                    testMaster => testMaster.id !== selectedTestMasterId
-                )
-            );
+            await fetchTestMaster();
 
             setShowModal(false);
         } catch (error) {
@@ -46,15 +47,6 @@ function TestMasterList() {
             console.error(error);
         }
     };
-
-    const filteredTestMaster = testMaster.filter(
-        (testMaster) =>
-            testMaster.doctor?.name
-                ?.toLowerCase()
-                .includes(search.toLowerCase()) ||
-
-            testMaster.testName?.toLowerCase().includes(search.toLowerCase())
-    );
 
     return (
         <>
@@ -71,7 +63,11 @@ function TestMasterList() {
                             className="form-control border-black"
                             placeholder="Search test name or doctor..."
                             value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                setCurrentPage(0);
+                            }
+                            }
                         />
                     </div>
                 </div>
@@ -100,8 +96,8 @@ function TestMasterList() {
                     </thead>
 
                     <tbody>
-                        {filteredTestMaster.length > 0 ? (
-                            filteredTestMaster.map((testMaster) => (
+                        {testMaster.length > 0 ? (
+                            testMaster.map((testMaster) => (
                                 <tr key={testMaster.id}>
                                     <td>{testMaster.id}</td>
 
@@ -158,6 +154,8 @@ function TestMasterList() {
 
                 </table>
             </div>
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
             <ConfirmationModal
                 show={showModal}

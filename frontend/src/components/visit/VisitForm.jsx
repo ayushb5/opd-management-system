@@ -1,8 +1,8 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { visitValidationSchema } from "../../validations/visitValidation";
-import { getDoctors } from "../../services/doctorService";
-import { getPatients } from "../../services/patientService";
+import { getAllDoctors } from "../../services/doctorService";
+import { getAllPatients } from "../../services/patientService";
 
 function VisitForm({ initialValues, onSubmit, isEdit = false, isFollowUp = false }) {
     const formik = useFormik({
@@ -21,7 +21,7 @@ function VisitForm({ initialValues, onSubmit, isEdit = false, isFollowUp = false
 
     const fetchDoctors = async () => {
         try {
-            const data = await getDoctors();
+            const data = await getAllDoctors();
             setDoctors(data);
         } catch (error) {
             console.error(error);
@@ -30,7 +30,7 @@ function VisitForm({ initialValues, onSubmit, isEdit = false, isFollowUp = false
     }
     const fetchPatients = async () => {
         try {
-            const data = await getPatients();
+            const data = await getAllPatients();
             setPatients(data);
         } catch (error) {
             console.error(error);

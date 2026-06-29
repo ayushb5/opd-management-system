@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 import { patientValidationSchema } from "../../validations/patientValidation"
 import { useEffect, useState } from "react"
-import { getDoctors } from "../../services/doctorService"
+import { getAllDoctors } from "../../services/doctorService"
 
 function PatientForm({ initialValues, onSubmit, isEdit = false }) {
     const formik = useFormik({
@@ -18,7 +18,7 @@ function PatientForm({ initialValues, onSubmit, isEdit = false }) {
 
     const fetchDoctors = async () => {
         try {
-            const data = await getDoctors();
+            const data = await getAllDoctors();
             setDoctors(data);
         } catch (error) {
             console.error(error);

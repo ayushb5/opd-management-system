@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
-import { getDoctors } from "../../services/doctorService"
+import { getAllDoctors } from "../../services/doctorService"
 import { testMasterValidationSchema } from "../../validations/testMasterValidation"
 
 function TestMasterForm({ initialValues, onSubmit, isEdit = false }) {
@@ -19,7 +19,7 @@ function TestMasterForm({ initialValues, onSubmit, isEdit = false }) {
 
     const fetchDoctors = async () => {
         try {
-            const data = await getDoctors();
+            const data = await getAllDoctors();
             setDoctors(data);
         } catch (error) {
             console.error(error);
