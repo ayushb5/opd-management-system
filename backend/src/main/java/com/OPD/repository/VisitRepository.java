@@ -3,6 +3,8 @@ package com.OPD.repository;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -47,4 +49,13 @@ public interface VisitRepository extends JpaRepository<Visit, Integer> {
 	long countByDoctor_IdAndStatusIn(Integer doctorId,List<Visit.Status> statuses);
 	
 	List<Visit> findTop5ByDoctor_IdOrderByVisitDateDescIdDesc(Integer doctorId);
+	
+//	Get Visits by search functionality
+	Page<Visit> findByPatient_PatientNameContainingIgnoreCaseOrDoctor_NameContainingIgnoreCaseOrComplaintsContainingIgnoreCaseOrDiagnosisContainingIgnoreCase(
+	        String patientName,
+	        String doctorName,
+	        String complaints,
+	        String diagnosis,
+	        Pageable pageable
+	);
 }
