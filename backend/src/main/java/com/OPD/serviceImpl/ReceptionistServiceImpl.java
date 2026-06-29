@@ -3,6 +3,9 @@ package com.OPD.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Receptionist;
@@ -24,8 +27,17 @@ public class ReceptionistServiceImpl implements ReceptionistService {
 	}
 
 	@Override
-	public List<Receptionist> getAllReceptionists() {
-		return repository.findAll();
+	public Page<Receptionist> getAllReceptionists(int page,int size,String search) {
+		Pageable pageable=PageRequest.of(page, size);
+		if (search == null || search.isBlank()) {
+		    return repository.findAll(pageable);
+		}
+		return repository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrMobileNoContaining(
+				search, 
+				search, 
+				search, 
+				pageable
+		);
 	}
 
 	@Override

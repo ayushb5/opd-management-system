@@ -3,6 +3,9 @@ package com.OPD.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.OPD.entities.Bill;
@@ -41,8 +44,15 @@ public class BillServiceImpl implements BillService {
 	}
 
 	@Override
-	public List<Bill> getAllBills() {
-		return repository.findAll();
+	public Page<Bill> getAllBills(int page,int size,String search) {
+		Pageable pageable=PageRequest.of(page, size);
+		if (search == null || search.isBlank()) {
+		    return repository.findAll(pageable);
+		}
+		return repository.findByVisit_Patient_PatientNameContainingIgnoreCase(
+				search, 
+				pageable
+		);
 	}
 
 	@Override

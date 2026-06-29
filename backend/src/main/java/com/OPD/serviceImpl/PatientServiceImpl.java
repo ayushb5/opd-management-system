@@ -24,7 +24,7 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public Page<Patient> getAll(int page,int size,String search) {
+	public Page<Patient> getPatients(int page,int size,String search) {
 		Pageable pageable = PageRequest.of(page,size);
 		if (search == null || search.isBlank()) {
 		    return repository.findAll(pageable);
@@ -35,6 +35,11 @@ public class PatientServiceImpl implements PatientService {
 		        search,
 		        pageable
 		);
+	}
+	
+	@Override
+	public List<Patient> getAllPatients(){
+		return repository.findAll();
 	}
 
 	@Override
