@@ -7,8 +7,10 @@ export const addDoctor = async (doctorData) => {
 };
 
 // Get all Doctors
-export const getDoctors = async () => {
-  const response = await axiosInstance.get("/doctors");
+export const getDoctors = async (page = 0, size = 10, search = "") => {
+  const response = await axiosInstance.get("/doctors", {
+    params: { page, size, search },
+  });
   return response.data;
 };
 
