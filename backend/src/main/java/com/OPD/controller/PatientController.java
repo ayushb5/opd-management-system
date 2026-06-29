@@ -57,8 +57,14 @@ public class PatientController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<Page<Patient>> getAllPatients(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "") String search){
-		Page<Patient> patients=service.getAll(page,size,search);
+	public ResponseEntity<Page<Patient>> getPatients(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "") String search){
+		Page<Patient> patients=service.getPatients(page,size,search);
+		return new ResponseEntity<>(patients,HttpStatus.OK);
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<Patient>> getAllPatients(){
+		List<Patient> patients=service.getAllPatients();
 		return new ResponseEntity<>(patients,HttpStatus.OK);
 	}
 	

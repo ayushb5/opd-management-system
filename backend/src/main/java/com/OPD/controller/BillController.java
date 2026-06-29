@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.BillDto;
@@ -66,8 +68,8 @@ public class BillController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Bill>> getAllBills(){
-		List<Bill> bills=service.getAllBills();
+	public ResponseEntity<Page<Bill>> getAllBills(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "") String search){
+		Page<Bill> bills=service.getAllBills(page,size,search);
 		return new ResponseEntity<>(bills,HttpStatus.OK);
 	}
 	

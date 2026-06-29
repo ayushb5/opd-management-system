@@ -62,8 +62,14 @@ public class DoctorController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<Page<Doctor>> getAllDoctors(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "") String search){
-		Page<Doctor> doctors=service.getAllDoctors(page,size,search);
+	public ResponseEntity<Page<Doctor>> getDoctors(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "") String search){
+		Page<Doctor> doctors=service.getDoctors(page,size,search);
+		return new ResponseEntity<>(doctors,HttpStatus.OK);
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<Doctor>> getAllDoctors(){
+		List<Doctor> doctors=service.getAllDoctors();
 		return new ResponseEntity<>(doctors,HttpStatus.OK);
 	}
 	

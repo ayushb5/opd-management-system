@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.VisitDto;
@@ -80,6 +84,16 @@ public class VisitController {
 	}
 	
 	@GetMapping
+	public ResponseEntity<Page<Visit>> getAllVisits(
+			@RequestParam(defaultValue="0") int page,
+			@RequestParam(defaultValue="10") int size,
+	        @RequestParam(defaultValue = "") String search,
+	        @PageableDefault(size = 10) Pageable pageable) {
+		Page<Visit> visits=service.getVisits(page, size, search);
+	    return new ResponseEntity<>(visits,HttpStatus.OK);
+	}
+	
+	@GetMapping("/all")
 	public ResponseEntity<List<Visit>> getAllVisits(){
 		List<Visit> visits=service.getAllVisits();
 		return new ResponseEntity<>(visits,HttpStatus.OK);
