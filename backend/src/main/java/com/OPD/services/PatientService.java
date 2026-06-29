@@ -8,7 +8,8 @@ import com.OPD.entities.Patient;
 
 public interface PatientService {
 	Patient save(Patient patient);
-	Page<Patient> getAll(int page, int size, String search);
+	Page<Patient> getPatients(int page, int size, String search);
+	List<Patient> getAllPatients();
 	Patient getById(Integer id);
 	List<Patient> getPatientByDoctorId(Integer doctorId);
 	void deletePatientById(Integer id);

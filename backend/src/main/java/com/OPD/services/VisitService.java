@@ -3,11 +3,14 @@ package com.OPD.services;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.OPD.entities.Visit;
 
 public interface VisitService {
 	Visit save(Visit visit);
 	List<Visit> getAllVisits();
+	Page<Visit> getVisits(int page,int size,String search);
 	Visit getVisitById(Integer id);
 	void deleteVisitById(Integer id);
 	List<Visit> getVisitsByDate(LocalDate visitDate);
