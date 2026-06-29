@@ -5,9 +5,13 @@ import { Pencil, Trash } from "react-bootstrap-icons";
 import { deleteDoctor, getDoctors } from "../../services/doctorService";
 import ConfirmationModal from "../ConfirmationModal";
 import { toast } from "react-toastify"
+import Pagination from "../Pagination";
 
 function DoctorList() {
     const [doctors, setDoctors] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
     const [search, setSearch] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [selectedDoctorId, setSelectedDoctorId] = useState(null);
@@ -16,37 +20,34 @@ function DoctorList() {
 
     useEffect(() => {
         fetchDoctors();
-    }, [])
+    }, [currentPage, pageSize, search])
+
+    console.log(search);
 
     const fetchDoctors = async () => {
         try {
-            const doctorsData = await getDoctors();
-            setDoctors(doctorsData);
+            const doctorsData = await getDoctors(currentPage, pageSize, search);
+            setDoctors(doctorsData.content);
+            setTotalPages(doctorsData.totalPages);
         } catch (error) {
             console.error(error);
+            toast.error("Failed to load doctors");
         }
     }
+
+    console.log(doctors);
 
     const handleDelete = async () => {
         try {
             await deleteDoctor(selectedDoctorId);
             toast.success("Doctor deleted successfully");
-
-            setDoctors(
-                doctors.filter(doctor => doctor.id != selectedDoctorId)
-            );
+            await fetchDoctors();
             setShowModal(false);
         } catch (error) {
             toast.error("Failed to delete doctor");
             console.error(error);
         }
     }
-
-    const filteredDoctors = doctors.filter((doctor) =>
-        doctor.name?.toLowerCase().includes(search.toLowerCase()) ||
-        doctor.specialization?.toLowerCase().includes(search.toLowerCase()) ||
-        doctor.mobile?.includes(search)
-    );
 
     return (
         <>
@@ -89,8 +90,8 @@ function DoctorList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredDoctors.length > 0 ? (
-                            filteredDoctors.map((doctor) => (
+                        {doctors.length > 0 ? (
+                            doctors.map((doctor) => (
                                 <tr key={doctor.id}>
                                     <td>{doctor.id}</td>
                                     <td className="text-nowrap">{doctor.name}</td>
@@ -125,6 +126,8 @@ function DoctorList() {
                     </tbody>
                 </table>
             </div>
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
             <ConfirmationModal
                 show={showModal}
