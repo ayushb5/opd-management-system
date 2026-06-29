@@ -7,8 +7,10 @@ export const addBill = async (billData) => {
 };
 
 // Get all Bills
-export const getBills = async () => {
-  const response = await axiosInstance.get("/bills");
+export const getBills = async (page = 0, size = 10, search = "") => {
+  const response = await axiosInstance.get("/bills", {
+    params: { page, size, search },
+  });
   return response.data;
 };
 

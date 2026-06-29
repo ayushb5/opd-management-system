@@ -6,9 +6,17 @@ export const addTestMaster = async (testMasterData) => {
   return response.data;
 };
 
-// Get all Test Masters
-export const getTestMasters = async () => {
-  const response = await axiosInstance.get("/test-masters");
+// Get All Test Masters
+export const getAllTestMasters = async () => {
+  const response = await axiosInstance.get("/test-masters/all");
+  return response.data;
+};
+
+// Get Test Masters with pagination and search functionality
+export const getTestMasters = async (page = 0, size = 10, search = "") => {
+  const response = await axiosInstance.get("/test-masters", {
+    params: { page, size, search },
+  });
   return response.data;
 };
 

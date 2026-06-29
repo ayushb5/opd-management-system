@@ -9,9 +9,11 @@ export const addReferralCenter = async (referralCenterData) => {
   return response.data;
 };
 
-// Get all ReferralCenters
-export const getReferralCenters = async () => {
-  const response = await axiosInstance.get("/referral-centers");
+// Get all referral centers
+export const getReferralCenters = async (page = 0, size = 10, search = "") => {
+  const response = await axiosInstance.get("/referral-centers", {
+    params: { page, size, search },
+  });
   return response.data;
 };
 

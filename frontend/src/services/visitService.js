@@ -6,9 +6,17 @@ export const addVisit = async (visitData) => {
   return response.data;
 };
 
-// Get all Visits
-export const getVisits = async () => {
-  const response = await axiosInstance.get("/visits");
+// Get All Visits
+export const getAllVisits = async () => {
+  const response = await axiosInstance.get("/visits/all");
+  return response.data;
+};
+
+// Get Visits by pagination and search functionality
+export const getVisits = async (page = 0, size = 10, search = "") => {
+  const response = await axiosInstance.get("/visits", {
+    params: { page, size, search },
+  });
   return response.data;
 };
 

@@ -7,8 +7,10 @@ export const addReceptionist = async (receptionistData) => {
 };
 
 // Get all Receptionists
-export const getReceptionists = async () => {
-  const response = await axiosInstance.get("/receptionists");
+export const getReceptionists = async (page = 0, size = 10, search = "") => {
+  const response = await axiosInstance.get("/receptionists", {
+    params: { page, size, search },
+  });
   return response.data;
 };
 
