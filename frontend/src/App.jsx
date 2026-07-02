@@ -48,6 +48,7 @@ import BillDetails from "./components/bill/BillDetails";
 import FollowUpList from "./components/followup/FollowUpList";
 import AddReferral from "./components/referral/AddReferral";
 import EditReferral from "./components/referral/EditReferral";
+import Profile from "./components/common/Profile";
 
 function App() {
   return (
@@ -60,6 +61,15 @@ function App() {
           element={
             <ProtectedRoute allowedRole="ADMIN">
               <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/profile"
+          element={
+            <ProtectedRoute allowedRole="ADMIN">
+              <Profile />
             </ProtectedRoute>
           }
         />
@@ -388,6 +398,14 @@ function App() {
           }
         />
 
+        <Route path="/doctor/profile"
+          element={
+            <ProtectedRoute allowedRole="DOCTOR">
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/doctor/visits/"
         >
@@ -494,12 +512,22 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         {/* RECEPTIONIST */}
         <Route
           path="/receptionist/dashboard"
           element={
             <ProtectedRoute allowedRole="RECEPTIONIST">
               <ReceptionistDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/receptionist/profile"
+          element={
+            <ProtectedRoute allowedRole="RECEPTIONIST">
+              <Profile />
             </ProtectedRoute>
           }
         />
