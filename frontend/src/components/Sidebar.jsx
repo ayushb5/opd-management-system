@@ -38,12 +38,6 @@ function Sidebar({ showTitle = true }) {
         ]
     }
 
-    const handleLogout = () => {
-        localStorage.clear();
-        toast.success("Logout successful!");
-        navigate("/");
-    }
-
     return (
         <div className="bg-dark text-white h-100 w-100 p-3 d-flex flex-column">
             {
@@ -65,13 +59,6 @@ function Sidebar({ showTitle = true }) {
                     </NavLink>
                 ))
             }
-
-            <div className="mt-auto">
-                <button className="btn btn-danger fw-semibold w-100" onClick={handleLogout}>
-                    <span className="me-2"><ArrowBarRight /></span>
-                    Logout
-                </button>
-            </div>
         </div>
     )
 }
