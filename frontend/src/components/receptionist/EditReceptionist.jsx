@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { ArrowLeft } from "react-bootstrap-icons";
-import { getReceptionist, updateReceptionist } from "../../services/receptionistService";
+import { getReceptionistById, updateReceptionist } from "../../services/receptionistService";
 import ReceptionistForm from "./ReceptionistForm";
 
 function EditReceptionist() {
@@ -25,7 +25,7 @@ function EditReceptionist() {
 
     const fetchReceptionist = async () => {
         try {
-            const receptionist = await getReceptionist(id);
+            const receptionist = await getReceptionistById(id);
             setInitialValues({
                 name: receptionist.name || "",
                 email: receptionist.email || "",
