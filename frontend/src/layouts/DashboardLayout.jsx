@@ -1,9 +1,12 @@
 import { Outlet } from "react-router-dom"
+import { useState } from "react"
 import Navbar from "../components/Navbar"
 import Sidebar from "../components/Sidebar"
 
 function DashboardLayout() {
-
+    const [user, setUser] = useState(
+        JSON.parse(localStorage.getItem("user"))
+    );
     return (
         <div className="container-fluid">
             <div className="row min-vh-100">
@@ -30,9 +33,9 @@ function DashboardLayout() {
                     </div>
                 </div>
                 <div className="col-12 col-lg-10 p-0">
-                    <Navbar />
+                    <Navbar user={user} />
                     <div className="p-4">
-                        <Outlet />
+                        <Outlet context={{ user, setUser }} />
                     </div>
                 </div>
             </div>
