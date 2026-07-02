@@ -24,6 +24,9 @@
     display: none;
 }
 
+.profile-box:hover {
+    background-color: #f8f9fa;
+}
 
 @media (max-width: 500.98px) {
     .add-btn {
