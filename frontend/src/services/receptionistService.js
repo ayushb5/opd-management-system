@@ -15,7 +15,7 @@ export const getReceptionists = async (page = 0, size = 10, search = "") => {
 };
 
 //Get Receptionist by Id
-export const getReceptionist = async (id) => {
+export const getReceptionistById = async (id) => {
   const response = await axiosInstance.get(`/receptionists/${id}`);
   return response.data;
 };
