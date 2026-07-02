@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.AdminDto;
+import com.OPD.dto.AdminUpdateDto;
 import com.OPD.entities.Admin;
 import com.OPD.response.DashboardResponse;
 import com.OPD.services.AdminService;
@@ -64,13 +65,12 @@ public class AdminController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Admin> updateAdminById(@PathVariable("id") Integer id,@Valid @RequestBody AdminDto adminDto){
+	public ResponseEntity<Admin> updateAdminById(@PathVariable("id") Integer id,@Valid @RequestBody AdminUpdateDto adminUpdateDto){
 		Admin admin=service.getAdminById(id);
 		
-		admin.setName(adminDto.getName());
-		admin.setEmail(adminDto.getEmail());
-		admin.setMobileNo(adminDto.getMobileNo());
-		admin.setPassword(passwordEncoder.encode(adminDto.getPassword()));
+		admin.setName(adminUpdateDto.getName());
+		admin.setEmail(adminUpdateDto.getEmail());
+		admin.setMobileNo(adminUpdateDto.getMobileNo());
 		
 		Admin updatedAdmin=service.save(admin);
 		return new ResponseEntity<>(updatedAdmin,HttpStatus.OK);

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.DoctorDto;
+import com.OPD.dto.DoctorUpdateDto;
 import com.OPD.entities.Doctor;
 import com.OPD.exception.DuplicateResourceException;
 import com.OPD.repository.DoctorRepository;
@@ -85,16 +86,16 @@ public class DoctorController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Doctor> updateDoctorById(@PathVariable("id") Integer id,@Valid @RequestBody DoctorDto doctorDto){
+	public ResponseEntity<Doctor> updateDoctorById(@PathVariable("id") Integer id,@Valid @RequestBody DoctorUpdateDto doctorUpdateDto){
 		Doctor doctor=service.getDoctorById(id);
 
-		doctor.setName(doctorDto.getName());
-		doctor.setEmail(doctorDto.getEmail());
-		doctor.setSpecialization(doctorDto.getSpecialization());
-		doctor.setClinicName(doctorDto.getClinicName());
-		doctor.setAddress(doctorDto.getAddress());
-		doctor.setMobileNo(doctorDto.getMobileNo());
-		doctor.setStatus(doctorDto.getStatus());
+		doctor.setName(doctorUpdateDto.getName());
+		doctor.setEmail(doctorUpdateDto.getEmail());
+		doctor.setSpecialization(doctorUpdateDto.getSpecialization());
+		doctor.setClinicName(doctorUpdateDto.getClinicName());
+		doctor.setAddress(doctorUpdateDto.getAddress());
+		doctor.setMobileNo(doctorUpdateDto.getMobileNo());
+		doctor.setStatus(doctorUpdateDto.getStatus());
 		
 		Doctor updatedDoctor=service.save(doctor);
 		return new ResponseEntity<>(updatedDoctor,HttpStatus.OK);

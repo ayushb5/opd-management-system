@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.ReceptionistDto;
+import com.OPD.dto.ReceptionistUpdateDto;
 import com.OPD.entities.Doctor;
 import com.OPD.entities.Receptionist;
 import com.OPD.exception.DuplicateResourceException;
@@ -94,15 +95,12 @@ public class ReceptionistController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Receptionist> updateReceptionistById(@PathVariable("id") Integer id, @Valid @RequestBody ReceptionistDto receptionistDto){
+	public ResponseEntity<Receptionist> updateReceptionistById(@PathVariable("id") Integer id, @Valid @RequestBody ReceptionistUpdateDto receptionistUpdateDto){
 		Receptionist receptionist=service.getReceptionistById(id);
-		Doctor doctor=doctorService.getDoctorById(receptionistDto.getDoctorId());
 		
-		receptionist.setName(receptionistDto.getName());
-		receptionist.setEmail(receptionistDto.getEmail());
-		receptionist.setMobileNo(receptionistDto.getMobileNo());
-		receptionist.setStatus(receptionistDto.getStatus());
-		receptionist.setDoctor(doctor);
+		receptionist.setName(receptionistUpdateDto.getName());
+		receptionist.setEmail(receptionistUpdateDto.getEmail());
+		receptionist.setMobileNo(receptionistUpdateDto.getMobileNo());
 		
 		Receptionist updatedReceptionist=service.save(receptionist);
 		return new ResponseEntity<>(updatedReceptionist,HttpStatus.OK);
