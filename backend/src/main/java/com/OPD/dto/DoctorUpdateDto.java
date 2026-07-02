@@ -4,25 +4,15 @@ import com.OPD.entities.Doctor;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
-public class DoctorDto {
+public class DoctorUpdateDto {
 	@NotBlank(message="Doctor name is required")
 	private String name;
 	
 	@Email(message="Enter valid email")
 	@NotBlank(message="Email is required")
 	private String email;
-	
-	@NotBlank(message = "Password is required")
-	@Size(
-	    min = 6,
-	    max = 20,
-	    message = "Password must be between 6 and 20 characters"
-	)
-	private String password;
 	
 	@NotBlank(message="Specialization is required")
 	private String specialization;
@@ -58,14 +48,6 @@ public class DoctorDto {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getSpecialization() {
 		return specialization;
 	}
@@ -97,7 +79,7 @@ public class DoctorDto {
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
-
+	
 	public Doctor.Status getStatus() {
 		return status;
 	}
@@ -106,8 +88,7 @@ public class DoctorDto {
 		this.status = status;
 	}
 
-	public DoctorDto() {
+	public DoctorUpdateDto() {
 		
 	}
-	
 }
