@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.AdminDto;
 import com.OPD.dto.AdminUpdateDto;
+import com.OPD.dto.ChangePasswordDto;
 import com.OPD.entities.Admin;
+import com.OPD.exception.BadRequestException;
 import com.OPD.response.DashboardResponse;
 import com.OPD.services.AdminService;
 import com.OPD.services.DashboardService;
+import com.OPD.utils.OtpGenerator;
 
 import jakarta.validation.Valid;
 
@@ -35,6 +38,7 @@ public class AdminController {
 	private DashboardService dashboardService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
 	@PostMapping
 	public ResponseEntity<Admin> save(@Valid @RequestBody AdminDto adminDto){
 		Admin admin=new Admin();
@@ -63,6 +67,21 @@ public class AdminController {
 	public ResponseEntity<DashboardResponse> getDashboard() {
 	    return ResponseEntity.ok(dashboardService.getAdminDashboard());
 	}
+	
+	@PutMapping("/{id}/change-password")
+	public ResponseEntity<Void> changePassword(@PathVariable("id") int id,@Valid @RequestBody ChangePasswordDto changePasswordDto){
+		Admin admin=service.getAdminById(id);
+		if(!passwordEncoder.matches(changePasswordDto.getCurrentPassword(), admin.getPassword())) {
+			 throw new BadRequestException("Current password is incorrect");
+		}
+		if(!changePasswordDto.getNewPassword().equals(changePasswordDto.getConfirmPassword())) {
+			throw new BadRequestException("New password and confirm password do not match");
+		}
+		admin.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+		service.save(admin);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Admin> updateAdminById(@PathVariable("id") Integer id,@Valid @RequestBody AdminUpdateDto adminUpdateDto){

@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.OPD.dto.ChangePasswordDto;
 import com.OPD.dto.ReceptionistDto;
 import com.OPD.dto.ReceptionistUpdateDto;
+import com.OPD.entities.Admin;
 import com.OPD.entities.Doctor;
 import com.OPD.entities.Receptionist;
+import com.OPD.exception.BadRequestException;
 import com.OPD.exception.DuplicateResourceException;
 import com.OPD.repository.ReceptionistRepository;
 import com.OPD.response.DashboardResponse;
@@ -92,6 +95,20 @@ public class ReceptionistController {
 	@GetMapping("/dashboard")
 	public ResponseEntity<DashboardResponse> getReceptionistDashboard() {
 	    return ResponseEntity.ok(dashboardService.getReceptionistDashboard());
+	}
+	
+	@PutMapping("/{id}/change-password")
+	public ResponseEntity<Void> changePassword(@PathVariable("id") int id,@Valid @RequestBody ChangePasswordDto changePasswordDto){
+		Receptionist receptionist=service.getReceptionistById(id);
+		if(!passwordEncoder.matches(changePasswordDto.getCurrentPassword(), receptionist.getPassword())) {
+			 throw new BadRequestException("Current password is incorrect");
+		}
+		if(!changePasswordDto.getNewPassword().equals(changePasswordDto.getConfirmPassword())) {
+			throw new BadRequestException("New password and confirm password do not match");
+		}
+		receptionist.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+		service.save(receptionist);
+		return ResponseEntity.ok().build();
 	}
 	
 	@PutMapping("/{id}")

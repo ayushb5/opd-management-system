@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.OPD.dto.ChangePasswordDto;
 import com.OPD.dto.DoctorDto;
 import com.OPD.dto.DoctorUpdateDto;
 import com.OPD.entities.Doctor;
+import com.OPD.exception.BadRequestException;
 import com.OPD.exception.DuplicateResourceException;
 import com.OPD.repository.DoctorRepository;
 import com.OPD.response.DashboardResponse;
@@ -83,6 +85,20 @@ public class DoctorController {
 	@GetMapping("/dashboard/{doctorId}")
 	public ResponseEntity<DashboardResponse> getDashboard(@PathVariable("doctorId") Integer doctorId){
 		return ResponseEntity.ok(dashboardService.getDoctorDashboard(doctorId));
+	}
+	
+	@PutMapping("/{id}/change-password")
+	public ResponseEntity<Void> changePassword(@PathVariable("id") int id,@Valid @RequestBody ChangePasswordDto changePasswordDto){
+		Doctor doctor=service.getDoctorById(id);
+		if(!passwordEncoder.matches(changePasswordDto.getCurrentPassword(), doctor.getPassword())) {
+			 throw new BadRequestException("Current password is incorrect");
+		}
+		if(!changePasswordDto.getNewPassword().equals(changePasswordDto.getConfirmPassword())) {
+			throw new BadRequestException("New password and confirm password do not match");
+		}
+		doctor.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+		service.save(doctor);
+		return ResponseEntity.ok().build();
 	}
 	
 	@PutMapping("/{id}")
