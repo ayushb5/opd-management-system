@@ -26,6 +26,16 @@ export const getReceptionistById = async (id) => {
 //   return response.data;
 // };
 
+// change password
+export const changeReceptionistPassword = async (id, password) => {
+  const response = await axiosInstance.put(
+    `/receptionists/${id}/change-password`,
+    password,
+  );
+
+  return response.data;
+};
+
 // Update Receptionist by Id
 export const updateReceptionist = async (id, receptionistData) => {
   const response = await axiosInstance.put(

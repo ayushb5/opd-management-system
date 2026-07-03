@@ -6,6 +6,16 @@ export const getAdminById = async (id) => {
   return response.data;
 };
 
+// change password
+export const changeAdminPassword = async (id, password) => {
+  const response = await axiosInstance.put(
+    `/admin/${id}/change-password`,
+    password,
+  );
+
+  return response.data;
+};
+
 // Update admin by Id
 export const updateAdmin = async (id, adminData) => {
   const response = await axiosInstance.put(`/admin/${id}`, adminData);

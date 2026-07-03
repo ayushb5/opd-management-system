@@ -26,6 +26,16 @@ export const getDoctorById = async (id) => {
   return response.data;
 };
 
+// change password
+export const changeDoctorPassword = async (id, password) => {
+  const response = await axiosInstance.put(
+    `/doctors/${id}/change-password`,
+    password,
+  );
+
+  return response.data;
+};
+
 // Update doctor by Id
 export const updateDoctor = async (id, doctorData) => {
   const response = await axiosInstance.put(`/doctors/${id}`, doctorData);
