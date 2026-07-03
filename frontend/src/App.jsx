@@ -48,7 +48,8 @@ import BillDetails from "./components/bill/BillDetails";
 import FollowUpList from "./components/followup/FollowUpList";
 import AddReferral from "./components/referral/AddReferral";
 import EditReferral from "./components/referral/EditReferral";
-import Profile from "./components/common/Profile";
+import Profile from "./pages/common/Profile";
+import ChangePassword from "./pages/common/ChangePassword";
 
 function App() {
   return (
@@ -73,6 +74,12 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/admin/change-password" element={
+          <ProtectedRoute allowedRole="ADMIN">
+            <ChangePassword />
+          </ProtectedRoute>
+        } />
 
         {/* Admin - Doctor */}
         <Route
@@ -406,6 +413,12 @@ function App() {
           }
         />
 
+        <Route path="/doctor/change-password" element={
+          <ProtectedRoute allowedRole="DOCTOR">
+            <ChangePassword />
+          </ProtectedRoute>
+        } />
+
         <Route
           path="/doctor/visits/"
         >
@@ -531,6 +544,12 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/receptionist/change-password" element={
+          <ProtectedRoute allowedRole="RECEPTIONIST">
+            <ChangePassword />
+          </ProtectedRoute>
+        } />
 
         {/* Receptionist - Patient */}
         <Route
