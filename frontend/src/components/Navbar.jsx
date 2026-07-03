@@ -55,7 +55,7 @@ function Navbar({ user }) {
                         </button>
                     </li>
                     <li>
-                        <button className="dropdown-item">
+                        <button className="dropdown-item" onClick={() => navigate(`/${user.role.toLowerCase()}/change-password`)}>
                             <Key className="me-2" />
                             Change Password
                         </button>
