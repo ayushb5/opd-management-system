@@ -69,7 +69,11 @@ function Profile() {
                 name: profile.name
             };
             setUser(updatedUser);
-            localStorage.setItem("user", JSON.stringify(updatedUser));
+            if (localStorage.getItem("user")) {
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+            } else {
+                sessionStorage.setItem("user", JSON.stringify(updatedUser));
+            }
             setIsEditing(false);
             toast.success("Profile updated successfully");
         } catch (error) {
