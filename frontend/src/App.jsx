@@ -1,4 +1,4 @@
-import Login from "./pages/Login"
+import Login from "./pages/auth/Login"
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import DashboardLayout from "./layouts/DashboardLayout";
@@ -50,11 +50,17 @@ import AddReferral from "./components/referral/AddReferral";
 import EditReferral from "./components/referral/EditReferral";
 import Profile from "./pages/common/Profile";
 import ChangePassword from "./pages/common/ChangePassword";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
+import VerifyOtp from "./pages/auth/VerifyOtp";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/verify-otp" element={<VerifyOtp />} />
       <Route element={<DashboardLayout />}>
         {/* Admin */}
         <Route
