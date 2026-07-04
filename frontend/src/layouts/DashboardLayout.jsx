@@ -5,7 +5,8 @@ import Sidebar from "../components/Sidebar"
 
 function DashboardLayout() {
     const [user, setUser] = useState(
-        JSON.parse(localStorage.getItem("user"))
+        JSON.parse(localStorage.getItem("user")) ||
+        JSON.parse(sessionStorage.getItem("user"))
     );
     return (
         <div className="container-fluid">
