@@ -28,10 +28,18 @@
     background-color: #f8f9fa;
 }
 
+.forgot-pass-card {
+    width: 400px;
+}
+
 @media (max-width: 500.98px) {
     .add-btn {
         font-size: small !important;
         padding: 0.25rem 0.5rem !important;
+    }
+
+    .forgot-pass-card {
+        width: 330px;
     }
 }
 
