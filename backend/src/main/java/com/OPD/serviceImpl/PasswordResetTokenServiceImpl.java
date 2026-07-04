@@ -5,11 +5,16 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.OPD.dto.ResetPasswordDto;
 import com.OPD.entities.PasswordResetToken;
+import com.OPD.repository.AdminRepository;
+import com.OPD.repository.DoctorRepository;
 import com.OPD.repository.PasswordResetTokenRepository;
+import com.OPD.repository.ReceptionistRepository;
 import com.OPD.services.EmailService;
 import com.OPD.services.PasswordResetTokenService;
 import com.OPD.exception.BadRequestException;
@@ -23,6 +28,15 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
 	private EmailService emailService;
 	@Value("${app.frontend.url}")
 	private String frontendUrl;
+	
+	@Autowired
+	private AdminRepository adminRepository;
+	@Autowired
+	private DoctorRepository doctorRepository;
+	@Autowired
+	private ReceptionistRepository receptionistRepository;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Transactional
 	@Override
@@ -52,6 +66,34 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
 		if(resetToken.getExpiryTime().isBefore(LocalDateTime.now())) {
 			throw new BadRequestException("Reset link has expired");
 		}
+	}
+	
+	@Transactional
+	@Override
+	public void resetPassword(ResetPasswordDto dto) {
+		validateToken(dto.getToken());
+		PasswordResetToken resetToken=repository.findByToken(dto.getToken()).get();
+		if(!dto.getNewPassword().equals(dto.getConfirmPassword())) {
+			throw new BadRequestException("Passwords do not match");
+		}
+		String encodedPassword=passwordEncoder.encode(dto.getNewPassword());
+		String email=resetToken.getEmail();
+		
+		adminRepository.findByEmail(email).ifPresent(admin->{
+			admin.setPassword(encodedPassword);
+			adminRepository.save(admin);
+		});
+		doctorRepository.findByEmail(email).ifPresent(doctor->{
+			doctor.setPassword(encodedPassword);
+			doctorRepository.save(doctor);
+		});
+		receptionistRepository.findByEmail(email).ifPresent(receptionist->{
+			receptionist.setPassword(encodedPassword);
+			receptionistRepository.save(receptionist);
+		});
+		
+		resetToken.setUsed(true);
+		repository.save(resetToken);
 	}
 
 }
