@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.OPD.dto.ForgotPasswordDto;
 import com.OPD.dto.LoginDto;
+import com.OPD.dto.ResetPasswordDto;
+import com.OPD.dto.VerifyOtpDto;
 import com.OPD.repository.AdminRepository;
 import com.OPD.repository.DoctorRepository;
 import com.OPD.repository.ReceptionistRepository;
+import com.OPD.response.LoginOtpResponse;
 import com.OPD.response.LoginResponse;
 import com.OPD.services.AuthService;
 import com.OPD.services.OtpVerificationService;
@@ -46,8 +49,8 @@ public class AuthController {
 	private ReceptionistRepository receptionistRepository;
 	
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginDto loginDto){
-		LoginResponse response=service.login(loginDto);
+	public ResponseEntity<LoginOtpResponse> login(@Valid @RequestBody LoginDto loginDto){
+		LoginOtpResponse response=service.login(loginDto);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
@@ -77,6 +80,21 @@ public class AuthController {
 		Map<String, String> response = new HashMap<>();
 	    response.put("message", "Token is valid");
 	    return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping("/reset-password")
+	public ResponseEntity<Map<String,String>> resetPassword(@Valid @RequestBody ResetPasswordDto dto){
+		passwordResetTokenService.resetPassword(dto);
+		
+		Map<String,String> response=new HashMap<>();
+		response.put("message", "Password reset successfully");
+		return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping("/verify-otp")
+	public ResponseEntity<LoginResponse> verifyOtp(@Valid @RequestBody VerifyOtpDto dto){
+		LoginResponse response=service.verifyOtp(dto);
+		return ResponseEntity.ok(response);
 	}
 	
 //	@PostMapping("/admin/login")
