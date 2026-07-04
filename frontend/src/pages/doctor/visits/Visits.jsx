@@ -10,7 +10,9 @@ function Visits() {
     const [search, setSearch] = useState("");
 
     const user = JSON.parse(
-        localStorage.getItem("user") || "{}"
+        localStorage.getItem("user") ||
+        sessionStorage.getItem("user") ||
+        "null"
     );
 
     const doctorId = user.id;
