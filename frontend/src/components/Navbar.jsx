@@ -8,6 +8,7 @@ function Navbar({ user }) {
 
     const handleLogout = () => {
         localStorage.clear();
+        sessionStorage.clear();
         toast.success("Logout successful!");
         navigate("/");
     }
@@ -29,7 +30,7 @@ function Navbar({ user }) {
                     aria-expanded="false"
                     style={{ cursor: "pointer" }}
                 >
-                    <span className="badge bg-primary me-2">{user.role}</span>
+                    <span className="badge bg-primary me-2">{user?.role}</span>
                     <div className="d-none d-md-block text-end me-2">
                         <small className="fw-semibold">{user.name}</small>
                     </div>
@@ -49,13 +50,13 @@ function Navbar({ user }) {
                         <hr className="dropdown-divider" />
                     </li>
                     <li>
-                        <button className="dropdown-item" onClick={() => navigate(`/${user.role.toLowerCase()}/profile`)}>
+                        <button className="dropdown-item" onClick={() => navigate(`/${user?.role.toLowerCase()}/profile`)}>
                             <PersonCircle className="me-2" />
                             My Profile
                         </button>
                     </li>
                     <li>
-                        <button className="dropdown-item" onClick={() => navigate(`/${user.role.toLowerCase()}/change-password`)}>
+                        <button className="dropdown-item" onClick={() => navigate(`/${user?.role.toLowerCase()}/change-password`)}>
                             <Key className="me-2" />
                             Change Password
                         </button>

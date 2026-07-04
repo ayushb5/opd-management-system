@@ -1,14 +1,12 @@
-import { NavLink, useNavigate } from "react-router-dom"
-import { Grid, PersonBadge, People, ArrowBarRight, PersonVcard, Clipboard2Check, Capsule, Diagram3Fill, Flask, Receipt, CalendarCheck, ClockHistory } from "react-bootstrap-icons"
-import { toast } from "react-toastify"
+import { NavLink } from "react-router-dom"
+import { Grid, PersonBadge, People, PersonVcard, Clipboard2Check, Capsule, Diagram3Fill, Flask, Receipt, ClockHistory } from "react-bootstrap-icons"
 
 function Sidebar({ showTitle = true }) {
-    const user = JSON.parse(
-        localStorage.getItem("user") || "{}"
-    );
+    const user =
+        JSON.parse(localStorage.getItem("user")) ||
+        JSON.parse(sessionStorage.getItem("user"));
 
     const role = user.role;
-    const navigate = useNavigate();
 
     const menuItems = {
         ADMIN: [

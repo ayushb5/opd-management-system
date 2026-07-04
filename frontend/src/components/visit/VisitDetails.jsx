@@ -67,7 +67,7 @@ function VisitDetails() {
         setVisit({ ...visit, [e.target.name]: e.target.value });
     }
 
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("user") || sessionStorage.getItem("user");
     const user = storedUser ? JSON.parse(storedUser) : null;
     const role = user?.role;
 

@@ -6,7 +6,9 @@ import PatientForm from "./PatientForm";
 
 function AddPatient() {
     const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user =
+        JSON.parse(localStorage.getItem("user")) ||
+        JSON.parse(sessionStorage.getItem("user"));
     const role = user.role;
 
     const initialValues = {
@@ -45,7 +47,7 @@ function AddPatient() {
             navigate("/receptionist/patients");
         }
     }
-    
+
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">

@@ -16,7 +16,12 @@ const FollowUpList = () => {
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
 
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const user =
+        JSON.parse(
+            localStorage.getItem("user") ||
+            sessionStorage.getItem("user") ||
+            "null"
+        );
     const doctorId = user?.id;
 
     const fetchFollowUps = async (selectedFilter = "ALL") => {

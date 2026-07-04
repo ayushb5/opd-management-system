@@ -21,7 +21,9 @@ function EditReferral() {
         details: "",
     });
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user =
+        JSON.parse(localStorage.getItem("user")) ||
+        JSON.parse(sessionStorage.getItem("user"));
     const role = user?.role;
 
     useEffect(() => {

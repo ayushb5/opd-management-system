@@ -12,7 +12,9 @@ function ReferralList({ visitId, patientId, doctorId }) {
     const [selectReferralId, setSelectedReferralId] = useState(null);
     const navigate = useNavigate();
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user =
+        JSON.parse(localStorage.getItem("user")) ||
+        JSON.parse(sessionStorage.getItem("user"));
     const role = user?.role;
 
     useEffect(() => {

@@ -19,7 +19,9 @@ function AddBill() {
         paymentStatus: ""
     }
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user =
+        JSON.parse(localStorage.getItem("user")) ||
+        JSON.parse(sessionStorage.getItem("user"));
     const role = user.role;
     const basePath = role === "RECEPTIONIST" ? "/receptionist" : "/admin";
 

@@ -11,7 +11,9 @@ function EditVisit() {
 
     const [loading, setLoading] = useState(true);
 
-    const storedUser = localStorage.getItem("user");
+    const storedUser =
+        localStorage.getItem("user") ||
+        sessionStorage.getItem("user");
     const user = storedUser ? JSON.parse(storedUser) : null;
     const role = user?.role;
 
