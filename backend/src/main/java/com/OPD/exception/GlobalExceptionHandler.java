@@ -13,45 +13,67 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	@ExceptionHandler(ResourceNotFoundException.class)
-		public ResponseEntity<Map<String,Object>> handleResourceNotFound(ResourceNotFoundException e){
-			Map<String,Object> error=new HashMap<>();
-			error.put("timestamp", LocalDateTime.now());
-			error.put("status", HttpStatus.NOT_FOUND.value());
-			error.put("message", e.getMessage());
-			
-			return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+	public ResponseEntity<Map<String, Object>> handleResourceNotFound(ResourceNotFoundException e) {
+		Map<String, Object> error = new HashMap<>();
+		error.put("timestamp", LocalDateTime.now());
+		error.put("status", HttpStatus.NOT_FOUND.value());
+		error.put("message", e.getMessage());
+
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
-	
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Map<String, String>> handleValidation(MethodArgumentNotValidException ex){
-		Map<String,String> errors=new HashMap<>();
-		
-		ex.getBindingResult().getFieldErrors().forEach(error->{
+	public ResponseEntity<Map<String, String>> handleValidation(MethodArgumentNotValidException ex) {
+		Map<String, String> errors = new HashMap<>();
+
+		ex.getBindingResult().getFieldErrors().forEach(error -> {
 			errors.put(error.getField(), error.getDefaultMessage());
 		});
-		
-		return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@ExceptionHandler(BadRequestException.class)
-	public ResponseEntity<Map<String,Object>> handleBadRequest(BadRequestException e){
-	    Map<String,Object> error = new HashMap<>();
+	public ResponseEntity<Map<String, Object>> handleBadRequest(BadRequestException e) {
+		Map<String, Object> error = new HashMap<>();
 
-	    error.put("timestamp", LocalDateTime.now());
-	    error.put("status", HttpStatus.BAD_REQUEST.value());
-	    error.put("message", e.getMessage());
+		error.put("timestamp", LocalDateTime.now());
+		error.put("status", HttpStatus.BAD_REQUEST.value());
+		error.put("message", e.getMessage());
 
-	    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@ExceptionHandler(InvalidCredentialsException.class)
-	public ResponseEntity<Map<String,Object>> handleInvalidCredentials(InvalidCredentialsException e){
-		Map<String,Object> errors=new HashMap<>();
-		
+	public ResponseEntity<Map<String, Object>> handleInvalidCredentials(InvalidCredentialsException e) {
+		Map<String, Object> errors = new HashMap<>();
+
 		errors.put("timestamp", LocalDateTime.now());
 		errors.put("status", HttpStatus.UNAUTHORIZED.value());
 		errors.put("message", e.getMessage());
-		
-		return new ResponseEntity<>(errors,HttpStatus.UNAUTHORIZED);
+
+		return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
+	}
+
+	@ExceptionHandler(DuplicateResourceException.class)
+	public ResponseEntity<Map<String, Object>> handleDuplicateResource(DuplicateResourceException e) {
+		Map<String, Object> errors = new HashMap<>();
+
+		errors.put("timestamp", LocalDateTime.now());
+		errors.put("status", HttpStatus.CONFLICT.value());
+		errors.put("message", e.getMessage());
+
+		return new ResponseEntity<>(errors, HttpStatus.CONFLICT);
+	}
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Map<String, Object>> handleGlobalException(Exception e) {
+		Map<String, Object> errors = new HashMap<>();
+
+		errors.put("timestamp", LocalDateTime.now());
+		errors.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+		errors.put("message", "An unexpected error occurred: " + e.getMessage());
+
+		return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
