@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.OPD.entities.Visit;
 import com.OPD.exception.ResourceNotFoundException;
@@ -19,7 +20,8 @@ public class VisitServiceImpl implements VisitService {
 
 	@Autowired
 	private VisitRepository repository;
-	
+
+	@Transactional
 	@Override
 	public Visit save(Visit visit) {
 		return repository.save(visit);
@@ -31,36 +33,34 @@ public class VisitServiceImpl implements VisitService {
 	}
 
 	@Override
-	public Page<Visit> getVisits(int page,int size,String search){
-		Pageable pageable=PageRequest.of(page, size);
+	public Page<Visit> getVisits(int page, int size, String search) {
+		Pageable pageable = PageRequest.of(page, size);
 		if (search == null || search.isBlank()) {
-		    return repository.findAll(pageable);
+			return repository.findAll(pageable);
 		}
-		return repository.findByPatient_PatientNameContainingIgnoreCaseOrDoctor_NameContainingIgnoreCaseOrComplaintsContainingIgnoreCaseOrDiagnosisContainingIgnoreCase(
-				search,
-                search,
-                search,
-                search,
-                pageable
-		);
-	}
-	
-	@Override
-	public Visit getVisitById(Integer id) {
-		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit not found with id: "+id));
+		return repository
+				.findByPatient_PatientNameContainingIgnoreCaseOrDoctor_NameContainingIgnoreCaseOrComplaintsContainingIgnoreCaseOrDiagnosisContainingIgnoreCase(
+						search, search, search, search, pageable);
 	}
 
 	@Override
+	public Visit getVisitById(Integer id) {
+		return repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Visit not found with id: " + id));
+	}
+
+	@Transactional
+	@Override
 	public void deleteVisitById(Integer id) {
-		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Visit not found with id: "+id));
+		repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Visit not found with id: " + id));
 		repository.deleteById(id);
 	}
 
 	@Override
 	public List<Visit> getVisitsByDate(LocalDate visitDate) {
-	    return repository.findByVisitDate(visitDate);
+		return repository.findByVisitDate(visitDate);
 	}
-	
+
 	@Override
 	public List<Visit> getVisitsByDoctorId(Integer doctorId) {
 		return repository.findByDoctor_Id(doctorId);

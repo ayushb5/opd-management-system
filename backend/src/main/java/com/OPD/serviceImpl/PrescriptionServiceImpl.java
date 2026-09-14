@@ -4,17 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.OPD.entities.Prescription;
 import com.OPD.exception.ResourceNotFoundException;
 import com.OPD.repository.PrescriptionRepository;
 import com.OPD.services.PrescriptionService;
+
 @Service
 public class PrescriptionServiceImpl implements PrescriptionService {
 
 	@Autowired
 	private PrescriptionRepository repository;
-	
+
+	@Transactional
 	@Override
 	public Prescription save(Prescription prescription) {
 		return repository.save(prescription);
@@ -27,7 +30,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
 	@Override
 	public Prescription getPrescriptionById(Integer id) {
-		return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Prescription not found with id: "+id));
+		return repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Prescription not found with id: " + id));
 	}
 
 	@Override
@@ -40,9 +44,11 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 		return repository.findByMedicine_Id(medicineId);
 	}
 
+	@Transactional
 	@Override
 	public void deletePrescriptionById(Integer id) {
-		repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Prescription not found with id: "+id));
+		repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Prescription not found with id: " + id));
 		repository.deleteById(id);
 	}
 
