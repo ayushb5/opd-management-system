@@ -1,4 +1,5 @@
 package com.OPD.serviceImpl;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.OPD.response.LoginResponse;
 import com.OPD.services.AuthService;
 import com.OPD.services.JwtService;
 import com.OPD.services.OtpVerificationService;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -34,39 +36,42 @@ public class AuthServiceImpl implements AuthService {
 	private OtpVerificationService otpVerificationService;
 	@Autowired
 	private JwtService jwtService;
-	
+
 	@Override
 	public LoginOtpResponse login(LoginDto loginDto) {
-		
-		Optional<Admin> admin=adminRepository.findByEmail(loginDto.getEmail());
-		
-		if(admin.isPresent()) {
-			Admin adminData=admin.get();
-			if(!passwordEncoder.matches(loginDto.getPassword(), adminData.getPassword())) {
+
+		Optional<Admin> admin = adminRepository.findByEmail(loginDto.getEmail());
+
+		if (admin.isPresent()) {
+			Admin adminData = admin.get();
+			if (!passwordEncoder.matches(loginDto.getPassword(), adminData.getPassword())) {
 				throw new InvalidCredentialsException("Invalid email or password");
 			}
 			otpVerificationService.generateAndSendOtp(adminData.getEmail());
-			return new LoginOtpResponse(adminData.getId(),adminData.getRole(),adminData.getEmail(),adminData.getName(),"OTP sent successfully");
+			return new LoginOtpResponse(adminData.getId(), adminData.getRole(), adminData.getEmail(),
+					adminData.getName(), "OTP sent successfully");
 		}
-		
-		Optional<Doctor> doctor=doctorRepository.findByEmail(loginDto.getEmail());
-		if(doctor.isPresent()) {
-			Doctor doctorData=doctor.get();
-			if(!passwordEncoder.matches(loginDto.getPassword(), doctorData.getPassword())) {
+
+		Optional<Doctor> doctor = doctorRepository.findByEmail(loginDto.getEmail());
+		if (doctor.isPresent()) {
+			Doctor doctorData = doctor.get();
+			if (!passwordEncoder.matches(loginDto.getPassword(), doctorData.getPassword())) {
 				throw new InvalidCredentialsException("Invalid email or password");
 			}
 			otpVerificationService.generateAndSendOtp(doctorData.getEmail());
-			return new LoginOtpResponse(doctorData.getId(),doctorData.getRole(),doctorData.getEmail(),doctorData.getName(),"OTP sent successfully");
+			return new LoginOtpResponse(doctorData.getId(), doctorData.getRole(), doctorData.getEmail(),
+					doctorData.getName(), "OTP sent successfully");
 		}
-		
-		Optional<Receptionist> receptionist=receptionistRepository.findByEmail(loginDto.getEmail());
-		if(receptionist.isPresent()) {
-			Receptionist receptionistData=receptionist.get();
-			if(!passwordEncoder.matches(loginDto.getPassword(), receptionistData.getPassword())) {
+
+		Optional<Receptionist> receptionist = receptionistRepository.findByEmail(loginDto.getEmail());
+		if (receptionist.isPresent()) {
+			Receptionist receptionistData = receptionist.get();
+			if (!passwordEncoder.matches(loginDto.getPassword(), receptionistData.getPassword())) {
 				throw new InvalidCredentialsException("Invalid email or password");
 			}
 			otpVerificationService.generateAndSendOtp(receptionistData.getEmail());
-			return new LoginOtpResponse(receptionistData.getId(),receptionistData.getRole(), receptionistData.getEmail(), receptionistData.getName(),"OTP sent successfully");
+			return new LoginOtpResponse(receptionistData.getId(), receptionistData.getRole(),
+					receptionistData.getEmail(), receptionistData.getName(), "OTP sent successfully");
 		}
 		throw new InvalidCredentialsException("Invalid email or password");
 	}
@@ -74,31 +79,37 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public LoginResponse verifyOtp(VerifyOtpDto dto) {
 		otpVerificationService.verifyOtp(dto.getEmail(), dto.getOtp());
-		
-		Optional<Admin> admin=adminRepository.findByEmail(dto.getEmail());
-		
-		if(admin.isPresent()) {
-			Admin adminData=admin.get();
-			return new LoginResponse(adminData.getId(),jwtService.generateToken(adminData.getEmail()),adminData.getRole(),adminData.getEmail(),adminData.getName());
+
+		Optional<Admin> admin = adminRepository.findByEmail(dto.getEmail());
+
+		if (admin.isPresent()) {
+			Admin adminData = admin.get();
+			return new LoginResponse(adminData.getId(),
+					jwtService.generateToken(adminData.getEmail(), adminData.getRole().name()), adminData.getRole(),
+					adminData.getEmail(), adminData.getName());
 		}
-		
-		Optional<Doctor> doctor=doctorRepository.findByEmail(dto.getEmail());
-		
-		if(doctor.isPresent()) {
-			Doctor doctorData=doctor.get();
-			return new LoginResponse(doctorData.getId(),jwtService.generateToken(doctorData.getEmail()),doctorData.getRole(),doctorData.getEmail(),doctorData.getName());
+
+		Optional<Doctor> doctor = doctorRepository.findByEmail(dto.getEmail());
+
+		if (doctor.isPresent()) {
+			Doctor doctorData = doctor.get();
+			return new LoginResponse(doctorData.getId(),
+					jwtService.generateToken(doctorData.getEmail(), doctorData.getRole().name()), doctorData.getRole(),
+					doctorData.getEmail(), doctorData.getName());
 		}
-		
-		Optional<Receptionist> receptionist=receptionistRepository.findByEmail(dto.getEmail());
-		
-		if(receptionist.isPresent()) {
-			Receptionist receptionistData=receptionist.get();
-			return new LoginResponse(receptionistData.getId(),jwtService.generateToken(receptionistData.getEmail()),receptionistData.getRole(),receptionistData.getEmail(),receptionistData.getName());
+
+		Optional<Receptionist> receptionist = receptionistRepository.findByEmail(dto.getEmail());
+
+		if (receptionist.isPresent()) {
+			Receptionist receptionistData = receptionist.get();
+			return new LoginResponse(receptionistData.getId(),
+					jwtService.generateToken(receptionistData.getEmail(), receptionistData.getRole().name()),
+					receptionistData.getRole(), receptionistData.getEmail(), receptionistData.getName());
 		}
-		
+
 		throw new InvalidCredentialsException("Invalid user");
 	}
-	
+
 //	@Override
 //	public LoginResponse adminLogin(LoginDto loginDto) {
 //		Admin admin=adminRepository.findByEmail(loginDto.getEmail()).orElseThrow(()->new InvalidCredentialsException("Invalid email or password"));
@@ -124,6 +135,5 @@ public class AuthServiceImpl implements AuthService {
 //		}
 //		return new LoginResponse(jwtService.generateToken(receptionist.getEmail()),receptionist.getRole(),receptionist.getEmail());
 //	}
-	
 
 }
