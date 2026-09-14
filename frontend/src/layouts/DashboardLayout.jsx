@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 import { useState } from "react"
 import Navbar from "../components/Navbar"
 import Sidebar from "../components/Sidebar"
@@ -8,6 +8,13 @@ function DashboardLayout() {
         JSON.parse(localStorage.getItem("user")) ||
         JSON.parse(sessionStorage.getItem("user"))
     );
+    const token =
+        localStorage.getItem("token") ||
+        sessionStorage.getItem("token");
+
+    if (!token || !user) {
+        return <Navigate to="/" replace />;
+    }
     return (
         <div className="container-fluid">
             <div className="row min-vh-100">

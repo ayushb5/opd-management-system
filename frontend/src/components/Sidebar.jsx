@@ -6,6 +6,10 @@ function Sidebar({ showTitle = true }) {
         JSON.parse(localStorage.getItem("user")) ||
         JSON.parse(sessionStorage.getItem("user"));
 
+    if (!user) {
+        return null;
+    }
+
     const role = user.role;
 
     const menuItems = {

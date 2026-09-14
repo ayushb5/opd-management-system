@@ -53,6 +53,7 @@ import ChangePassword from "./pages/common/ChangePassword";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import VerifyOtp from "./pages/auth/VerifyOtp";
+import PageNotFound from "./pages/common/PageNotFound";
 
 function App() {
   return (
@@ -736,8 +737,8 @@ function App() {
           }
           />
         </Route>
-
       </Route>
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
 }
