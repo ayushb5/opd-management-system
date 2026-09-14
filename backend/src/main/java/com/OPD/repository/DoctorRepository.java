@@ -19,4 +19,5 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
 	        String mobileNo,
 	        Pageable pageable
 	);
-}	
+}
+

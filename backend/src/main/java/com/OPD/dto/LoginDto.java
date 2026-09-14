@@ -11,6 +11,7 @@ public class LoginDto {
 	@NotBlank(message="Password is required")
 	@Size(min=6,message="Enter password at least 6 characters")
 	private String password;
+	
 	public String getEmail() {
 		return email;
 	}
