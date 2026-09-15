@@ -3,13 +3,19 @@ package com.OPD.dto;
 public class MonthlyVisitDto {
 	private String month;
 	private Long count;
-	
+
 	public MonthlyVisitDto() {
 	}
 
 	public MonthlyVisitDto(String month, Long count) {
 		super();
 		this.month = month;
+		this.count = count;
+	}
+
+	public MonthlyVisitDto(Object month, Long count) {
+		super();
+		this.month = month != null ? month.toString() : "";
 		this.count = count;
 	}
 
@@ -33,5 +39,5 @@ public class MonthlyVisitDto {
 	public String toString() {
 		return "MonthlyVisitDto [month=" + month + ", count=" + count + "]";
 	}
-	
+
 }
