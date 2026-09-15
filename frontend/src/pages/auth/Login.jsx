@@ -119,7 +119,20 @@ function Login() {
                                 <NavLink to="/forgot-password" className={"nav-link text-primary"}>Forgot password?</NavLink>
                             </div>
                             <div className="text-center">
-                                <button className="btn btn-primary w-100 py-2 fw-semibold" type="submit">Login</button>
+                                <button
+                                    className="btn btn-primary w-100 py-2 fw-semibold d-flex align-items-center justify-content-center gap-2"
+                                    type="submit"
+                                    disabled={formik.isSubmitting}
+                                >
+                                    {formik.isSubmitting ? (
+                                        <>
+                                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            Sending OTP...
+                                        </>
+                                    ) : (
+                                        "Login"
+                                    )}
+                                </button>
                             </div>
                         </form>
                     </div>

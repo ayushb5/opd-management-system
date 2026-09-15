@@ -3,6 +3,8 @@ import DashboardCard from "../../components/DashboardCard"
 import { CalendarCheck, People, HourglassSplit, ClockHistory } from "react-bootstrap-icons"
 import { getDoctorDashboard } from "../../services/dashboardService";
 import RecentVisitTable from "../../components/RecentVisitTable";
+import WeeklyVisitsChart from "../../components/charts/WeeklyVisitsChart";
+import DonutDistributionChart from "../../components/charts/DonutDistributionChart";
 
 function DoctorDashboard() {
 
@@ -30,6 +32,13 @@ function DoctorDashboard() {
         }
     }
 
+    const completedCount = Math.max(0, dashboard.todayVisits - dashboard.pendingVisits);
+    const hasData = completedCount > 0 || dashboard.pendingVisits > 0;
+    const statusData = hasData ? [
+        { name: "Completed", value: completedCount },
+        { name: "Pending", value: dashboard.pendingVisits }
+    ] : [];
+
     return (
         <div className="container-fluid">
             <div className="row g-4 mb-4">
@@ -45,6 +54,20 @@ function DoctorDashboard() {
                 </div>
                 <div className="col-12 col-sm-6 col-xl-3">
                     <DashboardCard title={"Today's Follow-ups"} count={dashboard.todayFollowups} icon={<ClockHistory />} />
+                </div>
+            </div>
+
+            <div className="row g-4 mb-4">
+                <div className="col-12 col-lg-7">
+                    <WeeklyVisitsChart data={dashboard.weeklyVisits} title="My Weekly Consultations" />
+                </div>
+                <div className="col-12 col-lg-5">
+                    <DonutDistributionChart
+                        title="Today's Patient Queue"
+                        badgeText="Status"
+                        colors={["#198754", "#ffc107"]}
+                        data={statusData}
+                    />
                 </div>
             </div>
 
